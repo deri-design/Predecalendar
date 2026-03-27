@@ -24,10 +24,10 @@
         .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; margin: 4px; font-weight: bold; }
         .active .num { color: #fff; }
         .today .num { color: var(--gold); }
-        .event { background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 10px; flex-shrink: 0; overflow: hidden; border-radius: 2px; }
+        .event { background: rgba(0, 0, 0, 0.7); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 10px; flex-shrink: 0; overflow: hidden; border-radius: 2px; }
         .event.news { border-left-color: var(--teal); }
         .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #111; }
-        .info { padding: 8px; }
+        .info { padding: 6px; }
         .e-title { font-weight: bold; color: var(--gold); margin-bottom: 6px; font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.news .e-title { color: var(--teal); }
         .btn { display: block; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.5rem; padding: 4px; font-family: 'Orbitron'; background: rgba(255,255,255,0.03); }
@@ -49,10 +49,10 @@
             try {
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
-                evData = data.events || data || []; 
-                document.getElementById('st').innerText = `SYNC ACTIVE: ${evData.length} EVENTS LOADED`;
+                evData = data.events || []; 
+                document.getElementById('st').innerText = `SYNC ACTIVE: ${evData.length} EVENTS LOADED | UPDATED: ${data.last_updated}`;
                 render();
-            } catch(e) { document.getElementById('st').innerText = "DATA SYNCING - REFRESH IN 1 MINUTE"; }
+            } catch(e) { document.getElementById('st').innerText = "SYNCING WITH DATA PROVIDER..."; }
         }
         function draw(date, gId, lId) {
             const g = document.getElementById(gId), l = document.getElementById(lId);

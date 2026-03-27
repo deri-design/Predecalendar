@@ -1,37 +1,29 @@
 {
-    "last_updated": "2026-03-27 22:38:25",
+    "last_updated": "2026-03-27 23:25:39",
     "events": [
         {
-            "date": "2026-04-07",
-            "title": "V1.13: Throne of Thorns",
-            "desc": "V1.13: Throne of Thorns patch is coming, featuring a Hero Affinity level cap increase to Level 99. This update allows players to push their mains further than ever before. The patch includes various new features and changes.",
-            "type": "patch",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69c83611&is=69c6e491&hm=52d97cfa7b0dcb04d693d959d9813f67e8c223d384a4716bc9586a2edcf7fd6d&"
-        },
-        {
             "date": "2026-04-01",
-            "title": "V1.13 Dev Stream",
-            "desc": "The V1.13 Dev Stream is scheduled for April 1st, where the development team will provide a first look at the new update, V1.13 Throne of Thorns. The stream will be live on Twitch at 6PM UTC / 2PM ET. Viewers can expect to see new features and changes in the upcoming patch.",
+            "title": "v1.13 Stream",
+            "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14 <@&1128995603444150425>",
             "type": "news",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487185725479714916",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69c83923&is=69c6e7a3&hm=cab6c08af1e1c77279b8fa30ff75d46d0c6f3318455140b7b83d1180b486d28f&"
         },
         {
-            "date": "2026-03-27",
-            "title": "V1.12.6 Patch",
-            "desc": "V1.12.6 patch is live, featuring Daybreak V3, Sylvanis Skins, and the Renegade The Fey Skin. Players can read the full patch notes and join the discussion on the official Discord channel. The patch includes new skins and game modes.",
-            "type": "patch",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_5_85dc3fa777.jpg"
+            "date": "2026-04-07",
+            "title": "v1.13",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14 <@&1128995603444150425>",
+            "type": "news",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487182428824145991",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69c83611&is=69c6e491&hm=52d97cfa7b0dcb04d693d959d9813f67e8c223d384a4716bc9586a2edcf7fd6d&"
         },
         {
             "date": "2026-03-27",
-            "title": "Refer-a-Friend Competition",
-            "desc": "The Refer-a-Friend competition is back, giving players a chance to win a Secretlab TITAN Evo gaming chair. Players can earn entries by referring friends, and the more referrals, the better their chances of winning. The competition is open, and players can learn more on the official website.",
-            "type": "news",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/RAF_Secretlab_1920x1080_2_fd213e4f99.png",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431"
+            "title": "v1.12.6",
+            "desc": "# V1.12.6 is LIVE!\n\n\ud83c\udf04  Daybreak V3\n\ud83c\udf32 Sylvanis Skins\n\ud83e\uddda Renegade The Fey Skin\n\nRead full patch notes here:\nhttps://playp.red/47L1xmd\n\nJoin Daybreak V3 discussion here:\nhttps://discord.com/channels/389767672151146498/1485953418534326403/1485953418534326403\n\n\ud83d\udd14 <@&1128995603444150425>",
+            "type": "patch",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487185615287226572",
+            "image": ""
         }
     ]
 }

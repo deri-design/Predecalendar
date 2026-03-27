@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-03-27 05:08:56",
+    "last_updated": "2026-03-27 05:13:31",
     "events": [
         {
             "date": "2026-03-01",
@@ -9,65 +9,65 @@
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-03-18",
             "title": "V1.12.6 Patch Notes",
             "url": "https://www.predecessorgame.com/news/patch-notes/v1-12-6-patchnotes",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_2_copy_a0d5243989.jpg",
             "type": "patch"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-03-06",
             "title": "V1.12.4 Patch Notes",
             "url": "https://www.predecessorgame.com/news/patch-notes/v1-12-4-patchnotes",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_4_19a7f893e5.jpg",
             "type": "patch"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-03-05",
             "title": "Daybreak Updates (New Map Update)",
             "url": "https://www.predecessorgame.com/news/dev-diary/daybreak-introduction",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Blog_Header_2cddcfe091.jpg",
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-02-26",
             "title": "Double Trouble Weekend!",
             "url": "https://www.predecessorgame.com/news/events/double-trouble-weekend",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Double_Trouble_Weekend_fbbb4c76f2.png",
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-02-25",
             "title": "Friend Reward Competition",
             "url": "https://www.predecessorgame.com/news/events/friend-reward-competition",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Ra_F_Header_c3d91f19fa.png",
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-02-19",
             "title": "V1.12 Patch Notes",
-            "url": "https://www.predecessorgame.com/news/patch-notes/v1-12-patch-notes",
+            "url": "https://www.predecessorgame.com/news/patch-notes/v1-12-patchnotes",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_d1d98d3701.jpg",
             "type": "patch"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-02-10",
             "title": "E\u0335\u0344\u031b\u034c\u0341\u0302\u0340\u035b\u030b\u0341\u0302\u031f\u0359\u0331\u0347N\u0338\u030c\u035d\u0303\u031f\u035a\u0323\u035a\u032f\u034e\u0320\u0323\u0323\u0333E\u0334\u0300\u0301\u0357\u0302\u0307\u0311\u0315\u033f\u0347\u0339\u0345\u0330\u0345\u0345M\u0336\u0341\u0308\u0350\u033e\u0346\u035d\u0309\u0341\u033a\u0320\u035a\u034eI\u0338\u0308\u034b\u0341\u0300\u0309\u030e\u030c\u031b\u0302\u0314\u0327\u0354\u032d\u0339E\u0336\u035d\u030a\u0305\u034c\u0342\u0358\u0303\u035b\u030a\u035b\u034d\u0339\u0347\u032a\u034e\u0326S\u0338\u030e\u0353 \u0338\u0313\u0344\u035b\u033e\u035d\u0300\u0306\u0315\u033d\u031fF\u0336\u0304\u0357\u0344\u0360\u0342\u033d\u0301\u0342\u0314\u0350\u034d\u035a\u0345\u0327\u0355\u031f\u0331\u0322\u0356\u0323O\u0334\u030d\u032f\u0339\u0328\u0339\u0359\u032b\u033c\u031c\u0323R\u0335\u0310\u034b\u0311\u0350\u035b\u0346\u035c\u0319\u0331 \u0338\u0350\u030a\u0346\u030f\u0331\u0326L\u0337\u034b\u0341\u0302\u0308\u0305\u033f\u030c\u031a\u0305\u0333\u0326\u032a\u0325\u0333\u0331I\u0336\u0360\u0345\u0316\u033b\u0356F\u0335\u034a\u0354\u0316\u0354\u032c\u0325\u0349\u0348\u0353\u031eE\u0336\u0309\u0310\u0301\u0352\u035d\u030d\u0342\u0312\u034a\u0347\u031c\u0339\u0318\u0353\u0322",
             "url": "https://www.predecessorgame.com/news/announcements/enemies-for-life",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Shinbi_Defaced_moshed_02_11_11_17_49_732_38dcdff9fb.gif",
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-02-05",
             "title": "2026 Competitive Events Update",
             "url": "https://www.predecessorgame.com/news/events/pcc-competitive-events-update",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Comp_Update_Header_8d24b1f521.png",
             "type": "news"
         },
         {
-            "date": "2026-03-01",
+            "date": "2026-01-29",
             "title": "V1.11.2 Patch Notes",
-            "url": "https://www.predecessorgame.com/news/patch-notes/v1-11-2-patch-notes",
+            "url": "https://www.predecessorgame.com/news/patch-notes/v1-11-2-patchnotes",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/So_Me_1920x1080_available_now_12_1_da8fb7800b.jpg",
             "type": "patch"
         }

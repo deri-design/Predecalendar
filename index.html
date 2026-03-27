@@ -4,109 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predecessor | Live Roadmap</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-dark: #06080d; --bg-grid: rgba(255, 255, 255, 0.03);
-            --gold: #dcb63b; --teal: #37a9a9; --border: #1e2638;
-            --cell: #090e16; --text: #c8d0e0; --header-bg: #0d131f;
-        }
+        :root { --gold: #dcb63b; --teal: #37a9a9; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: var(--bg-dark); color: var(--text); font-family: 'Rajdhani', sans-serif;
-            background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
-            background-size: 40px 40px; padding: 2rem 1rem; min-height: 100vh;
+        body { 
+            background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem; 
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); 
+            background-size: 40px 40px; 
         }
-        .container { max-width: 1700px; margin: 0 auto; width: 100%; }
-        .header { text-align: center; margin-bottom: 2rem; }
-        .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 6px; font-size: 3rem; text-transform: uppercase; }
-        .status-bar { font-family: 'Orbitron'; font-size: 0.75rem; color: var(--teal); margin-top: 10px; letter-spacing: 2px; }
-        .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; font-size: 0.8rem; font-weight: bold; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
-        .dot.patch { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
-        .dot.news { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
-        .calendars-wrapper { display: flex; gap: 1.5rem; width: 100%; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px; font-size: 3rem; }
+        .calendars { display: flex; gap: 1rem; }
         .section { flex: 1; min-width: 0; }
-        .month-header { font-family: 'Orbitron'; color: var(--gold); margin-bottom: 1rem; text-align: center; display: flex; justify-content: space-between; align-items: center; }
-        .nav-btn { cursor: pointer; color: var(--text); padding: 5px 15px; border: 1px solid var(--border); transition: 0.2s; user-select: none; }
-        .nav-btn:hover { background: #fff; color: #000; }
+        .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1.2rem; }
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-        .head-cell { background: var(--header-bg); padding: 12px; text-align: center; font-size: 0.65rem; color: #5d7599; font-family: 'Orbitron'; }
-        .cell { background: var(--cell); min-height: 150px; max-height: 250px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; }
-        .cell::-webkit-scrollbar { width: 4px; }
-        .cell::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-        .today { outline: 1px solid var(--gold); background: rgba(220, 182, 59, 0.08); }
+        .h-cell { background: #0d131f; padding: 10px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; }
+        .cell { background: var(--cell); min-height: 150px; padding: 6px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; }
+        .cell.today { outline: 1px solid var(--gold); background: rgba(220,182,59,0.1); }
         .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; margin-bottom: 8px; }
-        .active .num { color: var(--text); }
-        .event { background: rgba(220, 182, 59, 0.1); border-left: 3px solid var(--gold); padding: 6px; margin-bottom: 6px; flex-shrink: 0; }
+        .active .num { color: #fff; }
+        .event { background: rgba(220,182,59,0.1); border-left: 3px solid var(--gold); padding: 5px; margin-bottom: 5px; font-size: 0.6rem; line-height: 1.2; }
         .event.news { border-left-color: var(--teal); background: rgba(55, 169, 169, 0.1); }
-        .event-title { font-weight: bold; color: var(--gold); margin-bottom: 4px; font-family: 'Orbitron'; font-size: 0.6rem; }
-        .event.news .event-title { color: var(--teal); }
-        .details-btn { display: block; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; text-decoration: none; font-size: 0.55rem; padding: 3px; font-family: 'Orbitron'; }
-        .details-btn:hover { background: #fff; color: #000; }
-        @media (max-width: 1300px) { .calendars-wrapper { flex-direction: column; gap: 3rem; } }
+        .e-title { font-family: 'Orbitron'; font-weight: bold; color: var(--gold); margin-bottom: 4px; display: block; overflow: hidden; text-overflow: ellipsis; }
+        .event.news .e-title { color: var(--teal); }
+        .btn { display: block; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: #fff; text-decoration: none; padding: 2px; font-size: 0.5rem; font-family: 'Orbitron'; margin-top: 4px; }
+        .btn:hover { background: #fff; color: #000; }
+        @media (max-width: 1400px) { .calendars { flex-direction: column; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>PREDECESSOR LIVE ROADMAP</h1>
-            <div id="status" class="status-bar">CONNECTING TO DATA SOURCE...</div>
-        </header>
-        <div class="legend">
-            <span><div class="dot patch"></div> PATCH NOTES</span>
-            <span><div class="dot news"></div> OFFICIAL NEWS</span>
-        </div>
-        <div class="calendars-wrapper">
-            <div class="section"><div class="month-header"><div class="nav-btn" id="prev-btn">&lt; PREV</div><span id="label-1"></span><div style="width:50px"></div></div><div class="grid" id="grid-1"></div></div>
-            <div class="section"><div class="month-header" style="justify-content: center; color: #fff;"><span id="label-2"></span></div><div class="grid" id="grid-2"></div></div>
-            <div class="section"><div class="month-header"><div style="width:50px"></div><span id="label-3"></span><div class="nav-btn" id="next-btn">NEXT &gt;</div></div><div class="grid" id="grid-3"></div></div>
-        </div>
+    <div class="header"><h1>PREDECESSOR LIVE ROADMAP</h1><p id="st" style="color:var(--teal); font-family: 'Orbitron'; font-size: 0.8rem; margin-top: 10px;">Syncing...</p></div>
+    <div class="calendars">
+        <div class="section"><h2 class="m-name" id="l1"></h2><div class="grid" id="g1"></div></div>
+        <div class="section"><h2 class="m-name" id="l2"></h2><div class="grid" id="g2"></div></div>
+        <div class="section"><h2 class="m-name" id="l3"></h2><div class="grid" id="g3"></div></div>
     </div>
     <script>
-        let eventData = [];
-        const today = new Date();
-        let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        const formatDate = (y, m, d) => `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        let evs = []; const today = new Date();
         async function init() {
             try {
-                // cache busting timestamp added
-                const response = await fetch('./events.json?t=' + Date.now());
-                eventData = await response.json();
-                document.getElementById('status').innerText = `SYNC ACTIVE: ${eventData.length} EVENTS LOADED`;
-                renderAll();
-            } catch (e) {
-                document.getElementById('status').innerText = "OFFLINE OR SYNC IN PROGRESS...";
-                renderAll(); 
+                const r = await fetch('./events.json?t=' + Date.now());
+                evs = await r.json();
+                document.getElementById('st').innerText = `LIVE SYNC ACTIVE: ${evs.length} EVENTS LOADED`;
+            } catch(e) { document.getElementById('st').innerText = "Syncing with GitHub..."; }
+            render();
+        }
+        function draw(date, gId, lId) {
+            const g = document.getElementById(gId), l = document.getElementById(lId);
+            const m = date.getMonth(), y = date.getFullYear();
+            l.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' }).toUpperCase();
+            g.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
+            let start = new Date(y, m, 1).getDay(); start = (start === 0) ? 7 : start;
+            const count = new Date(y, m + 1, 0).getDate();
+            for (let i = 1; i < start; i++) g.innerHTML += `<div class="cell"></div>`;
+            for (let d = 1; d <= count; d++) {
+                const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const items = evs.filter(e => e.date === dStr);
+                const isT = d===today.getDate() && m===today.getMonth() && y===today.getFullYear();
+                let html = `<div class="cell active ${isT?'today':''}"><div class="num">${d}</div>`;
+                items.forEach(e => {
+                    html += `<div class="event ${e.type==='patch'?'':'news'}"><span class="e-title">${e.title}</span><a href="${e.url}" target="_blank" class="btn">DETAILS ↗</a></div>`;
+                });
+                g.innerHTML += html + `</div>`;
             }
         }
-        function drawMonth(targetDate, gridId, labelId) {
-            const grid = document.getElementById(gridId);
-            const label = document.getElementById(labelId);
-            const m = targetDate.getMonth(), y = targetDate.getFullYear();
-            label.innerText = targetDate.toLocaleString('default', { month: 'long', year: 'numeric' }).toUpperCase();
-            grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="head-cell">${d}</div>`).join("");
-            let firstDay = new Date(y, m, 1).getDay();
-            firstDay = (firstDay === 0) ? 7 : firstDay;
-            const daysInMonth = new Date(y, m + 1, 0).getDate();
-            for (let i = 1; i < firstDay; i++) grid.innerHTML += `<div class="cell"></div>`;
-            for (let d = 1; d <= daysInMonth; d++) {
-                const currentStr = formatDate(y, m + 1, d);
-                const matches = eventData.filter(e => e.date.trim() === currentStr);
-                const isToday = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
-                let html = matches.map(e => `<div class="event ${e.type === 'patch' ? '' : 'news'}"><div class="event-title">${e.title}</div><a href="${e.url}" target="_blank" class="details-btn">DETAILS ↗</a></div>`).join("");
-                grid.innerHTML += `<div class="cell active ${isToday ? 'today' : ''}"><div class="num">${d}</div>${html}</div>`;
-            }
+        function render() {
+            draw(new Date(today.getFullYear(), today.getMonth()-1, 1), 'g1', 'l1');
+            draw(new Date(today.getFullYear(), today.getMonth(), 1), 'g2', 'l2');
+            draw(new Date(today.getFullYear(), today.getMonth()+1, 1), 'g3', 'l3');
         }
-        function renderAll() {
-            drawMonth(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1), 'grid-1', 'label-1');
-            drawMonth(new Date(viewDate.getFullYear(), viewDate.getMonth(), 1), 'grid-2', 'label-2');
-            drawMonth(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1), 'grid-3', 'label-3');
-        }
-        document.getElementById('prev-btn').addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() - 1); renderAll(); });
-        document.getElementById('next-btn').addEventListener('click', () => { viewDate.setMonth(viewDate.getMonth() + 1); renderAll(); });
         init();
     </script>
 </body>

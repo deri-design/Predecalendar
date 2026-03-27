@@ -9,53 +9,31 @@
         :root { --gold: #dcb63b; --teal: #37a9a9; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 1.5rem; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; }
-        
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px; font-size: 2.8rem; text-transform: uppercase; text-shadow: 0 0 15px rgba(220,182,59,0.3); }
-        .st-bar { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--teal); margin-top: 10px; text-transform: uppercase; }
-
+        .st-bar { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--teal); margin-top: 10px; text-transform: uppercase; }
         .calendars { display: flex; gap: 1rem; }
         .section { flex: 1; min-width: 0; }
         .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1rem; }
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
         .h-cell { background: #0d131f; padding: 10px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; }
-        
         .cell { background: var(--cell); min-height: 180px; max-height: 450px; padding: 5px; display: flex; flex-direction: column; position: relative; overflow: visible; }
         .today { outline: 1px solid var(--gold); background: rgba(220, 182, 59, 0.05); }
         .num { font-family: 'Orbitron'; font-size: 0.75rem; color: #5d7599; margin: 4px; font-weight: bold; }
         .active .num { color: #fff; }
-
-        /* --- CLICKABLE EVENT CARD --- */
         .event { position: relative; display: block; text-decoration: none; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; border-radius: 2px; transition: 0.2s; cursor: crosshair; }
         .event:hover { border-color: #fff; transform: scale(1.02); z-index: 100; }
         .event.news { border-left-color: var(--teal); }
-
         .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #000; border-bottom: 1px solid var(--border); }
         .info { padding: 8px; }
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.news .e-title { color: var(--teal); }
-
-        /* --- TACTICAL BRIEFING POPUP --- */
-        .briefing {
-            display: none;
-            position: absolute;
-            left: 105%; top: 0;
-            width: 320px;
-            background: #0d131f;
-            border: 1px solid var(--gold);
-            padding: 18px;
-            z-index: 999;
-            box-shadow: 0 0 40px rgba(0,0,0,1);
-            pointer-events: none;
-            backdrop-filter: blur(15px);
-        }
+        .briefing { display: none; position: absolute; left: 105%; top: 0; width: 320px; background: #0d131f; border: 1px solid var(--gold); padding: 18px; z-index: 999; box-shadow: 0 0 40px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(15px); }
         .event:hover .briefing { display: block; }
         .section:nth-child(3) .briefing { left: auto; right: 105%; }
-
         .briefing-tag { font-family: 'Orbitron'; font-size: 0.55rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; display: block; }
         .briefing-desc { font-size: 0.8rem; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; }
         .briefing-date { display: block; margin-top: 15px; font-size: 0.6rem; color: var(--teal); font-family: 'Orbitron'; border-top: 1px solid var(--border); padding-top: 8px; }
-
         @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 3rem; } .briefing { left: 0; top: 105%; width: 100%; } .section:nth-child(3) .briefing { right: 0; } }
     </style>
 </head>

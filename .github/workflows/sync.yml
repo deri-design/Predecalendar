@@ -1,4 +1,4 @@
-name: Sync AI Roadmap
+name: Sync Groq Roadmap
 on:
   schedule:
     - cron: '0 */6 * * *'
@@ -11,27 +11,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-
       - name: Install dependencies
-        run: pip install requests
-
-      - name: Run AI Agent
+        run: pip install requests groq
+      - name: Run Scraper
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python scraper.py
-
-      - name: Commit and Push
+      - name: Push changes
         run: |
-          git config --global user.name 'Gemini-Bot'
-          git config --global user.email 'bot@gemini.ai'
+          git config --global user.name 'Groq-Bot'
+          git config --global user.email 'bot@groq.ai'
           git add events.json
-          git commit -m "AI Update via V1 API" || exit 0
+          git commit -m "Groq AI Update" || exit 0
           git push origin main

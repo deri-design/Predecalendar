@@ -20,7 +20,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install requests google-genai
+        run: pip install requests google-generativeai
 
       - name: Run AI Agent
         env:

@@ -1,37 +1,37 @@
 {
-    "last_updated": "2026-03-27 22:29:34",
+    "last_updated": "2026-03-27 22:38:25",
     "events": [
         {
             "date": "2026-04-07",
             "title": "V1.13: Throne of Thorns",
-            "desc": "V1.13: Throne of Thorns update with Hero Affinity level cap increasing to Level 99",
+            "desc": "V1.13: Throne of Thorns patch is coming, featuring a Hero Affinity level cap increase to Level 99. This update allows players to push their mains further than ever before. The patch includes various new features and changes.",
             "type": "patch",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69c83611&is=69c6e491&hm=52d97cfa7b0dcb04d693d959d9813f67e8c223d384a4716bc9586a2edcf7fd6d&",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261"
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69c83611&is=69c6e491&hm=52d97cfa7b0dcb04d693d959d9813f67e8c223d384a4716bc9586a2edcf7fd6d&"
         },
         {
             "date": "2026-04-01",
             "title": "V1.13 Dev Stream",
-            "desc": "V1.13 Dev Stream on Twitch for a first look at the new update",
+            "desc": "The V1.13 Dev Stream is scheduled for April 1st, where the development team will provide a first look at the new update, V1.13 Throne of Thorns. The stream will be live on Twitch at 6PM UTC / 2PM ET. Viewers can expect to see new features and changes in the upcoming patch.",
             "type": "news",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69c83923&is=69c6e7a3&hm=cab6c08af1e1c77279b8fa30ff75d46d0c6f3318455140b7b83d1180b486d28f&",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261"
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69c83923&is=69c6e7a3&hm=cab6c08af1e1c77279b8fa30ff75d46d0c6f3318455140b7b83d1180b486d28f&"
         },
         {
             "date": "2026-03-27",
-            "title": "V1.12.6",
-            "desc": "V1.12.6 patch with Daybreak V3, Sylvanis Skins, and Renegade The Fey Skin",
+            "title": "V1.12.6 Patch",
+            "desc": "V1.12.6 patch is live, featuring Daybreak V3, Sylvanis Skins, and the Renegade The Fey Skin. Players can read the full patch notes and join the discussion on the official Discord channel. The patch includes new skins and game modes.",
             "type": "patch",
-            "url": "https://playp.red/47L1xmd",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_5_85dc3fa777.jpg"
         },
         {
             "date": "2026-03-27",
             "title": "Refer-a-Friend Competition",
-            "desc": "Refer-a-Friend competition to win a Secretlab TITAN Evo gaming chair",
+            "desc": "The Refer-a-Friend competition is back, giving players a chance to win a Secretlab TITAN Evo gaming chair. Players can earn entries by referring friends, and the more referrals, the better their chances of winning. The competition is open, and players can learn more on the official website.",
             "type": "news",
-            "url": "https://playp.red/4sD3FF8",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/RAF_Secretlab_1920x1080_2_fd213e4f99.png"
+            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/RAF_Secretlab_1920x1080_2_fd213e4f99.png",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487202475520819431"
         }
     ]
 }

@@ -2,80 +2,83 @@ import os
 import requests
 import json
 import re
-import google.generativeai as genai
+from google import genai
 from datetime import datetime
 
+# Configuration
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 CHANNEL_ID = "1487129767865225261" 
 
-def scrape():
-    print("--- AI Agent: Temporal Sync Start ---")
-    
-    # 1. Fetch Discord Messages
+def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
     url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=15"
-    
     response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        print(f"DISCORD ERROR: {response.status_code}")
-        return
+    return response.json()
 
-    messages = response.json()
-    print(f"Read {len(messages)} messages.")
+def ask_ai_for_roadmap(messages_text):
+    # Initialize the NEW modern client
+    client = genai.Client(api_key=GEMINI_KEY)
+    
+    today = datetime.now().strftime("%A, %B %d, %Y")
+    
+    prompt = f"""
+    Today is {today}. I am providing Discord announcements for the game "Predecessor".
+    Extract the ACTUAL start dates for upcoming events, patches, or community news.
+    
+    Messages:
+    ---
+    {messages_text}
+    ---
+    
+    Rules:
+    1. Identify the event/patch start date.
+    2. Format the output as a strict JSON list of objects.
+    3. Categorize as "patch" or "news".
+    
+    Output Format:
+    [
+      {{"date": "YYYY-MM-DD", "title": "Event Name", "type": "patch/news", "url": "link", "image": "img_url"}}
+    ]
+    """
+    
+    # Use the new generate_content syntax
+    response = client.models.generate_content(
+        model='gemini-1.5-flash',
+        contents=prompt
+    )
+    
+    # Robust JSON extraction
+    raw_text = response.text
+    json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
+    if json_match:
+        return json.loads(json_match.group(0))
+    return json.loads(raw_text.strip())
 
-    combined_text = ""
-    for m in messages:
-        combined_text += f"SENT: {m['timestamp']} | MSG: {m['content']}\n---\n"
-
-    # 2. Consult Gemini (Using REST transport to fix 404)
-    print("Connecting to Gemini AI Engine...")
+def scrape():
+    print("--- AI Roadmap: New SDK Sync ---")
+    
     try:
-        # Use REST transport to ensure compatibility with GitHub Runners
-        genai.configure(api_key=GEMINI_KEY, transport='rest')
-        
-        # Use the most stable model identifier
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        
-        today = datetime.now().strftime("%A, %B %d, %Y")
-        
-        prompt = f"""
-        Today is {today}. Extract game events for "Predecessor" from these Discord messages.
-        
-        Messages:
-        {combined_text}
+        messages = get_discord_messages()
+        combined_text = ""
+        for m in messages:
+            combined_text += f"TIME: {m['timestamp']} | MSG: {m['content']}\n---\n"
 
-        Return ONLY a JSON list of objects:
-        [
-          {{"date": "YYYY-MM-DD", "title": "Event Name", "type": "patch/news", "url": "link", "image": "img_url"}}
-        ]
-        """
+        print("Consulting Gemini 1.5-Flash via New SDK...")
+        events = ask_ai_for_roadmap(combined_text)
         
-        response = model.generate_content(prompt)
-        
-        # Extract JSON list from AI response
-        raw_text = response.text
-        json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
-        
-        if json_match:
-            events = json.loads(json_match.group(0))
-            print(f"SUCCESS: AI identified {len(events)} events.")
-        else:
-            print("AI didn't find any events in the text.")
-            events = []
-
-        # 3. Save Output
         output = {
             "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "events": events
         }
-        
+
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
+        print(f"SUCCESS: {len(events)} events processed.")
 
     except Exception as e:
-        print(f"AI SYSTEM ERROR: {e}")
-        # Always ensure events.json exists
+        print(f"ERROR: {e}")
+        # Ensure file exists to avoid workflow failure
         if not os.path.exists('events.json'):
             with open('events.json', 'w') as f:
                 json.dump({"events": []}, f)

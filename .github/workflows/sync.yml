@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,7 +20,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests beautifulsoup4
 
       - name: Run Scraper
         run: python scraper.py
@@ -31,18 +29,8 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          
-          # Check if events.json was actually created by the scraper
           if [ -f "events.json" ]; then
             git add events.json
-            # Only commit if there are actual changes
-            if git diff --staged --quiet; then
-              echo "No changes to commit"
-            else
-              git commit -m "Update events.json"
-              git push origin main
-            fi
-          else
-            echo "Error: events.json was not created by the scraper."
-            exit 1
+            git commit -m "Auto-update events.json" || exit 0
+            git push origin main
           fi

@@ -1,114 +1,90 @@
 import requests
-from bs4 import BeautifulSoup
 import json
 import re
 from datetime import datetime
 
 URL = "https://www.predecessorgame.com/en-US/news"
-BASE_URL = "https://www.predecessorgame.com"
-
-# --- VERIFIED SAFETY NET ---
-# These stay exactly as they are. The scraper will skip these URLs if found on site.
-FALLBACK_EVENTS = [
-    {
-        "date": "2026-03-05", 
-        "title": "V1.12.4 Patch Notes", 
-        "type": "patch", 
-        "url": "https://www.predecessorgame.com/en-US/news/patch-notes/v1-12-4-patchnotes",
-        "desc": "Verified official patch notes link."
-    },
-    {
-        "date": "2026-03-17", 
-        "title": "V1.12.6 Patch Notes", 
-        "type": "patch", 
-        "url": "https://www.predecessorgame.com/en-US/news/patch-notes/v1-12-6-patchnotes",
-        "desc": "Verified official patch notes link."
-    },
-    {
-        "date": "2026-03-04", 
-        "title": "Daybreak Map Update", 
-        "type": "news", 
-        "url": "https://www.predecessorgame.com/en-US/news/dev-diary/daybreak-introduction", 
-        "desc": "Verified official dev diary link."
-    }
-]
-
-def clean_date(text):
-    # Regex to find: "March 17, 2026" or "Mar 17 2026"
-    match = re.search(r'([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})', text)
-    if match:
-        mon, day, year = match.groups()
-        mon = mon[:3].capitalize()
-        try:
-            dt = datetime.strptime(f"{mon} {day} {year}", "%b %d %Y")
-            return dt.strftime("%Y-%m-%d")
-        except: pass
-    return None
+BASE_URL = "https://www.predecessorgame.com/en-US/news"
 
 def scrape():
-    print("Executing Ultra-Aggressive Scrape...")
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'}
-    
-    # Initialize with our verified safety net
-    events = list(FALLBACK_EVENTS)
-    verified_urls = [e['url'] for e in events]
+    print("Starting Live API Scrape...")
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     
     try:
         response = requests.get(URL, headers=headers, timeout=15)
-        soup = BeautifulSoup(response.text, 'html.parser')
+        html = response.text
         
-        # Find every link pointing to a news article
-        all_links = soup.find_all('a', href=re.compile(r'/news/'))
-        print(f"Found {len(all_links)} potential news links on page.")
+        # 1. Locate the JSON data block embedded in the HTML (Next.js __NEXT_DATA__)
+        # This is where the actual database records for news are stored.
+        json_pattern = r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>'
+        match = re.search(json_pattern, html)
+        
+        if not match:
+            print("Could not find the data block. Website structure may have changed.")
+            return
 
-        for card in all_links:
-            raw_url = card['href']
-            full_url = BASE_URL + raw_url if raw_url.startswith('/') else raw_url
+        data = json.loads(match.group(1))
+        
+        # 2. Navigate to the news list inside the JSON
+        # Path: props -> pageProps -> news (or similar based on current site state)
+        # We search deep for the key 'newsList' or 'articles'
+        news_list = []
+        
+        # Search for the news array inside the complex JSON object
+        def find_news_list(obj):
+            if isinstance(obj, dict):
+                for k, v in obj.items():
+                    if k == 'newsList' and isinstance(v, list):
+                        return v
+                    res = find_news_list(v)
+                    if res: return res
+            elif isinstance(obj, list):
+                for item in obj:
+                    res = find_news_list(item)
+                    if res: return res
+            return None
+
+        news_data = find_news_list(data)
+        
+        if not news_data:
+            print("Found the data block but no news items inside.")
+            return
+
+        final_events = []
+        for item in news_data:
+            # Extract fields
+            title = item.get('title', 'Untitled Update')
+            slug = item.get('slug', '')
+            # Categories: patch-notes, dev-diary, events, announcements, community
+            category = item.get('category', {}).get('slug', 'announcements')
             
-            # 1. Fix URL inconsistency automatically
-            if "-patch-notes" in full_url and "v1-" in full_url:
-                full_url = full_url.replace("-patch-notes", "-patchnotes")
+            # Use the 'publishedAt' or 'createdAt' date
+            raw_date = item.get('publishedAt') or item.get('createdAt') or ""
+            # Format: 2026-03-17T14:00:00.000Z -> 2026-03-17
+            date_str = raw_date[:10] if len(raw_date) >= 10 else datetime.now().strftime("%Y-%m-%d")
 
-            # 2. Skip if we already have this URL in our Fallback/Verified list
-            if full_url in verified_urls:
-                continue
+            # 3. Build the EXACT URL
+            # The pattern is: BASE_URL / category-slug / article-slug
+            full_url = f"{BASE_URL}/{category}/{slug}"
 
-            # 3. Extract Title (The first long string of text found)
-            # We look for the text inside the card that isn't the date
-            card_text = card.get_text(separator='|').split('|')
-            card_text = [t.strip() for t in card_text if len(t.strip()) > 1]
-            
-            title = "New Update"
-            found_date = None
-            
-            for segment in card_text:
-                d = clean_date(segment)
-                if d:
-                    found_date = d
-                elif len(segment) > 10 and title == "New Update":
-                    title = segment
+            final_events.append({
+                "date": date_str,
+                "title": title,
+                "url": full_url,
+                "type": "patch" if category == "patch-notes" or "patch" in title.lower() else "news",
+                "desc": f"Category: {category.replace('-', ' ').title()}"
+            })
 
-            # 4. If we found a date, save the event
-            if found_date:
-                events.append({
-                    "date": found_date,
-                    "title": title,
-                    "url": full_url,
-                    "type": "patch" if "patch" in title.lower() else "news",
-                    "desc": "Official Website Sync"
-                })
-                verified_urls.append(full_url)
-                print(f"Added: {title} ({found_date})")
-
-        # Save to JSON
+        # 4. Save to events.json
         with open('events.json', 'w') as f:
-            json.dump(events, f, indent=4)
-        print(f"Success! Total events in JSON: {len(events)}")
+            json.dump(final_events, f, indent=4)
+        
+        print(f"Success! {len(final_events)} live events scraped and URLs generated.")
 
     except Exception as e:
-        print(f"Scrape Error: {e}")
-        with open('events.json', 'w') as f:
-            json.dump(events, f, indent=4)
+        print(f"Critical Scrape Error: {e}")
 
 if __name__ == "__main__":
     scrape()

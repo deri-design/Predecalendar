@@ -4,83 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predecessor | Live Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #dcb63b; --teal: #37a9a9; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
+        :root {
+            --gold: #dcb63b;
+            --teal: #37a9a9;
+            --bg: #06080d;
+            --cell: #090e16;
+            --border: #1e2638;
+            --text: #c8d0e0;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            padding: 2rem;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
         .header { text-align: center; margin-bottom: 2rem; }
-        .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px; font-size: 3rem; text-shadow: 0 0 20px rgba(220,182,59,0.3); }
+        .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 5px; font-size: 3rem; text-shadow: 0 0 20px rgba(220,182,59,0.3); text-transform: uppercase; }
+        
         .st-bar { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--teal); margin-top: 10px; text-transform: uppercase; }
+
         .calendars { display: flex; gap: 1rem; }
         .section { flex: 1; min-width: 0; }
         .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1.1rem; }
+
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
         .h-cell { background: #0d131f; padding: 12px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; }
-        .cell { background: var(--cell); min-height: 180px; max-height: 500px; padding: 4px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; }
+
+        .cell {
+            background: var(--cell);
+            min-height: 180px;
+            max-height: 500px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
         .cell::-webkit-scrollbar { width: 4px; }
         .cell::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
         .today { outline: 1px solid var(--gold); background: rgba(220, 182, 59, 0.08); z-index: 2; }
         .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; margin: 4px; font-weight: bold; }
         .active .num { color: #fff; }
         .today .num { color: var(--gold); }
-        .event { background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 10px; flex-shrink: 0; overflow: hidden; border-radius: 2px; }
+
+        /* --- CLICKABLE EVENT CARD --- */
+        .event {
+            display: block; /* Makes full link fill space */
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--gold);
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 2px;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .event:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
         .event.news { border-left-color: var(--teal); }
-        .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #111; }
-        .info { padding: 8px; }
-        .e-title { font-weight: bold; color: var(--gold); margin-bottom: 6px; font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
+        .event.news:hover { box-shadow: 0 0 10px rgba(55, 169, 169, 0.2); }
+        .event.patch:hover { box-shadow: 0 0 10px rgba(220, 182, 59, 0.2); }
+
+        .event-img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            display: block;
+            background: #111;
+            transition: transform 0.3s ease;
+        }
+        
+        .event:hover .event-img { transform: scale(1.05); }
+
+        .info { padding: 10px 8px; }
+        .e-title {
+            font-weight: bold;
+            color: var(--gold);
+            font-family: 'Orbitron';
+            font-size: 0.6rem;
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
         .event.news .e-title { color: var(--teal); }
-        .btn { display: block; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.5rem; padding: 4px; font-family: 'Orbitron'; background: rgba(255,255,255,0.03); }
-        .btn:hover { background: #fff; color: #000; }
+
         @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 3rem; } }
     </style>
 </head>
 <body>
-    <div class="header"><h1>PREDECESSOR LIVE ROADMAP</h1><div id="st" class="st-bar">Connecting...</div></div>
+    <div class="header">
+        <h1>PREDECESSOR LIVE ROADMAP</h1>
+        <div id="st" class="st-bar">Connecting to temporal stream...</div>
+    </div>
+
     <div class="calendars">
         <div class="section"><h2 class="m-name" id="l1"></h2><div class="grid" id="g1"></div></div>
         <div class="section"><h2 class="m-name" id="l2"></h2><div class="grid" id="g2"></div></div>
         <div class="section"><h2 class="m-name" id="l3"></h2><div class="grid" id="g3"></div></div>
     </div>
+
     <script>
-        let evData = []; const today = new Date();
+        let evData = []; 
+        const today = new Date();
         let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+
         async function init() {
             try {
+                // Fetch events.json with a timestamp to avoid caching
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
-                evData = data.events || []; 
-                document.getElementById('st').innerText = `SYNC ACTIVE: ${evData.length} EVENTS LOADED | UPDATED: ${data.last_updated}`;
+                evData = data.events || data || []; 
+                
+                const count = evData.length;
+                const updated = data.last_updated ? `| UPDATED: ${data.last_updated}` : "";
+                document.getElementById('st').innerText = `SYNC ACTIVE: ${count} EVENTS LOADED ${updated}`;
                 render();
-            } catch(e) { document.getElementById('st').innerText = "DATA SYNCING - REFRESH IN 1 MINUTE"; }
+            } catch(e) { 
+                document.getElementById('st').innerText = "DATA ERROR - CHECK GITHUB ACTION STATUS"; 
+            }
         }
+
         function draw(date, gId, lId) {
             const g = document.getElementById(gId), l = document.getElementById(lId);
             const m = date.getMonth(), y = date.getFullYear();
+            
             l.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' }).toUpperCase();
             g.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
-            let start = new Date(y, m, 1).getDay(); start = (start === 0) ? 7 : start;
+            
+            let start = new Date(y, m, 1).getDay(); 
+            start = (start === 0) ? 7 : start;
+            
             const count = new Date(y, m + 1, 0).getDate();
+            
             for (let i = 1; i < start; i++) g.innerHTML += `<div class="cell"></div>`;
+            
             for (let d = 1; d <= count; d++) {
                 const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
-                const isT = d===today.getDate() && m===today.getMonth() && y===today.getFullYear();
+                const isT = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
+                
                 let html = `<div class="cell active ${isT?'today':''}"><div class="num">${d}</div>`;
+                
                 items.forEach(e => {
-                    html += `<div class="event ${e.type==='patch'?'':'news'}">
-                        ${e.image ? `<img src="${e.image}" class="event-img" onerror="this.style.display='none'">` : ''}
-                        <div class="info"><div class="e-title">${e.title}</div><a href="${e.url}" target="_blank" class="btn">DETAILS ↗</a></div>
-                    </div>`;
+                    const typeClass = e.type === 'patch' ? 'patch' : 'news';
+                    html += `
+                        <a href="${e.url}" target="_blank" class="event ${typeClass}">
+                            ${e.image ? `<img src="${e.image}" class="event-img" onerror="this.style.display='none'">` : ''}
+                            <div class="info">
+                                <div class="e-title">${e.title}</div>
+                            </div>
+                        </a>`;
                 });
+                
                 g.innerHTML += html + `</div>`;
             }
         }
+
         function render() {
             draw(new Date(viewDate.getFullYear(), viewDate.getMonth()-1, 1), 'g1', 'l1');
             draw(new Date(viewDate.getFullYear(), viewDate.getMonth(), 1), 'g2', 'l2');
             draw(new Date(viewDate.getFullYear(), viewDate.getMonth()+1, 1), 'g3', 'l3');
         }
+
         init();
     </script>
 </body>

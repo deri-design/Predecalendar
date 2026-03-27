@@ -13,84 +13,74 @@ def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
     url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=15"
     res = requests.get(url, headers=headers)
-    if res.status_code != 200:
-        print(f"DISCORD ERROR: {res.status_code}")
-        return []
-    return res.json()
+    return res.json() if res.status_code == 200 else []
 
-def ask_gemini(messages_text):
-    # Switching to gemini-1.5-flash-latest for much better stability and free-tier limits
-    api_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GEMINI_KEY}"
+def ask_gemini(messages_text, model_name):
+    """Hits the Gemini API with a specific model name"""
+    api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={GEMINI_KEY}"
     
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
-    Today's Date: {today}
-    You are an AI data extractor for the game "Predecessor".
-    
-    Read these Discord announcements:
-    ---
-    {messages_text}
-    ---
-    
-    TASK:
-    Extract upcoming event dates, patches, or hero releases.
+    Today is {today}. Context: Game "Predecessor".
+    Extract upcoming event dates, patches, or hero releases from these Discord announcements.
     Rules:
     1. Identify the ACTUAL date the event starts.
-    2. Format as a strict JSON list of objects only.
-    3. Include fields: "date" (YYYY-MM-DD), "title", "type" (patch/news), "url", "image".
-    4. If a message contains a link to an image, put it in "image".
+    2. Format as a JSON list only.
+    3. Include: "date" (YYYY-MM-DD), "title", "type" (patch/news), "url", "image".
+    4. If an image link exists in the message, include it.
     
-    OUTPUT ONLY THE JSON (Start with [ and end with ]):
+    Messages:
+    {messages_text}
+
+    OUTPUT ONLY JSON:
     """
     
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}]
-    }
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
+    response = requests.post(api_url, json=payload, timeout=20)
     
-    response = requests.post(api_url, json=payload)
-    
-    if response.status_code != 200:
-        print(f"AI API ERROR: {response.status_code} - {response.text}")
-        return None
-
-    try:
-        data = response.json()
-        raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
-        # Standardize formatting
-        json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
-        if json_match:
+    if response.status_code == 200:
+        try:
+            raw_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+            json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
             return json.loads(json_match.group(0))
-        return []
-    except Exception as e:
-        print(f"Parsing error: {e}")
+        except:
+            return None
+    else:
+        print(f"Model {model_name} failed with status {response.status_code}")
         return None
 
 def scrape():
-    print("--- AI Agent: Logic Sync Start (Stable Model) ---")
-    
+    print("--- AI Agent: Robust Sync Start ---")
     messages = get_discord_messages()
     if not messages:
-        print("No messages found.")
+        print("Could not retrieve Discord messages.")
         return
 
     combined = ""
     for m in messages:
-        combined += f"SENT: {m['timestamp']} | CONTENT: {m['content']}\n---\n"
+        combined += f"SENT: {m['timestamp']} | MSG: {m['content']}\n---\n"
 
-    print("Requesting extraction from Gemini 1.5-Flash-Latest...")
-    events = ask_gemini(combined)
+    # List of models to try in order of likelihood to have quota
+    models_to_try = ["gemini-2.0-flash-lite", "gemini-1.5-flash-8b", "gemini-2.0-flash"]
+    events = None
+
+    for model in models_to_try:
+        print(f"Trying model: {model}...")
+        events = ask_gemini(combined, model)
+        if events is not None:
+            print(f"SUCCESS: {model} delivered the data.")
+            break
     
     if events is not None:
-        events.sort(key=lambda x: x.get('date', ''))
         output = {
             "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "events": events
         }
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print(f"SUCCESS: {len(events)} events written to events.json")
+        print(f"Final: {len(events)} events saved.")
     else:
-        print("Scrape failed to generate events.")
+        print("CRITICAL: All AI models failed or were rate-limited.")
 
 if __name__ == "__main__":
     scrape()

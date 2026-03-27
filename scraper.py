@@ -2,86 +2,67 @@ import os
 import requests
 import json
 import re
-from google import genai
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# Configuration
+# Config
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
-CHANNEL_ID = "1487129767865225261" 
+CHANNEL_ID = "1487129767865225261"
 
 def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
     url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=15"
-    response = requests.get(url, headers=headers)
-    return response.json()
+    res = requests.get(url, headers=headers)
+    return res.json() if res.status_code == 200 else []
 
-def ask_ai_for_roadmap(messages_text):
-    # Initialize the NEW modern client
-    client = genai.Client(api_key=GEMINI_KEY)
+def ask_gemini(messages_text):
+    # Use the stable V1 endpoint directly
+    api_url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_KEY}"
     
     today = datetime.now().strftime("%A, %B %d, %Y")
+    prompt = f"Today is {today}. Extract game events for 'Predecessor' from these Discord messages into a JSON list with 'date' (YYYY-MM-DD), 'title', 'type' (patch/news), 'url', and 'image'. Text: {messages_text}"
     
-    prompt = f"""
-    Today is {today}. I am providing Discord announcements for the game "Predecessor".
-    Extract the ACTUAL start dates for upcoming events, patches, or community news.
+    payload = {
+        "contents": [{
+            "parts": [{"text": prompt}]
+        }]
+    }
     
-    Messages:
-    ---
-    {messages_text}
-    ---
+    response = requests.post(api_url, json=payload)
+    data = response.json()
     
-    Rules:
-    1. Identify the event/patch start date.
-    2. Format the output as a strict JSON list of objects.
-    3. Categorize as "patch" or "news".
-    
-    Output Format:
-    [
-      {{"date": "YYYY-MM-DD", "title": "Event Name", "type": "patch/news", "url": "link", "image": "img_url"}}
-    ]
-    """
-    
-    # Use the new generate_content syntax
-    response = client.models.generate_content(
-        model='gemini-1.5-flash',
-        contents=prompt
-    )
-    
-    # Robust JSON extraction
-    raw_text = response.text
+    if "candidates" not in data:
+        print(f"Gemini API Error: {data}")
+        return []
+
+    raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
+    # Extract JSON list from response
     json_match = re.search(r'\[.*\]', raw_text, re.DOTALL)
-    if json_match:
-        return json.loads(json_match.group(0))
-    return json.loads(raw_text.strip())
+    return json.loads(json_match.group(0)) if json_match else []
 
 def scrape():
-    print("--- AI Roadmap: New SDK Sync ---")
-    
-    try:
-        messages = get_discord_messages()
-        combined_text = ""
-        for m in messages:
-            combined_text += f"TIME: {m['timestamp']} | MSG: {m['content']}\n---\n"
+    print("--- Direct API Sync Start ---")
+    messages = get_discord_messages()
+    if not messages:
+        print("Could not read Discord messages.")
+        return
 
-        print("Consulting Gemini 1.5-Flash via New SDK...")
-        events = ask_ai_for_roadmap(combined_text)
-        
+    combined = ""
+    for m in messages:
+        combined += f"SENT: {m['timestamp']} | MSG: {m['content']}\n---\n"
+
+    print(f"Sending {len(messages)} messages to Gemini V1...")
+    try:
+        events = ask_gemini(combined)
         output = {
             "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "events": events
         }
-
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print(f"SUCCESS: {len(events)} events processed.")
-
+        print(f"SUCCESS: {len(events)} events saved.")
     except Exception as e:
-        print(f"ERROR: {e}")
-        # Ensure file exists to avoid workflow failure
-        if not os.path.exists('events.json'):
-            with open('events.json', 'w') as f:
-                json.dump({"events": []}, f)
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape()

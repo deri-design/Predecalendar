@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "date": "2026-02-18",
+        "title": "V1.12 Patch Notes",
+        "type": "patch",
+        "url": "https://www.predecessorgame.com/en-US/news/patch-notes/v1-12-patch-notes",
+        "desc": "Major Season 3 overhaul."
+    },
+    {
+        "date": "2026-03-04",
+        "title": "Daybreak Map Update",
+        "type": "news",
+        "url": "https://www.predecessorgame.com/en-US/news/dev-diary/daybreak-introduction",
+        "desc": "New map reveal."
+    },
+    {
+        "date": "2026-03-05",
+        "title": "V1.12.4 Patch Notes",
+        "type": "patch",
+        "url": "https://www.predecessorgame.com/en-US/news/patch-notes/v1-12-4-patch-notes",
+        "desc": "Balance fixes."
+    },
+    {
+        "date": "2026-03-17",
+        "title": "V1.12.6 Patch Notes",
+        "type": "patch",
+        "url": "https://www.predecessorgame.com/en-US/news/patch-notes/v1-12-6-patch-notes",
+        "desc": "Current live build."
+    },
+    {
+        "date": "2026-03-25",
+        "title": "Refer-a-Friend Competition",
+        "type": "news",
+        "url": "https://www.predecessorgame.com/en-US/news/events/friend-reward-competition",
+        "desc": "Win a Secretlab chair!"
+    }
+]

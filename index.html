@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predecessor | Live Roadmap</title>
+    <title>Predecessor | AI Roadmap</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #dcb63b; --teal: #37a9a9; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
@@ -14,29 +14,29 @@
         .st-bar { font-family: 'Orbitron'; font-size: 0.65rem; color: var(--teal); margin-top: 10px; text-transform: uppercase; }
         .calendars { display: flex; gap: 1rem; }
         .section { flex: 1; min-width: 0; }
-        .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1rem; }
+        .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1.1rem; }
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
         .h-cell { background: #0d131f; padding: 10px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; }
         .cell { background: var(--cell); min-height: 180px; max-height: 450px; padding: 5px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; }
         .cell::-webkit-scrollbar { width: 4px; }
         .cell::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         .today { outline: 1px solid var(--gold); background: rgba(220, 182, 59, 0.05); }
-        .num { font-family: 'Orbitron'; font-size: 0.75rem; color: #5d7599; margin: 4px; font-weight: bold; }
+        .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; margin: 4px; font-weight: bold; }
         .active .num { color: #fff; }
         .today .num { color: var(--gold); }
-        .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 10px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; }
-        .event:hover { border-color: #fff; transform: translateY(-2px); }
+        /* Clickable Cards */
+        .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--border); border-left: 3px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; }
+        .event:hover { border-color: #fff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
         .event.news { border-left-color: var(--teal); }
-        .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #000; }
-        .info { padding: 6px; }
-        .e-title { font-weight: bold; color: var(--gold); margin-bottom: 6px; font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; display: block; }
+        .event-img { width: 100%; height: 70px; object-fit: cover; display: block; background: #000; border-bottom: 1px solid var(--border); }
+        .info { padding: 8px; }
+        .e-title { font-weight: bold; color: var(--gold); margin-bottom: 4px; font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.news .e-title { color: var(--teal); }
-        .btn { display: block; text-align: center; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.5rem; padding: 3px; font-family: 'Orbitron'; background: rgba(255,255,255,0.02); }
         @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 3rem; } }
     </style>
 </head>
 <body>
-    <div class="header"><h1>PREDECESSOR LIVE ROADMAP</h1><div id="st" class="st-bar">Loading temporal data...</div></div>
+    <div class="header"><h1>PREDECESSOR AI ROADMAP</h1><div id="st" class="st-bar">Re-synchronizing timeline...</div></div>
     <div class="calendars">
         <div class="section"><h2 class="m-name" id="l1"></h2><div class="grid" id="g1"></div></div>
         <div class="section"><h2 class="m-name" id="l2"></h2><div class="grid" id="g2"></div></div>
@@ -49,12 +49,10 @@
             try {
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
-                // SMART HANDLER: Accept Object or Array
-                evData = Array.isArray(data) ? data : (data.events || []);
-                const updateStr = data.last_updated ? ` | UPDATED: ${data.last_updated}` : "";
-                document.getElementById('st').innerText = `SYNC ACTIVE: ${evData.length} EVENTS LOADED ${updateStr}`;
+                evData = data.events || [];
+                document.getElementById('st').innerText = `AI ONLINE: ${evData.length} DATES SYNCED | ${data.last_updated}`;
                 render();
-            } catch(e) { document.getElementById('st').innerText = "SYNCING WITH DATA CLOUD..."; render(); }
+            } catch(e) { document.getElementById('st').innerText = "AI OFFLINE - RUN GITHUB ACTION"; render(); }
         }
         function draw(date, gId, lId) {
             const g = document.getElementById(gId), l = document.getElementById(lId);
@@ -72,7 +70,7 @@
                 items.forEach(e => {
                     html += `<a href="${e.url || '#'}" target="_blank" class="event ${e.type==='patch'?'':'news'}">
                         ${e.image ? `<img src="${e.image}" class="event-img" onerror="this.style.display='none'">` : ''}
-                        <div class="info"><div class="e-title">${e.title}</div><div class="btn">DETAILS ↗</div></div></a>`;
+                        <div class="info"><div class="e-title">${e.title}</div></div></a>`;
                 });
                 g.innerHTML += html + `</div>`;
             }

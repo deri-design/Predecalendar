@@ -1,13 +1,13 @@
 import requests
-import json
 import re
+import json
 from datetime import datetime
 
 URL = "https://www.predecessorgame.com/en-US/news"
-BASE_URL = "https://www.predecessorgame.com/en-US/news"
+BASE_URL = "https://www.predecessorgame.com"
 
 def scrape():
-    print("Starting Live API Scrape...")
+    print("Starting Universal Brute-Force Scrape...")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
@@ -16,75 +16,66 @@ def scrape():
         response = requests.get(URL, headers=headers, timeout=15)
         html = response.text
         
-        # 1. Locate the JSON data block embedded in the HTML (Next.js __NEXT_DATA__)
-        # This is where the actual database records for news are stored.
-        json_pattern = r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>'
-        match = re.search(json_pattern, html)
+        # 1. Find all potential news links and the text around them
+        # We look for <a> tags containing /news/ and grab a large chunk of surrounding text
+        # to find the associated date.
+        links = re.findall(r'href="(/en-US/news/[^"]+)"[^>]*>(.*?)</a>', html, re.DOTALL)
         
-        if not match:
-            print("Could not find the data block. Website structure may have changed.")
-            return
-
-        data = json.loads(match.group(1))
+        # 2. Find all dates on the page in format "Month DD, YYYY"
+        # We'll map these to the links we found.
+        all_dates = re.findall(r'([A-Z][a-z]+ \d{1,2}, \d{4})', html)
         
-        # 2. Navigate to the news list inside the JSON
-        # Path: props -> pageProps -> news (or similar based on current site state)
-        # We search deep for the key 'newsList' or 'articles'
-        news_list = []
-        
-        # Search for the news array inside the complex JSON object
-        def find_news_list(obj):
-            if isinstance(obj, dict):
-                for k, v in obj.items():
-                    if k == 'newsList' and isinstance(v, list):
-                        return v
-                    res = find_news_list(v)
-                    if res: return res
-            elif isinstance(obj, list):
-                for item in obj:
-                    res = find_news_list(item)
-                    if res: return res
-            return None
-
-        news_data = find_news_list(data)
-        
-        if not news_data:
-            print("Found the data block but no news items inside.")
-            return
+        print(f"Found {len(links)} links and {len(all_dates)} dates.")
 
         final_events = []
-        for item in news_data:
-            # Extract fields
-            title = item.get('title', 'Untitled Update')
-            slug = item.get('slug', '')
-            # Categories: patch-notes, dev-diary, events, announcements, community
-            category = item.get('category', {}).get('slug', 'announcements')
+        
+        # We loop through the links and try to match them with the dates
+        # Typically, the first N links on the page match the first N dates found.
+        for i in range(len(links)):
+            if i >= len(all_dates): break
             
-            # Use the 'publishedAt' or 'createdAt' date
-            raw_date = item.get('publishedAt') or item.get('createdAt') or ""
-            # Format: 2026-03-17T14:00:00.000Z -> 2026-03-17
-            date_str = raw_date[:10] if len(raw_date) >= 10 else datetime.now().strftime("%Y-%m-%d")
+            raw_url = links[i][0]
+            inner_html = links[i][1]
+            
+            # Clean the title: remove HTML tags and extra whitespace
+            title = re.sub('<[^<]+?>', '', inner_html).strip()
+            if not title or len(title) < 5: 
+                # If title is empty/short, it's likely an image link, skip it
+                continue
+            
+            # Convert date: "March 17, 2026" -> "2026-03-17"
+            try:
+                raw_date = all_dates[i]
+                clean_date = datetime.strptime(raw_date, "%B %d, %Y").strftime("%Y-%m-%d")
+            except:
+                continue
 
-            # 3. Build the EXACT URL
-            # The pattern is: BASE_URL / category-slug / article-slug
-            full_url = f"{BASE_URL}/{category}/{slug}"
+            full_url = BASE_URL + raw_url
+            
+            # Fix the hyphen inconsistency for patches automatically
+            if "-patch-notes" in full_url and "v1-" in full_url:
+                full_url = full_url.replace("-patch-notes", "-patchnotes")
 
             final_events.append({
-                "date": date_str,
+                "date": clean_date,
                 "title": title,
                 "url": full_url,
-                "type": "patch" if category == "patch-notes" or "patch" in title.lower() else "news",
-                "desc": f"Category: {category.replace('-', ' ').title()}"
+                "type": "patch" if "patch" in title.lower() else "news",
+                "desc": f"Published: {raw_date}"
             })
 
-        # 4. Save to events.json
-        with open('events.json', 'w') as f:
-            json.dump(final_events, f, indent=4)
-        
-        print(f"Success! {len(final_events)} live events scraped and URLs generated.")
+        # Remove duplicates based on URL
+        unique_events = list({v['url']: v for v in final_events}.values())
+
+        if not unique_events:
+            print("Warning: No events captured. The site layout might be blocking the scraper.")
+        else:
+            with open('events.json', 'w') as f:
+                json.dump(unique_events, f, indent=4)
+            print(f"Success! Saved {len(unique_events)} events.")
 
     except Exception as e:
-        print(f"Critical Scrape Error: {e}")
+        print(f"CRITICAL ERROR: {e}")
 
 if __name__ == "__main__":
     scrape()

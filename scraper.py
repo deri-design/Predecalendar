@@ -12,17 +12,15 @@ CHANNEL_ID = "1487129767865225261"
 
 def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
-    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=20"
+    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=25"
     res = requests.get(url, headers=headers)
     return res.json() if res.status_code == 200 else []
 
 def find_deep_img(obj):
-    """Recursively crawls a JSON object to find the first URL ending in an image extension."""
     if isinstance(obj, str):
         if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
             if 'http' in obj: return obj
     if isinstance(obj, dict):
-        # Prioritize Discord's specific image fields
         if 'image' in obj and isinstance(obj['image'], dict):
             url = obj['image'].get('url')
             if url: return url
@@ -36,23 +34,41 @@ def find_deep_img(obj):
     return ""
 
 def extract_full_content(m):
-    """Grabs standard content + forwarded content + embed content."""
     text = m.get('content', '')
     if 'message_snapshots' in m:
         for snap in m['message_snapshots']:
             msg = snap.get('message', {})
             text += f"\n{msg.get('content', '')}"
             for emb in msg.get('embeds', []):
-                text += f"\n{emb.get('title', '')} {emb.get('description', '')}"
+                text += f"\n{emb.get('title', '')}\n{emb.get('description', '')}"
     if 'embeds' in m:
         for emb in m['embeds']:
-            text += f"\n{emb.get('title', '')} {emb.get('description', '')}"
+            text += f"\n{emb.get('title', '')}\n{emb.get('description', '')}"
     return text.strip()
 
 def ask_groq(messages_text):
     client = Groq(api_key=GROQ_KEY)
-    today = datetime.now().strftime("%Y-%m-%d")
-    prompt = f"Today is {today}. Context: 'Predecessor' game. Rules: JSON list only. date: YYYY-MM-DD. title: short. original_id: match to provided ID. type: patch/news. Messages: {messages_text}"
+    today = datetime.now().strftime("%A, %B %d, %Y")
+    
+    prompt = f"""
+    Today is {today}. Context: "Predecessor" game announcements.
+    TASK: Identify release dates for patches, streams, or events.
+    
+    RULES:
+    1. Only return events where a SPECIFIC DATE or relative date (e.g. "Next Tuesday") is mentioned in the message body.
+    2. IGNORE the date the message was sent. Look for when the event HAPPENS.
+    3. If no specific release/event date is found in the text, DO NOT include it in the JSON.
+    4. Output JSON list ONLY.
+    5. "original_id": Match to the ID provided.
+    
+    Messages:
+    {messages_text}
+
+    OUTPUT FORMAT:
+    [
+      {{"date": "YYYY-MM-DD", "title": "Short Name", "original_id": "id", "type": "patch/news"}}
+    ]
+    """
     
     chat = client.chat.completions.create(
         messages=[{"role": "user", "content": prompt}],
@@ -63,6 +79,7 @@ def ask_groq(messages_text):
     return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
 
 def scrape():
+    print("AI Agent: Starting Strict Temporal Sync...")
     messages = get_discord_messages()
     if not messages: return
 
@@ -71,7 +88,7 @@ def scrape():
 
     for m in messages:
         text = extract_full_content(m)
-        img = find_deep_img(m) # NEW: Deep search for image
+        img = find_deep_img(m)
         if text:
             intel_pool[m['id']] = {
                 "text": text, "img": img, 
@@ -93,7 +110,7 @@ def scrape():
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Success")
+        print(f"Success: {len(final)} validated events extracted.")
     except Exception as e:
         print(f"Error: {e}")
 

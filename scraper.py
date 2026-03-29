@@ -33,6 +33,16 @@ def find_deep_img(obj):
             if res: return res
     return ""
 
+def clean_discord_text(text):
+    """Removes Discord role pings, user IDs, and the notification bell emoji."""
+    # Remove role/user mentions like <@&1128995603444150425> or <@1234567>
+    text = re.sub(r'<@&?\d+>', '', text)
+    # Remove the bell emoji specifically and any surrounding whitespace
+    text = text.replace('🔔', '')
+    # Clean up multiple newlines or spaces left behind
+    text = re.sub(r'\n\s*\n', '\n', text)
+    return text.strip()
+
 def extract_full_content(m):
     text = m.get('content', '')
     if 'message_snapshots' in m:
@@ -57,18 +67,14 @@ def ask_groq(messages_text):
     RULES:
     1. Only return events where a SPECIFIC DATE is mentioned.
     2. Output JSON list ONLY.
-    3. Categorize "type" as: 
-       - "patch" (game updates/version notes)
-       - "hero" (new hero reveals or dev diaries)
-       - "season" (competitive updates, community events, or ranked news)
-       - "twitch" (livestreams, dev talks on Twitch, or broadcast schedules)
+    3. Categorize as "patch", "hero", "season", or "twitch".
     
     Messages:
     {messages_text}
 
     OUTPUT FORMAT:
     [
-      {{"date": "YYYY-MM-DD", "title": "Name", "original_id": "id", "type": "patch/hero/season/twitch"}}
+      {{"date": "YYYY-MM-DD", "title": "Name", "original_id": "id", "type": "type"}}
     ]
     """
     
@@ -82,19 +88,24 @@ def ask_groq(messages_text):
     return json.loads(json_match.group(0)) if json_match else []
 
 def scrape():
+    print("AI Agent: Cleaning Intel and Syncing...")
     messages = get_discord_messages()
     if not messages: return
+
     intel_pool = {}
     ai_input_list = []
+
     for m in messages:
         text = extract_full_content(m)
         img = find_deep_img(m)
         if text:
             intel_pool[m['id']] = {
-                "text": text, "img": img, 
+                "text": clean_discord_text(text), # CLEANING APPLIED HERE
+                "img": img, 
                 "url": f"https://discord.com/channels/1055546338907017278/{CHANNEL_ID}/{m['id']}"
             }
             ai_input_list.append(f"ID: {m['id']} | CONTENT: {text}")
+
     try:
         ai_events = ask_groq("\n---\n".join(ai_input_list))
         final = []
@@ -105,10 +116,11 @@ def scrape():
                     "date": ae['date'], "title": ae['title'], "type": ae['type'],
                     "desc": intel_pool[mid]['text'], "url": intel_pool[mid]['url'], "image": intel_pool[mid]['img']
                 })
+
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Scrape Complete.")
+        print("Scrape and Scrubbing Complete.")
     except Exception as e:
         print(f"Error: {e}")
 

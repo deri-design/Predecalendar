@@ -95,16 +95,16 @@
         .event.season .e-title { color: var(--red); }
         .event.twitch .e-title { color: #bf94ff; }
 
-        /* --- GLOBAL BRIEFING OVERLAY (200% SIZE + IMAGES) --- */
+        /* --- GLOBAL BRIEFING OVERLAY (16px FIXED VERSION) --- */
         #global-briefing {
             display: none;
             position: fixed; 
-            width: 650px;
+            width: 400px; /* Balanced width for 16px text */
             max-height: 85vh;
             overflow-y: auto;
             background: #0d131f;
-            border: 3px solid var(--gold);
-            padding: 0; /* Removing padding to allow image to hit edges */
+            border: 2px solid var(--gold);
+            padding: 0;
             z-index: 10000;
             box-shadow: 0 0 100px rgba(0,0,0,1);
             pointer-events: none;
@@ -114,29 +114,29 @@
 
         .briefing-img {
             width: 100%;
-            height: 250px; /* Cinematic height */
+            height: 180px;
             object-fit: cover;
-            border-bottom: 3px solid var(--border);
-            display: none; /* Hidden unless event has image */
+            border-bottom: 2px solid var(--border);
+            display: none;
         }
 
         .briefing-content {
-            padding: 30px;
+            padding: 20px;
         }
 
-        .briefing-tag { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; display: block; }
+        .briefing-tag { font-family: 'Orbitron'; font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; display: block; }
         
         .briefing-desc { 
-            font-size: 1.8rem; 
-            line-height: 1.5; 
+            font-size: 16px; /* EXACTLY 16PX */
+            line-height: 1.6; 
             color: #fff; 
-            text-shadow: 0 2px 4px #000; 
+            text-shadow: 0 1px 2px #000; 
             font-weight: 500; 
             white-space: pre-wrap; 
             word-wrap: break-word; 
         }
 
-        .briefing-date { display: block; margin-top: 30px; font-size: 1.3rem; color: var(--teal); font-family: 'Orbitron'; border-top: 2px solid var(--border); padding-top: 15px; }
+        .briefing-date { display: block; margin-top: 20px; font-size: 12px; color: var(--teal); font-family: 'Orbitron'; border-top: 1px solid var(--border); padding-top: 10px; }
 
         @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 4rem; } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
     </style>
@@ -209,7 +209,6 @@
             document.getElementById('b-desc').innerText = eventObj.desc;
             document.getElementById('b-date').innerText = `TARGET DEPLOYMENT: ${eventObj.date}`;
             
-            // Handle Image inside Pop-up
             if (eventObj.image) {
                 bImg.src = eventObj.image;
                 bImg.style.display = 'block';
@@ -219,10 +218,9 @@
 
             briefing.style.display = 'block';
             
-            // Intelligent Positioning
             let x = rect.left + rect.width + 20;
             let y = rect.top;
-            if (x + 650 > window.innerWidth) x = rect.left - 670;
+            if (x + 400 > window.innerWidth) x = rect.left - 420;
             if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
             
             briefing.style.left = x + 'px'; 

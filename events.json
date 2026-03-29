@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-03-29 07:11:55",
+    "last_updated": "2026-03-29 09:43:38",
     "events": [
         {
             "date": "2026-04-01",
@@ -7,15 +7,7 @@
             "type": "twitch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14 <@&1128995603444150425>",
             "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487185725479714916",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69c98aa3&is=69c83923&hm=78b645d7a72ec2f84e1b5460c246cbbed7076b5e6555e25a7054ab5e2b5fcb54&"
-        },
-        {
-            "date": "2026-04-07",
-            "title": "Dragon of Horns Twitch Event",
-            "type": "twitch",
-            "desc": "dragon of horns twitch event drops April 7th",
-            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487276954347507786",
-            "image": ""
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69ca3363&is=69c8e1e3&hm=3371d45730b832764dcb4f852bb480721128aa4ac4ef5f7a58f78c80e83dfdc7&"
         },
         {
             "date": "2026-04-07",
@@ -23,7 +15,7 @@
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14 <@&1128995603444150425>",
             "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487182428824145991",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69c98791&is=69c83611&hm=a36614effdd13a8023e2f3bc6367f192361e67164be30dae512278e2a40ec94a&"
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69ca3051&is=69c8ded1&hm=78375d70723eca7359414baa5b78cf8f64f3f135c8c0b9a53d719c4f0e95afd6&"
         }
     ]
 }

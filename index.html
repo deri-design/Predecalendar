@@ -57,7 +57,6 @@
         .alert-box p { font-size: 0.95rem; font-weight: 500; letter-spacing: 0.5px; }
         .alert-box span { color: var(--gold); font-weight: bold; }
 
-        /* --- TIMELINE DIVIDER --- */
         .divider {
             display: flex; align-items: center; color: var(--gold); font-family: 'Orbitron'; font-size: 0.8rem; 
             letter-spacing: 4px; margin-bottom: 2rem; font-weight: 900;
@@ -71,47 +70,75 @@
         .section { flex: 1; min-width: 0; }
         .m-name { font-family: 'Orbitron'; color: var(--gold); text-align: center; margin-bottom: 1rem; font-size: 1.1rem; }
         .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-        .h-cell { background: #0d131f; padding: 12px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; }
+        .h-cell { background: #0d131f; padding: 10px; text-align: center; font-size: 0.6rem; color: #5d7599; font-family: 'Orbitron'; }
         
-        .cell { background: var(--cell); min-height: 160px; max-height: 450px; padding: 5px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; }
+        .cell { background: var(--cell); min-height: 160px; max-height: 450px; padding: 5px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
+        .cell::-webkit-scrollbar { width: 4px; }
+        .cell::-webkit-scrollbar-thumb { background: var(--border); }
+        
         .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; margin: 4px; font-weight: bold; }
         .active .num { color: #fff; }
         .today { outline: 1px solid var(--gold); background: rgba(220, 182, 59, 0.05); }
 
         /* --- EVENT CARDS --- */
-        .event { 
-            display: block; text-decoration: none; background: rgba(0, 0, 0, 0.8); 
-            margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: help;
-            border: 1px solid var(--gold); 
-        }
+        .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.8); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: help; border: 1px solid var(--gold); }
         .event:hover { transform: translateY(-2px); border-color: #fff !important; }
-        
-        /* Category Colors */
         .event.patch { border-color: var(--gold); }
         .event.hero { border-color: var(--teal); }
         .event.season { border-color: var(--red); }
         .event.twitch { border-color: var(--twitch); }
 
-        .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #000; }
-        .info { padding: 8px; }
+        .event-img { width: 100%; height: 75px; object-fit: cover; display: block; background: #000; pointer-events: none; }
+        .info { padding: 8px; pointer-events: none; }
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
-        
-        /* Text Color matching for titles */
         .event.hero .e-title { color: var(--teal); }
         .event.season .e-title { color: var(--red); }
-        .event.twitch .e-title { color: #bf94ff; } /* Lighter purple for readability */
+        .event.twitch .e-title { color: #bf94ff; }
 
-        /* --- POPUP (200% SIZE) --- */
+        /* --- GLOBAL BRIEFING OVERLAY (200% SIZE + IMAGES) --- */
         #global-briefing {
-            display: none; position: fixed; width: 600px; max-height: 80vh; overflow-y: auto;
-            background: #0d131f; border: 3px solid var(--gold); padding: 30px; z-index: 10000;
-            box-shadow: 0 0 80px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(20px);
+            display: none;
+            position: fixed; 
+            width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: #0d131f;
+            border: 3px solid var(--gold);
+            padding: 0; /* Removing padding to allow image to hit edges */
+            z-index: 10000;
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            pointer-events: none;
+            backdrop-filter: blur(25px);
+            scrollbar-width: thin;
         }
-        .briefing-tag { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; display: block; }
-        .briefing-desc { font-size: 1.8rem; line-height: 1.5; color: #fff; text-shadow: 0 2px 4px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
-        .briefing-date { display: block; margin-top: 25px; font-size: 1.3rem; color: var(--teal); font-family: 'Orbitron'; border-top: 2px solid var(--border); padding-top: 15px; }
 
-        @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 4rem; } #global-briefing { width: 90%; left: 5% !important; top: 50% !important; transform: translateY(-50%); } }
+        .briefing-img {
+            width: 100%;
+            height: 250px; /* Cinematic height */
+            object-fit: cover;
+            border-bottom: 3px solid var(--border);
+            display: none; /* Hidden unless event has image */
+        }
+
+        .briefing-content {
+            padding: 30px;
+        }
+
+        .briefing-tag { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); letter-spacing: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; display: block; }
+        
+        .briefing-desc { 
+            font-size: 1.8rem; 
+            line-height: 1.5; 
+            color: #fff; 
+            text-shadow: 0 2px 4px #000; 
+            font-weight: 500; 
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+        }
+
+        .briefing-date { display: block; margin-top: 30px; font-size: 1.3rem; color: var(--teal); font-family: 'Orbitron'; border-top: 2px solid var(--border); padding-top: 15px; }
+
+        @media (max-width: 1400px) { .calendars { flex-direction: column; gap: 4rem; } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
     </style>
 </head>
 <body>
@@ -144,16 +171,21 @@
         </div>
     </div>
 
+    <!-- The Pop-up Overlay -->
     <div id="global-briefing">
-        <span id="b-tag" class="briefing-tag"></span>
-        <div id="b-desc" class="briefing-desc"></div>
-        <span id="b-date" class="briefing-date"></span>
+        <img id="b-img" class="briefing-img" src="" alt="Tactical Visual">
+        <div class="briefing-content">
+            <span id="b-tag" class="briefing-tag"></span>
+            <div id="b-desc" class="briefing-desc"></div>
+            <span id="b-date" class="briefing-date"></span>
+        </div>
     </div>
 
     <script>
         let evData = []; const today = new Date();
         let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
         const briefing = document.getElementById('global-briefing');
+        const bImg = document.getElementById('b-img');
 
         async function init() {
             try {
@@ -177,12 +209,24 @@
             document.getElementById('b-desc').innerText = eventObj.desc;
             document.getElementById('b-date').innerText = `TARGET DEPLOYMENT: ${eventObj.date}`;
             
+            // Handle Image inside Pop-up
+            if (eventObj.image) {
+                bImg.src = eventObj.image;
+                bImg.style.display = 'block';
+            } else {
+                bImg.style.display = 'none';
+            }
+
             briefing.style.display = 'block';
+            
+            // Intelligent Positioning
             let x = rect.left + rect.width + 20;
             let y = rect.top;
-            if (x + 600 > window.innerWidth) x = rect.left - 620;
+            if (x + 650 > window.innerWidth) x = rect.left - 670;
             if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
-            briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
+            
+            briefing.style.left = x + 'px'; 
+            briefing.style.top = Math.max(40, y) + 'px';
         }
 
         function hideBriefing() { briefing.style.display = 'none'; }

@@ -1,16 +1,9 @@
 {
-    "last_updated": "2026-03-30 00:20:41",
+    "last_updated": "2026-03-30 00:42:32",
     "events": [
         {
-            "date": "2026-04-01",
-            "title": "v1.13 Dev Stream",
-            "type": "twitch",
-            "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "url": "https://www.twitch.tv/predecessorgame",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69cadc23&is=69c98aa3&hm=c30658f4daca73cec8a372c8b3040c116f77716a9d5c2a5638ab7725e26c7f3d&"
-        },
-        {
             "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
             "title": "V1.13: Throne of Thorns",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
@@ -19,11 +12,21 @@
         },
         {
             "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
             "title": "Daybreak V4",
             "type": "patch",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
             "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487885557374914692",
             "image": ""
+        },
+        {
+            "date": "2026-04-01",
+            "iso_date": "2026-04-01T18:00:00Z",
+            "title": "v1.13 Dev Stream",
+            "type": "stream",
+            "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
+            "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487185725479714916",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69cadc23&is=69c98aa3&hm=c30658f4daca73cec8a372c8b3040c116f77716a9d5c2a5638ab7725e26c7f3d&"
         }
     ]
 }

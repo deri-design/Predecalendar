@@ -55,16 +55,24 @@ def extract_full_content(m):
 def ask_groq(messages_text):
     client = Groq(api_key=GROQ_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
+    
     prompt = f"""
     Today is {today}. Context: "Predecessor" game announcements.
-    Identify release dates for patches, hero reveals, or community events.
+    TASK: Identify release dates AND specific start times for events.
+    
     RULES:
-    1. Only return events where a SPECIFIC DATE is mentioned.
-    2. Output JSON list ONLY.
-    3. Categorize as "patch", "hero", "season", or "twitch".
+    1. Identify the event/patch date.
+    2. LOOK FOR TIME: If a specific time is mentioned (e.g., 6PM UTC, 2PM ET), extract it.
+    3. Output as a JSON list.
+    4. "iso_date": Convert the date and time to a full ISO 8601 string in UTC. 
+       - Example: 6PM UTC on April 1st becomes "2026-04-01T18:00:00Z".
+       - If no time is found, default to "T15:00:00Z" (standard patch time).
+    
     Messages: {messages_text}
-    OUTPUT FORMAT: [ {{"date": "YYYY-MM-DD", "title": "Name", "original_id": "id", "type": "type"}} ]
+
+    OUTPUT FORMAT: [ {{"date": "YYYY-MM-DD", "iso_date": "YYYY-MM-DDTHH:MM:SSZ", "title": "Name", "original_id": "id", "type": "type"}} ]
     """
+    
     chat = client.chat.completions.create(
         messages=[{"role": "user", "content": prompt}],
         model="llama-3.3-70b-versatile",
@@ -96,19 +104,19 @@ def scrape():
         for ae in ai_events:
             mid = ae.get('original_id')
             if mid in intel_pool:
-                # --- TWITCH URL HARD OVERRIDE ---
-                event_url = intel_pool[mid]['url']
-                if ae['type'] == 'twitch':
-                    event_url = "https://www.twitch.tv/predecessorgame"
-                
                 final_events.append({
-                    "date": ae['date'], "title": ae['title'], "type": ae['type'],
-                    "desc": intel_pool[mid]['text'], "url": event_url, "image": intel_pool[mid]['img']
+                    "date": ae['date'], 
+                    "iso_date": ae['iso_date'], # New precise time field
+                    "title": ae['title'], 
+                    "type": ae['type'],
+                    "desc": intel_pool[mid]['text'], 
+                    "url": intel_pool[mid]['url'] if ae['type'] != 'twitch' else "https://www.twitch.tv/predecessorgame",
+                    "image": intel_pool[mid]['img']
                 })
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_events}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Scrape and Intel Sync Complete (Twitch URL Locked).")
+        print("Success: Precise roadmap updated.")
     except Exception as e:
         print(f"Error: {e}")
 

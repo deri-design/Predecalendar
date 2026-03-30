@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import re
+import time
 from groq import Groq
 from datetime import datetime
 
@@ -17,17 +18,22 @@ def get_discord_messages():
     return res.json() if res.status_code == 200 else []
 
 def find_deep_img(obj):
-    """Deep recursion to find the image in Discord's nested forwarded snapshots."""
+    """Deepest possible recursion to find images in nested Discord forwarded objects."""
     if not obj: return ""
+    # If it's a URL string, check if it's an image
     if isinstance(obj, str):
         if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj:
             return obj
     if isinstance(obj, dict):
-        # Specific Discord keys for images
+        # Target specific Discord image keys
         for key in ['url', 'proxy_url']:
             if key in obj and isinstance(obj[key], str) and any(ext in obj[key].lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
                 return obj[key]
-        # Recursively check all values
+        # Check specific containers
+        if 'image' in obj and isinstance(obj['image'], dict):
+            res = find_deep_img(obj['image'])
+            if res: return res
+        # Recursively check everything else
         for v in obj.values():
             res = find_deep_img(v)
             if res: return res
@@ -60,9 +66,12 @@ def ask_groq(messages_text):
     client = Groq(api_key=GROQ_KEY)
     today = datetime.now().strftime("%Y-%m-%d")
     prompt = f"""
-    Today is {today}. Context: "Predecessor" game announcements.
+    Today is {today}. Context: "Predecessor" announcements.
     Identify ACTUAL release/event dates and short titles. 
-    Rules: 1. Only return events with specific dates. 2. Format: JSON list only.
+    RULES:
+    1. If a message mentions multiple distinct features for the SAME date, create ONE event for each.
+    2. If a message mentions ONE date for ONE thing, create ONE event.
+    3. JSON list only. date: YYYY-MM-DD. title: short. original_id: match to ID. type: patch/hero/season/twitch.
     Messages: {messages_text}
     """
     chat = client.chat.completions.create(
@@ -74,7 +83,7 @@ def ask_groq(messages_text):
     return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
 
 def scrape():
-    print("Starting Deep Recovery Scrape...")
+    print("Executing Deep Deduplication Scrape...")
     messages = get_discord_messages()
     if not messages: return
 
@@ -82,7 +91,7 @@ def scrape():
     ai_input_list = []
     for m in messages:
         text = extract_full_content(m)
-        img = find_deep_img(m) # Stronger recursive search
+        img = find_deep_img(m)
         if text:
             intel_pool[m['id']] = {
                 "text": clean_discord_text(text),
@@ -94,41 +103,60 @@ def scrape():
     try:
         ai_events = ask_groq("\n---\n".join(ai_input_list))
         
-        # We start with an empty list and use Message ID as the unique key
-        # This prevents duplicates like V1.13 and V1.13: Throne of Thorns
-        final_registry = {}
+        # Load Existing
+        try:
+            with open('events.json', 'r') as f:
+                old_data = json.load(f)
+                master_list = old_data.get('events', [])
+        except: master_list = []
 
+        # Process new AI events
         for ae in ai_events:
             mid = ae.get('original_id')
             if mid in intel_pool:
-                # Resolve Type
+                # Type and URL logic
                 full_text = intel_pool[mid]['text'].lower()
-                etype = ae.get('type', 'news')
-                if any(x in full_text for x in ["twitch", "stream"]): etype = "twitch"
-                elif "patch" in full_text or "v1." in ae['title'].lower(): etype = "patch"
+                etype = ae['type']
+                eurl = intel_pool[mid]['url']
+                if any(x in full_text for x in ["twitch", "stream"]):
+                    etype, eurl = "twitch", "https://www.twitch.tv/predecessorgame"
                 
                 iso = ae.get('iso_date', ae['date'] + "T18:00:00Z" if etype == "twitch" else ae['date'] + "T00:00:00Z")
 
-                event_obj = {
+                new_obj = {
                     "date": ae['date'], "iso_date": iso, "title": ae['title'].upper(), "type": etype,
-                    "desc": intel_pool[mid]['text'], "url": intel_pool[mid]['url'], "image": intel_pool[mid]['img']
+                    "desc": intel_pool[mid]['text'], "url": eurl, "image": intel_pool[mid]['img']
                 }
 
-                # DEDUPLICATION: If we already have an event for this message ID, 
-                # keep the one with the longer (more detailed) title.
-                if mid in final_registry:
-                    if len(event_obj['title']) > len(final_registry[mid]['title']):
-                        final_registry[mid] = event_obj
-                else:
-                    final_registry[mid] = event_obj
+                # Check for existing match
+                exists = next((i for i, x in enumerate(master_list) if x['title'] == new_obj['title'] and x['date'] == new_obj['date']), -1)
+                if exists > -1: master_list[exists] = new_obj
+                else: master_list.append(new_obj)
 
-        # Convert back to list and sort
-        merged_events = sorted(list(final_registry.values()), key=lambda x: x['date'])
+        # --- CRITICAL DEDUPLICATION ---
+        # 1. Filter out exact date/title duplicates
+        master_list = { (e['date'], e['title']): e for e in master_list }.values()
+        master_list = list(master_list)
 
-        output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": merged_events}
+        # 2. String-Match Purge (e.g. Remove "V1.13" if "V1.13: THRONE OF THORNS" exists)
+        final_list = []
+        master_list.sort(key=lambda x: len(x['title']), reverse=True) # Check longest titles first
+        
+        for e in master_list:
+            is_redundant = False
+            for other in final_list:
+                if e['date'] == other['date']:
+                    # If this title is just a shorter version of another on the same day
+                    if e['title'] in other['title'] and e['title'] != other['title']:
+                        is_redundant = True
+                        break
+            if not is_redundant:
+                final_list.append(e)
+
+        output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_list}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print(f"Success: {len(merged_events)} merged events saved.")
+        print(f"Success: {len(final_list)} unique events saved.")
     except Exception as e:
         print(f"Error: {e}")
 

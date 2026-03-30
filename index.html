@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predecessor | Live Roadmap HUD</title>
+    <title>Predecessor | Live Roadmap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #dcb63b; --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem 1rem; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 40px 40px; min-height: 100vh; }
-        .container { max-width: 1600px; margin: 0 auto; width: 100%; }
+        body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 40px 40px; min-height: 100vh; }
         .header { text-align: center; margin-bottom: 2rem; }
         .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 10px; font-size: 3.5rem; text-transform: uppercase; margin: 0; }
-        .countdown-container { width: 100%; max-width: 800px; margin: 0 auto 3rem auto; background: rgba(13, 19, 31, 0.8); border: 1px solid var(--teal); border-bottom: 4px solid var(--teal); padding: 25px; position: relative; box-shadow: 0 0 30px rgba(55, 169, 169, 0.15); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); display: flex; flex-direction: column; align-items: center; gap: 15px; animation: hudPulse 4s infinite ease-in-out; }
+        .countdown-container { width: 100%; max-width: 800px; margin: 0 auto 3rem auto; background: rgba(13, 19, 31, 0.8); border: 1px solid var(--teal); border-bottom: 4px solid var(--teal); padding: 25px; position: relative; box-shadow: 0 0 30px rgba(55, 169, 169, 0.15); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); display: flex; flex-direction: column; align-items: center; gap: 15px; animation: hudPulse 4s infinite; }
         @keyframes hudPulse { 0%, 100% { border-color: var(--teal); } 50% { border-color: #64ffff; } }
         .next-op-title { font-family: 'Orbitron'; font-size: 1.8rem; color: #fff; text-shadow: 0 0 15px #fff; text-transform: uppercase; letter-spacing: 3px; text-align: center; }
         .timer-hud { display: flex; gap: 20px; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
-        .timer-val { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; color: #fff; line-height: 1; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 4px; border-bottom: 2px solid var(--teal); width: 100%; text-align: center; }
+        .timer-val { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; color: #fff; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 4px; border-bottom: 2px solid var(--teal); width: 100%; text-align: center; }
         .timer-label { font-size: 0.6rem; font-family: 'Orbitron'; color: var(--teal); margin-top: 5px; letter-spacing: 2px; }
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 1px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; }
         .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); } .dot.twitch { background: var(--twitch); }
-        .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; }
+        .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; }
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
         .cell { background: var(--cell); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
@@ -35,7 +34,7 @@
         .month-tag { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--gold); opacity: 0.5; }
         .cell.today { outline: 2px solid var(--gold); background: rgba(220, 182, 59, 0.05); z-index: 2; }
         .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: help; padding: 8px; }
-        .event:hover { border-color: #fff !important; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .event:hover { border-color: #fff !important; transform: translateY(-2px); }
         .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); }
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
@@ -48,10 +47,8 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <header class="header"><h1>PREDECESSOR</h1></header>
-
         <div class="countdown-container" id="hud">
             <div class="next-op-title" id="op-title">STANDBY</div>
             <div class="timer-hud">
@@ -61,45 +58,43 @@
                 <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
             </div>
         </div>
-
         <div class="legend">
             <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
             <div class="legend-item"><div class="dot hero"></div> NEW HERO / DEV</div>
             <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
             <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
         </div>
-
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
-
     <div id="global-briefing">
         <img id="b-img" class="briefing-img" src="" alt="Visual">
         <div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div>
     </div>
-
     <script>
-        let evData =[]; const today = new Date();
+        let evData = []; const today = new Date();
         const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
-
         async function init() {
             try {
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
-                evData = data.events ||[];
-                setupCountdown();
-                renderRoadmap();
+                const raw = data.events || [];
+                // Frontend deduplication check
+                const seen = new Set();
+                evData = raw.filter(e => {
+                    const key = `${e.date}_${e.title.replace(/[^A-Z]/g, '')}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key); return true;
+                });
+                setupCountdown(); renderRoadmap();
             } catch(e) { renderRoadmap(); }
         }
-
         function setupCountdown() {
             const now = Date.now();
             const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
             if (futureEvents.length > 0) {
-                const nextEv = futureEvents[0];
-                document.getElementById('op-title').innerText = nextEv.title;
+                const nextEv = futureEvents[0]; document.getElementById('op-title').innerText = nextEv.title;
                 setInterval(() => {
-                    const diff = nextEv.time - Date.now();
-                    if (diff < 0) { window.location.reload(); return; }
+                    const diff = nextEv.time - Date.now(); if (diff < 0) { window.location.reload(); return; }
                     document.getElementById('d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
                     document.getElementById('h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
                     document.getElementById('m').innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
@@ -107,28 +102,20 @@
                 }, 1000);
             } else { document.getElementById('op-title').innerText = "NO UPCOMING OPS"; }
         }
-
         function renderRoadmap() {
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
-            
-            let startDate = new Date(); startDate.setDate(startDate.getDate() - 15);
-            let dayOffset = startDate.getDay(); startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
-            let endDate = new Date(); endDate.setDate(endDate.getDate() + 15);
-            let endDayOffset = endDate.getDay(); endDate.setDate(endDate.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset));
-            
-            let cursor = new Date(startDate);
-            while (cursor <= endDate) {
+            let start = new Date(); start.setDate(start.getDate() - 15);
+            let dayOffset = start.getDay(); start.setDate(start.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
+            let end = new Date(); end.setDate(end.getDate() + 15);
+            let endDayOffset = end.getDay(); end.setDate(end.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset));
+            let cursor = new Date(start);
+            while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
-                const isToday = cursor.toDateString() === today.toDateString();
-                const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
-                
                 const cell = document.createElement('div');
-                cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
-                
-                let cellHtml = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
-                
+                cell.className = `cell active ${cursor.toDateString() === today.toDateString() ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
+                cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
                     a.innerHTML = `<div class="e-title">${ev.title}</div>`;
@@ -147,8 +134,6 @@
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
-                cell.innerHTML += cellHtml; 
-                items.forEach(ev => cell.appendChild(cell.querySelector('a'))); // Reattach events correctly
                 grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
             }
         }

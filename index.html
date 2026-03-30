@@ -17,7 +17,6 @@
             font-family: 'Rajdhani', sans-serif; 
             padding: 2rem 1rem; 
             min-height: 100vh; 
-            /* Grid pattern removed */
         }
         
         .container { max-width: 1600px; margin: 0 auto; width: 100%; }
@@ -33,7 +32,6 @@
         .timer-val { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; color: #fff; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 4px; border-bottom: 2px solid var(--teal); width: 100%; text-align: center; }
         .timer-label { font-size: 0.6rem; font-family: 'Orbitron'; color: var(--teal); margin-top: 5px; letter-spacing: 2px; }
 
-        /* --- UPDATED LEGEND --- */
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: #888; letter-spacing: 1px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; }
@@ -45,13 +43,9 @@
         /* --- ROADMAP GRID --- */
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; }
-        
-        /* Sat and Sun column headers brighter */
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
         
         .cell { background: var(--cell); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
-        
-        /* Weekend Cell Highlighting */
         .cell.weekend { background: #0c1421; }
 
         .cell::-webkit-scrollbar { width: 4px; }
@@ -68,7 +62,6 @@
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
 
-        /* --- POPUP OVERLAY --- */
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: #0d131f; border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid var(--border); display: none; }
         .briefing-content { padding: 25px; }
@@ -142,21 +135,17 @@
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
 
-            // START DATE: Exactly 10 days ago
+            // START: 10 days ago, then back to Monday of that week
             let startDate = new Date();
             startDate.setDate(startDate.getDate() - 10);
+            let dayOffset = startDate.getDay(); 
+            startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
             
-            // END DATE: 15 days in the future
+            // END: 15 days in future, then to Sunday, then + 7 days for the extra row
             let endDate = new Date();
             endDate.setDate(endDate.getDate() + 15);
-
-            // Calculation for padding to keep columns aligned (Mon-Sun)
-            let firstDayIndex = startDate.getDay(); // 0 is Sun, 1 is Mon
-            let padCount = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
-
-            for (let i = 0; i < padCount; i++) {
-                grid.innerHTML += `<div class="cell" style="background: transparent; border: none;"></div>`;
-            }
+            let endDayOffset = endDate.getDay(); 
+            endDate.setDate(endDate.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset) + 7);
 
             let cursor = new Date(startDate);
             while (cursor <= endDate) {

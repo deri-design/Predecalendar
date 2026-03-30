@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predecessor | Live Roadmap</title>
+    <title>PredeCalendar | Live Roadmap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #dcb63b; --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --bg: #06080d; --cell: #090e16; --border: #1e2638; --text: #c8d0e0; }
+        /* --- CUSTOM FONT LOADING --- */
+        @font-face {
+            font-family: 'StoricaHeavy';
+            src: url('./fonts/Storica-Heavy.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root { 
+            --gold-light: #FBEB61; /* Light yellow from top of screenshot */
+            --gold-dark: #C48400;  /* Darker yellow from bottom of screenshot */
+            --gold: #dcb63b; 
+            --teal: #37a9a9; 
+            --red: #c73843; 
+            --twitch: #9146ff; 
+            --bg: #06080d; 
+            --cell: #090e16; 
+            --border: #1e2638; 
+            --text: #c8d0e0; 
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
@@ -20,8 +41,34 @@
         }
         
         .container { max-width: 1600px; margin: 0 auto; width: 100%; }
-        .header { text-align: center; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
-        .header h1 { font-family: 'Orbitron'; color: var(--gold); letter-spacing: 10px; font-size: 3.5rem; text-transform: uppercase; margin: 0; }
+
+        /* --- HEADER SECTION --- */
+        .header { text-align: center; margin-bottom: 2.5rem; display: flex; flex-direction: column; align-items: center; }
+        
+        .header h1 { 
+            font-family: 'StoricaHeavy', sans-serif; 
+            font-size: 4.5rem; 
+            text-transform: uppercase; 
+            margin: 0; 
+            letter-spacing: 2px;
+            /* Gradient Text Logic */
+            background: linear-gradient(to bottom, var(--gold-light) 20%, var(--gold-dark) 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            /* Subtle drop shadow to mimic game UI */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .subline {
+            font-family: 'Rajdhani', sans-serif;
+            color: #ffffff;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
 
         /* --- FANCY COUNTDOWN HUD --- */
         .countdown-container { width: 100%; max-width: 800px; margin: 0 auto 3rem auto; background: rgba(13, 19, 31, 0.8); border: 1px solid var(--teal); border-bottom: 4px solid var(--teal); padding: 25px; position: relative; box-shadow: 0 0 30px rgba(55, 169, 169, 0.15); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); display: flex; flex-direction: column; align-items: center; gap: 15px; animation: hudPulse 4s infinite; }
@@ -44,12 +91,8 @@
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; }
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
-        
         .cell { background: var(--cell); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
         .cell.weekend { background: #0c1421; }
-
-        .cell::-webkit-scrollbar { width: 4px; }
-        .cell::-webkit-scrollbar-thumb { background: var(--border); }
         .num-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .num { font-family: 'Orbitron'; font-size: 0.8rem; color: #5d7599; font-weight: bold; }
         .month-tag { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--gold); opacity: 0.5; }
@@ -62,19 +105,23 @@
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
 
+        /* --- POPUP OVERLAY --- */
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: #0d131f; border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid var(--border); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
 
-        @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
+        @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } .header h1 { font-size: 2.8rem; } }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header class="header"><h1>PREDECESSOR</h1></header>
+        <header class="header">
+            <h1>PredeCalendar</h1>
+            <div class="subline">Unofficial Predecessor Event Calendar</div>
+        </header>
 
         <div class="countdown-container" id="hud">
             <div class="next-op-title" id="op-title">STANDBY</div>
@@ -135,17 +182,11 @@
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
 
-            // START: 10 days ago, then back to Monday of that week
-            let startDate = new Date();
-            startDate.setDate(startDate.getDate() - 10);
-            let dayOffset = startDate.getDay(); 
-            startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
+            let startDate = new Date(); startDate.setDate(startDate.getDate() - 10);
+            let dayOffset = startDate.getDay(); startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
             
-            // END: 15 days in future, then to Sunday, then + 7 days for the extra row
-            let endDate = new Date();
-            endDate.setDate(endDate.getDate() + 15);
-            let endDayOffset = endDate.getDay(); 
-            endDate.setDate(endDate.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset) + 7);
+            let endDate = new Date(); endDate.setDate(endDate.getDate() + 15);
+            let endDayOffset = endDate.getDay(); endDate.setDate(endDate.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset) + 7);
 
             let cursor = new Date(startDate);
             while (cursor <= endDate) {
@@ -156,36 +197,32 @@
 
                 const cell = document.createElement('div');
                 cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
-                
-                let cellHtml = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
+                cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 
                 items.forEach(ev => {
-                    cellHtml += `<a href="${ev.url || '#'}" target="_blank" class="event ${ev.type}" onmouseenter="showBriefing(event, ${JSON.stringify(ev).replace(/"/g, '&quot;')})" onmouseleave="hideBriefing()"><div class="e-title">${ev.title}</div></a>`;
+                    let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
+                    a.innerHTML = `<div class="e-title">${ev.title}</div>`;
+                    a.addEventListener('mouseenter', (e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        let color = "var(--gold)"; 
+                        if(ev.type === "hero") color = "var(--teal)"; if(ev.type === "season") color = "var(--red)"; if(ev.type === "twitch") color = "var(--twitch)";
+                        briefing.style.borderColor = color; document.getElementById('b-tag').style.color = color;
+                        document.getElementById('b-tag').innerText = ev.title; document.getElementById('b-desc').innerText = ev.desc;
+                        if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
+                        briefing.style.display = 'block';
+                        let x = rect.left + rect.width + 20, y = rect.top;
+                        if (x + 450 > window.innerWidth) x = rect.left - 470;
+                        if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
+                        briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
+                    });
+                    a.addEventListener('mouseleave', () => briefing.style.display = 'none');
+                    cell.appendChild(a);
                 });
 
-                cell.innerHTML = cellHtml;
                 grid.appendChild(cell);
                 cursor.setDate(cursor.getDate() + 1);
             }
         }
-
-        window.showBriefing = function(e, eventObj) {
-            const rect = e.currentTarget.getBoundingClientRect();
-            let color = "var(--gold)";
-            if(eventObj.type === "hero") color = "var(--teal)"; if(eventObj.type === "season") color = "var(--red)"; if(eventObj.type === "twitch") color = "var(--twitch)";
-            briefing.style.borderColor = color;
-            document.getElementById('b-tag').style.color = color;
-            document.getElementById('b-tag').innerText = eventObj.title;
-            document.getElementById('b-desc').innerText = eventObj.desc;
-            if (eventObj.image) { bImg.src = eventObj.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
-            briefing.style.display = 'block';
-            let x = rect.left + rect.width + 20, y = rect.top;
-            if (x + 450 > window.innerWidth) x = rect.left - 470;
-            if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
-            briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
-        };
-
-        window.hideBriefing = function() { briefing.style.display = 'none'; };
         init();
     </script>
 </body>

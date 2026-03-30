@@ -54,7 +54,7 @@ def extract_full_content(m):
 
 def ask_groq(messages_text):
     client = Groq(api_key=GROQ_KEY)
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
     Today is {today}. Context: "Predecessor" game announcements.
     Identify release dates for patches, hero reveals, or community events.
@@ -71,7 +71,8 @@ def ask_groq(messages_text):
         temperature=0.1
     )
     raw = chat.choices[0].message.content
-    return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
+    json_match = re.search(r'\[.*\]', raw, re.DOTALL)
+    return json.loads(json_match.group(0)) if json_match else []
 
 def scrape():
     messages = get_discord_messages()
@@ -95,15 +96,19 @@ def scrape():
         for ae in ai_events:
             mid = ae.get('original_id')
             if mid in intel_pool:
-                # The image from the source message is now forced into every event card
+                # --- TWITCH URL HARD OVERRIDE ---
+                event_url = intel_pool[mid]['url']
+                if ae['type'] == 'twitch':
+                    event_url = "https://www.twitch.tv/predecessorgame"
+                
                 final_events.append({
                     "date": ae['date'], "title": ae['title'], "type": ae['type'],
-                    "desc": intel_pool[mid]['text'], "url": intel_pool[mid]['url'], "image": intel_pool[mid]['img']
+                    "desc": intel_pool[mid]['text'], "url": event_url, "image": intel_pool[mid]['img']
                 })
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_events}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Scrape and Intel Sync Complete.")
+        print("Scrape and Intel Sync Complete (Twitch URL Locked).")
     except Exception as e:
         print(f"Error: {e}")
 

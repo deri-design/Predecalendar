@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-03-30 05:31:56",
+    "last_updated": "2026-03-30 07:51:47",
     "events": [
         {
             "date": "2026-04-07",
@@ -26,7 +26,7 @@
             "type": "patch",
             "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
             "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487885620175966318",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69cac4f7&is=69c97377&hm=9c4400526057e41f10f3bfb59e8f7c544a1d1981b91499360939986a4851e62f&"
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69cb6db7&is=69ca1c37&hm=fec9f157d5f9cdee6307e45338af3e0da2d219ca432a52b557d293c0088262fd&"
         },
         {
             "date": "2026-04-01",
@@ -40,7 +40,7 @@
         {
             "date": "2026-03-27",
             "iso_date": "2026-03-27T00:00:00Z",
-            "title": "V1.12.6",
+            "title": "V1.12.6 PATCH",
             "type": "patch",
             "desc": "# V1.12.6 is LIVE!\n\ud83c\udf04  Daybreak V3\n\ud83c\udf32 Sylvanis Skins\n\ud83e\uddda Renegade The Fey Skin\nRead full patch notes here:\nhttps://playp.red/47L1xmd\nJoin Daybreak V3 discussion here:\nhttps://discord.com/channels/389767672151146498/1485953418534326403/1485953418534326403\nV1.12.6 Patch Notes | Predecessor\nEverything you need to know about V1.12.6!",
             "url": "https://discord.com/channels/1055546338907017278/1487129767865225261/1487185615287226572",

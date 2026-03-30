@@ -34,8 +34,11 @@ def find_deep_img(obj):
     return ""
 
 def clean_discord_text(text):
+    # Remove role/user pings
     text = re.sub(r'<@&?\d+>', '', text)
+    # Remove notification bell
     text = text.replace('🔔', '')
+    # Clean redundant whitespace
     text = re.sub(r'\n\s*\n', '\n', text)
     return text.strip()
 
@@ -60,31 +63,44 @@ def ask_groq(messages_text):
     Today is {today}. Context: "Predecessor" game announcements.
     TASK: Identify release dates AND specific start times for events.
     
-    RULES:
-    1. Identify the event/patch date.
-    2. LOOK FOR TIME: If a specific time is mentioned (e.g., 6PM UTC, 2PM ET), extract it.
-    3. Output as a JSON list.
-    4. "iso_date": Convert the date and time to a full ISO 8601 string in UTC. 
-       - Example: 6PM UTC on April 1st becomes "2026-04-01T18:00:00Z".
-       - If no time is found, default to "T15:00:00Z" (standard patch time).
+    CRITICAL TIME RULES:
+    1. Look for times like "6PM UTC / 2PM ET".
+    2. ALWAYS prioritize the UTC time. Ignore ET/PT/other zones.
+    3. CONVERT TO 24-HOUR UTC: 
+       - 6PM UTC = 18:00:00Z
+       - 2PM UTC = 14:00:00Z
+       - 9AM UTC = 09:00:00Z
+    4. "iso_date" must be formatted as: YYYY-MM-DDTHH:MM:SSZ
+    5. If NO time is mentioned in the text, default to midnight: T00:00:00Z.
     
-    Messages: {messages_text}
+    Rules:
+    - Only return events with specific dates.
+    - Categorize as "patch", "hero", "season", or "twitch".
+    - Match "original_id" to the provided ID.
+    
+    Messages:
+    {messages_text}
 
-    OUTPUT FORMAT: [ {{"date": "YYYY-MM-DD", "iso_date": "YYYY-MM-DDTHH:MM:SSZ", "title": "Name", "original_id": "id", "type": "type"}} ]
+    OUTPUT FORMAT (Strict JSON list only):
+    [ 
+      {{"date": "YYYY-MM-DD", "iso_date": "YYYY-MM-DDTHH:MM:SSZ", "title": "Name", "original_id": "id", "type": "type"}} 
+    ]
     """
     
-    chat = client.chat.completions.create(
+    chat_completion = client.chat.completions.create(
         messages=[{"role": "user", "content": prompt}],
         model="llama-3.3-70b-versatile",
         temperature=0.1
     )
-    raw = chat.choices[0].message.content
+    raw = chat_completion.choices[0].message.content
     json_match = re.search(r'\[.*\]', raw, re.DOTALL)
     return json.loads(json_match.group(0)) if json_match else []
 
 def scrape():
+    print("--- Starting High-Precision Temporal Scrape ---")
     messages = get_discord_messages()
     if not messages: return
+    
     intel_pool = {}
     ai_input_list = []
     for m in messages:
@@ -104,19 +120,25 @@ def scrape():
         for ae in ai_events:
             mid = ae.get('original_id')
             if mid in intel_pool:
+                # Set specific URL for twitch
+                event_url = intel_pool[mid]['url']
+                if ae['type'] == 'twitch':
+                    event_url = "https://www.twitch.tv/predecessorgame"
+                
                 final_events.append({
                     "date": ae['date'], 
-                    "iso_date": ae['iso_date'], # New precise time field
+                    "iso_date": ae['iso_date'], 
                     "title": ae['title'], 
                     "type": ae['type'],
                     "desc": intel_pool[mid]['text'], 
-                    "url": intel_pool[mid]['url'] if ae['type'] != 'twitch' else "https://www.twitch.tv/predecessorgame",
+                    "url": event_url, 
                     "image": intel_pool[mid]['img']
                 })
+        
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_events}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Success: Precise roadmap updated.")
+        print("Success: Timezone-corrected data saved.")
     except Exception as e:
         print(f"Error: {e}")
 

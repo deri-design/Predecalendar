@@ -72,7 +72,7 @@
         /* --- COUNTDOWN HUD --- */
         .countdown-container { 
             width: 100%; 
-            max-width: 700px; 
+            max-width: 750px; 
             margin: 0 auto 3rem auto; 
             background: rgba(13, 19, 31, 0.8); 
             border: 1px solid var(--gold); 
@@ -84,7 +84,7 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            gap: 12px; 
+            gap: 15px; 
             animation: hudPulse 4s infinite; 
         }
         
@@ -93,32 +93,33 @@
             50% { border-color: var(--gold-light); box-shadow: 0 0 30px rgba(220, 182, 59, 0.25); } 
         }
 
-        .next-op-title { font-family: 'Orbitron'; font-size: 1.5rem; color: #fff; text-shadow: 0 0 10px #fff; text-transform: uppercase; letter-spacing: 3px; text-align: center; }
+        .next-op-title { font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; text-shadow: 0 0 10px #fff; text-transform: uppercase; letter-spacing: 2px; text-align: center; line-height: 1.4; }
         
         .timer-hud { display: flex; gap: 15px; }
-        .timer-unit { display: flex; flex-direction: column; align-items: center; min-width: 70px; }
+        .timer-unit { display: flex; flex-direction: column; align-items: center; }
         
-        /* DIGITS USE STORICA FONT */
+        /* FIXED WIDTH DIGITS TO PREVENT JUMPING */
         .timer-val { 
             font-family: 'StoricaHeavy', sans-serif; 
             font-size: 2.2rem; 
             font-weight: normal; 
             color: #fff; 
             background: rgba(255,255,255,0.03); 
-            padding: 8px; 
+            padding: 8px 0; 
             border-radius: 4px; 
             border-bottom: 2px solid var(--gold); 
-            width: 100%; 
+            width: 85px; /* FIXED WIDTH */
             text-align: center; 
             text-shadow: 0 0 10px var(--hud-glow);
+            display: inline-block;
         }
         .timer-label { font-size: 0.55rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 5px; letter-spacing: 2px; }
 
         /* TWITCH CTA BUTTON */
         .twitch-cta {
-            display: none; /* Controlled by JS */
+            display: none;
             margin-top: 5px;
-            padding: 8px 20px;
+            padding: 8px 25px;
             background: var(--twitch);
             color: #fff;
             font-family: 'Orbitron', sans-serif;
@@ -132,11 +133,7 @@
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        .twitch-cta:hover {
-            background: #a970ff;
-            box-shadow: 0 0 25px rgba(145, 70, 255, 0.7);
-            transform: translateY(-2px);
-        }
+        .twitch-cta:hover { background: #a970ff; box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); transform: translateY(-2px); }
 
         /* --- LEGEND --- */
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -147,7 +144,7 @@
         .dot.season { background: var(--red); } 
         .dot.twitch { background: var(--twitch); }
 
-        /* --- ROADMAP GRID --- */
+        /* --- ROADMAP GRID (Rolling 10/15) --- */
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; }
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
@@ -166,14 +163,14 @@
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
 
-        /* --- POPUP OVERLAY --- */
+        /* --- POPUP OVERLAY (18px) --- */
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: #0d131f; border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid var(--border); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
 
-        @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } .header h1 { font-size: 2.8rem; } }
+        @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } .header h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
@@ -231,9 +228,9 @@
             
             if (futureEvents.length > 0) {
                 const nextEv = futureEvents[0]; 
-                document.getElementById('op-title').innerText = nextEv.title;
+                // PREFIX APPLIED HERE
+                document.getElementById('op-title').innerText = "NEXT EVENT: " + nextEv.title;
 
-                // SHOW TWITCH BUTTON IF CATEGORY IS TWITCH
                 if (nextEv.type === 'twitch') {
                     document.getElementById('twitch-btn').style.display = 'inline-block';
                 } else {
@@ -294,7 +291,6 @@
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
-
                 grid.appendChild(cell);
                 cursor.setDate(cursor.getDate() + 1);
             }

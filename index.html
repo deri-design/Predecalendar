@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predecessor | Live Roadmap HUD</title>
+    <title>Predecessor | Live Roadmap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
@@ -39,17 +39,20 @@
         .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); }
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
-        #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: #0d131f; border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
+        #global-briefing { display: none; position: fixed; width: 480px; max-height: 85vh; overflow-y: auto; background: #0d131f; border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid var(--border); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
+
         @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header class="header"><h1>PREDECESSOR</h1></header>
+
         <div class="countdown-container" id="hud">
             <div class="next-op-title" id="op-title">STANDBY</div>
             <div class="timer-hud">
@@ -59,21 +62,28 @@
                 <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
             </div>
         </div>
+
         <div class="legend">
             <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
             <div class="legend-item"><div class="dot hero"></div> NEW HERO / DEV</div>
             <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
             <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
         </div>
+
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
+
     <div id="global-briefing">
         <img id="b-img" class="briefing-img" src="" alt="Visual">
-        <div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div>
+        <div class="briefing-content">
+            <span id="b-tag" class="briefing-tag"></span>
+            <div id="b-desc" class="briefing-desc"></div>
+        </div>
     </div>
 
     <script>
-        let evData =[]; const today = new Date();
+        let evData =[]; 
+        const today = new Date();
         const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
 
         async function init() {
@@ -110,6 +120,7 @@
         function renderRoadmap() {
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
+            
             let startDate = new Date(); startDate.setDate(startDate.getDate() - 15);
             let dayOffset = startDate.getDay(); startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
             let endDate = new Date(); endDate.setDate(endDate.getDate() + 15);
@@ -121,14 +132,22 @@
                 const items = evData.filter(e => e.date === dStr);
                 const isToday = cursor.toDateString() === today.toDateString();
                 const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+                
                 const cell = document.createElement('div');
                 cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
                 
-                let cellHtml = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
-                
+                let cellHtml = `
+                    <div class="num-container">
+                        <span class="num">${cursor.getDate()}</span>
+                        <span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span>
+                    </div>
+                `;
+
                 items.forEach(ev => {
                     let a = document.createElement('a');
-                    a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
+                    a.href = ev.url || '#'; 
+                    a.target = "_blank"; 
+                    a.className = `event ${ev.type}`;
                     a.innerHTML = `<div class="e-title">${ev.title}</div>`;
                     
                     a.addEventListener('mouseenter', (e) => {
@@ -144,23 +163,28 @@
                         document.getElementById('b-desc').innerText = ev.desc;
                         
                         if (ev.image) { 
-                            bImg.src = ev.image; bImg.style.display = 'block'; 
-                        } else { bImg.style.display = 'none'; }
+                            bImg.src = ev.image; 
+                            bImg.style.display = 'block'; 
+                        } else { 
+                            bImg.style.display = 'none'; 
+                        }
                         
                         briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;
-                        if (x + 450 > window.innerWidth) x = rect.left - 470;
+                        if (x + 480 > window.innerWidth) x = rect.left - 500;
                         if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
-                        briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
+                        briefing.style.left = x + 'px'; 
+                        briefing.style.top = Math.max(40, y) + 'px';
                     });
+                    
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
                 
-                cell.innerHTML += cellHtml; // Append number logic
-                cell.innerHTML = cellHtml; // Rewrite inner
+                cell.innerHTML += cellHtml; // Append number last so it stays on top
+                cell.innerHTML = cellHtml; // Actually rewrite inner HTML properly
                 
-                // Final append
+                // Re-append to fix the cellHtml overwrite above
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
@@ -173,16 +197,19 @@
                         if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
                         briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;
-                        if (x + 450 > window.innerWidth) x = rect.left - 470;
+                        if (x + 480 > window.innerWidth) x = rect.left - 500;
                         if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
                         briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
                     });
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
-                grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
+                
+                grid.appendChild(cell); 
+                cursor.setDate(cursor.getDate() + 1);
             }
         }
+
         init();
     </script>
 </body>

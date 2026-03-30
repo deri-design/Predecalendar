@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-03-30 19:07:05",
+    "last_updated": "2026-03-30 21:49:26",
     "events": [
         {
             "date": "2026-04-07",
@@ -12,11 +12,11 @@
         },
         {
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T00:00:00Z",
+            "iso_date": "2026-04-07T18:00:00Z",
             "title": "V1.13",
             "type": "patch",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
-            "url": "https://www.predecessorgame.com/en-US/news",
+            "url": "https://www.twitch.tv/predecessorgame",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cb81d1&is=69ca3051&hm=d9561a7b5cbaa8e2615fe9b5ab37d79b030406706565a36678d3448f9e9da8c4&"
         },
         {
@@ -99,6 +99,15 @@
             "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
             "url": "https://www.predecessorgame.com/en-US/news",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69cc1677&is=69cac4f7&hm=2df15f9cb54ae8f4e579db19eb8d46d707751c1937a9ff39277816f222422e70&"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T00:00:00Z",
+            "title": "HERO AFFINITY",
+            "type": "patch",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cc2a91&is=69cad911&hm=db114ca5ffc9bb0088573945ef0efc418d888bdad3b52285baab7207d103fd87&"
         }
     ]
 }

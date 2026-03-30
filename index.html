@@ -91,7 +91,6 @@
         }
 
         function setupCountdown() {
-            // THE CRITICAL FIX: Use Date.now() for absolute UTC reference
             const futureEvents = evData
                 .map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") }))
                 .filter(e => e.time > Date.now())
@@ -101,7 +100,6 @@
                 const nextEv = futureEvents[0];
                 document.getElementById('op-title').innerText = nextEv.title;
                 setInterval(() => {
-                    // diff is now pure UTC milliseconds
                     const diff = nextEv.time - Date.now();
                     if (diff < 0) { window.location.reload(); return; }
                     document.getElementById('d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');

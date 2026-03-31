@@ -24,12 +24,9 @@
             --teal: #37a9a9; 
             --red: #c73843; 
             --twitch: #9146ff; 
-            
-            /* --- REVERTED TO DARK NEUTRAL PALETTE --- */
             --bg: #06080d; 
             --cell-glass: rgba(9, 14, 22, 0.85); 
             --border: #1e2638;
-            
             --text: #c8d0e0; 
             --hud-glow: rgba(220, 182, 59, 0.4);
             --glass-blur: blur(25px);
@@ -47,7 +44,6 @@
             overflow-x: hidden;
         }
 
-        /* --- STYLED BACKGROUND WITH 10% OPACITY --- */
         body::before {
             content: "";
             position: fixed;
@@ -55,8 +51,8 @@
             width: 100%; height: 100%;
             background: url('./img/bg.jpg') no-repeat center center;
             background-size: cover;
-            opacity: 0.1; 
-            mix-blend-mode: luminosity; 
+            opacity: 0.15; 
+            mix-blend-mode: luminosity;
             z-index: -1;
             pointer-events: none;
         }
@@ -89,24 +85,24 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.9);
         }
 
-        /* --- COUNTDOWN HUD --- */
+        /* --- REDESIGNED COUNTDOWN HUD --- */
         .countdown-container { 
             width: 100%; 
-            max-width: 750px; 
+            max-width: 1100px; 
             margin: 0 auto 3rem auto; 
             background: var(--cell-glass); 
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--gold); 
             border-bottom: 3px solid var(--gold); 
-            padding: 20px; 
+            padding: 30px; 
             position: relative; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
             clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); 
             display: flex; 
-            flex-direction: column; 
+            justify-content: space-between;
             align-items: center; 
-            gap: 15px; 
+            gap: 20px; 
             animation: hudPulse 4s infinite; 
         }
         
@@ -115,39 +111,47 @@
             50% { border-color: var(--gold-light); } 
         }
 
-        .next-op-title { 
-            font-family: 'Orbitron'; 
-            font-size: 1.4rem; 
-            color: #fff; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            text-align: center; 
-        }
-        
-        .timer-hud { display: flex; gap: 15px; }
+        /* HUD: LEFT SECTION */
+        .hud-left { flex: 1; text-align: left; }
+        .next-event-label { font-family: 'Orbitron'; font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; display: block; opacity: 0.8; }
+        .next-op-title { font-family: 'Orbitron'; font-size: 1.6rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; font-weight: 700; }
+
+        /* HUD: CENTER SECTION */
+        .hud-center { flex: 1.5; display: flex; justify-content: center; align-items: center; }
+        .timer-hud { display: flex; gap: 12px; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
-        
         .timer-val { 
             font-family: 'StoricaHeavy', sans-serif; 
             font-size: 2.2rem; 
             color: #fff; 
             background: rgba(0,0,0,0.3); 
-            padding: 8px 0; 
+            padding: 10px 0; 
             border-radius: 4px; 
             border-bottom: 2px solid var(--gold); 
             width: 85px; 
             text-align: center; 
         }
-        .timer-label { font-size: 0.55rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 5px; letter-spacing: 2px; }
+        .timer-label { font-size: 0.6rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 5px; letter-spacing: 2px; font-weight: bold; }
+
+        /* HUD: RIGHT SECTION */
+        .hud-right { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .hud-next-img {
+            width: 220px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            display: none; /* Shown by JS */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
 
         .twitch-cta {
             display: none;
-            margin-top: 5px;
-            padding: 8px 25px;
+            padding: 10px 20px;
             background: var(--twitch);
             color: #fff;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-decoration: none;
             text-transform: uppercase;
@@ -155,6 +159,8 @@
             border-radius: 2px;
             transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            width: 220px;
         }
         .twitch-cta:hover { background: #a970ff; transform: translateY(-2px); }
 
@@ -219,9 +225,15 @@
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid rgba(255,255,255,0.1); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
-        .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 3px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
+        .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
 
-        @media (max-width: 1000px) { .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } .header h1 { font-size: 2.5rem; } }
+        @media (max-width: 1100px) { 
+            .countdown-container { flex-direction: column; padding-bottom: 40px; } 
+            .hud-left { text-align: center; }
+            .roadmap-grid { grid-template-columns: repeat(1, 1fr); } 
+            #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } 
+            .header h1 { font-size: 2.5rem; } 
+        }
     </style>
 </head>
 <body>
@@ -234,14 +246,24 @@
 
         <!-- Dynamic Timer HUD -->
         <div class="countdown-container" id="hud">
-            <div class="next-op-title" id="op-title">STANDBY</div>
-            <div class="timer-hud">
-                <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
-                <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
-                <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
-                <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
+            <div class="hud-left">
+                <span class="next-event-label">NEXT EVENT:</span>
+                <div class="next-op-title" id="op-title">STANDBY</div>
             </div>
-            <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
+
+            <div class="hud-center">
+                <div class="timer-hud">
+                    <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
+                    <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
+                    <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
+                    <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
+                </div>
+            </div>
+
+            <div class="hud-right">
+                <img id="hud-next-img" class="hud-next-img" src="" alt="Upcoming Visual">
+                <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
+            </div>
         </div>
 
         <div class="legend">
@@ -261,8 +283,8 @@
 
     <script>
         let evData = []; const today = new Date();
-        let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
         const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
+        const hudImg = document.getElementById('hud-next-img');
 
         async function init() {
             try {
@@ -277,11 +299,23 @@
         function setupCountdown() {
             const now = Date.now();
             const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
+            
             if (futureEvents.length > 0) {
                 const nextEv = futureEvents[0]; 
-                document.getElementById('op-title').innerText = "NEXT EVENT: " + nextEv.title;
-                if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'inline-block'; } 
-                else { document.getElementById('twitch-btn').style.display = 'none'; }
+                document.getElementById('op-title').innerText = nextEv.title;
+                
+                // Show Image in HUD
+                if (nextEv.image) {
+                    hudImg.src = nextEv.image;
+                    hudImg.style.display = 'block';
+                }
+
+                if (nextEv.type === 'twitch') {
+                    document.getElementById('twitch-btn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('twitch-btn').style.display = 'none';
+                }
+
                 setInterval(() => {
                     const diff = nextEv.time - Date.now();
                     if (diff < 0) { window.location.reload(); return; }
@@ -330,8 +364,7 @@
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
-                grid.appendChild(cell);
-                cursor.setDate(cursor.getDate() + 1);
+                grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
             }
         }
         init();

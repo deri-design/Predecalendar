@@ -54,19 +54,19 @@
             border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); 
             padding: 35px 50px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
             clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); 
-            display: flex; justify-content: space-between; align-items: center; gap: 40px; 
+            display: flex; justify-content: space-between; align-items: stretch; /* STRETCH TO MATCH HEIGHT */
+            gap: 40px; 
             animation: hudPulse 4s infinite; 
         }
         
         @keyframes hudPulse { 0%, 100% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } }
 
-        /* HUD LEFT: Content Stack (Title -> Digits -> Button) */
-        .hud-left { flex: 1.2; display: flex; flex-direction: column; align-items: flex-start; gap: 15px; }
-        .next-event-label { font-family: 'Orbitron'; font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; }
-        .next-op-title { font-family: 'Orbitron'; font-size: 1.8rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; font-weight: 700; }
+        /* HUD LEFT: Content Stack */
+        .hud-left { flex: 1.2; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; }
+        .next-event-label { font-family: 'Orbitron'; font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 5px;}
+        .next-op-title { font-family: 'Orbitron'; font-size: 1.8rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; font-weight: 700; margin-bottom: 10px; }
 
-        /* TIMER HUD INSIDE LEFT COLUMN */
-        .timer-hud { display: flex; gap: 10px; margin: 5px 0; }
+        .timer-hud { display: flex; gap: 10px; margin: 10px 0; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
         .timer-val { 
             font-family: 'StoricaHeavy', sans-serif; font-size: 2.2rem; color: #fff; 
@@ -79,12 +79,21 @@
             display: none; padding: 12px 30px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; 
             font-size: 0.75rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; 
             border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4);
+            margin-top: 10px;
         }
         .twitch-cta:hover { background: #a970ff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); }
 
-        /* HUD RIGHT: Visual */
-        .hud-right { flex: 1; display: flex; justify-content: flex-end; }
-        .hud-next-img { width: 340px; height: 190px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        /* HUD RIGHT: Cinematic Image */
+        .hud-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+        .hud-next-img { 
+            width: 480px; /* Increased to maintain ratio */
+            height: 280px; /* UPDATED HEIGHT to match requested green marked height */
+            object-fit: cover; 
+            border: 1px solid var(--gold); 
+            border-radius: 2px; 
+            display: none; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+        }
 
         /* --- LEGEND --- */
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -110,7 +119,7 @@
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; }
 
         /* --- POPUP OVERLAY --- */
-        #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.9); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; scrollbar-width: thin; }
+        #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.9); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; backdrop-filter: blur(25px); scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid rgba(255,255,255,0.1); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
@@ -120,6 +129,7 @@
             .countdown-container { flex-direction: column; align-items: center; text-align: center; clip-path: none; border-radius: 4px; padding: 30px; } 
             .hud-left { align-items: center; text-align: center; margin-bottom: 20px; }
             .hud-right { align-items: center; }
+            .hud-next-img { width: 100%; height: auto; max-width: 400px; }
             .roadmap-grid { grid-template-columns: repeat(1, 1fr); } 
             #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } 
         }
@@ -136,7 +146,6 @@
         <!-- Dynamic Timer HUD -->
         <div class="countdown-container" id="hud">
             <div class="hud-left">
-                <!-- Label updated: no colon -->
                 <span class="next-event-label">NEXT EVENT</span>
                 <div class="next-op-title" id="op-title">STANDBY</div>
                 
@@ -189,7 +198,6 @@
             const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
             if (futureEvents.length > 0) {
                 const nextEv = futureEvents[0]; 
-                // Prefix "NEXT EVENT: " removed from title assignment
                 document.getElementById('op-title').innerText = nextEv.title;
                 if (nextEv.image) { hudImg.src = nextEv.image; hudImg.style.display = 'block'; }
                 if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'inline-block'; } 

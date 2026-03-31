@@ -1,13 +1,13 @@
 {
-    "last_updated": "2026-03-31 03:49:49",
+    "last_updated": "2026-03-31 05:15:22",
     "events": [
         {
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T00:00:00Z",
+            "iso_date": "2026-04-07T18:00:00Z",
             "title": "V1.13",
             "type": "twitch",
             "desc": "Hey everyone!\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
-            "url": "https://www.predecessorgame.com/en-US/news",
+            "url": "https://www.twitch.tv/predecessorgame",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cc2a91&is=69cad911&hm=db114ca5ffc9bb0088573945ef0efc418d888bdad3b52285baab7207d103fd87&"
         },
         {
@@ -72,6 +72,15 @@
             "desc": "# V1.12.6 is LIVE!\n\ud83c\udf04  Daybreak V3\n\ud83c\udf32 Sylvanis Skins\n\ud83e\uddda Renegade The Fey Skin\nRead full patch notes here:\nhttps://playp.red/47L1xmd\nJoin Daybreak V3 discussion here:\nhttps://discord.com/channels/389767672151146498/1485953418534326403/1485953418534326403\nV1.12.6 Patch Notes | Predecessor\nEverything you need to know about V1.12.6!",
             "url": "https://playp.red/47L1xmd",
             "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/Patch_Header_1_1_5_85dc3fa777.jpg"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T00:00:00Z",
+            "title": "HERO AFFINITY",
+            "type": "patch",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cc2a91&is=69cad911&hm=db114ca5ffc9bb0088573945ef0efc418d888bdad3b52285baab7207d103fd87&"
         }
     ]
 }

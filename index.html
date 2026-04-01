@@ -27,7 +27,6 @@
         .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 2.2rem; color: #fff; background: rgba(0,0,0,0.4); padding: 10px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 85px; text-align: center; }
         .timer-label { font-size: 0.55rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: bold; }
         .twitch-cta { display: none; padding: 12px 30px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); margin-top: 10px; }
-        .twitch-cta:hover { background: #a970ff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); }
         .hud-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
         .hud-next-img { width: 480px; height: 280px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
@@ -36,7 +35,7 @@
         .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); } .dot.twitch { background: var(--twitch); }
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
+        .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { color: var(--gold-light); }
         .cell { background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
         .cell.weekend { background: rgba(13, 19, 31, 0.95); }
         .num-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
@@ -126,8 +125,10 @@
             while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
+                const isToday = cursor.toDateString() === today.toDateString();
+                const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
                 const cell = document.createElement('div');
-                cell.className = `cell active ${cursor.toDateString() === today.toDateString() ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
+                cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;

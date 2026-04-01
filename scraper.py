@@ -11,18 +11,15 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 CHANNEL_ID = "1487129767865225261" 
 
 def get_discord_messages():
-    print(f"--- DISCORD: Connecting to Channel {CHANNEL_ID} ---")
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
     url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=25"
     res = requests.get(url, headers=headers)
     if res.status_code != 200:
-        print(f"DISCORD ERROR: {res.status_code} - Check if Bot is in server and Token is correct.")
         return []
-    msgs = res.json()
-    print(f"DISCORD SUCCESS: Found {len(msgs)} messages.")
-    return msgs
+    return res.json()
 
 def find_deep_img(obj):
+    """Recursively search for any image in standard msg, snapshots, or embeds."""
     if not obj: return ""
     if isinstance(obj, str):
         if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj:
@@ -47,9 +44,6 @@ def clean_discord_text(text):
 
 def extract_full_content(m):
     text = m.get('content', '')
-    # Log what we see in regular content
-    if text: print(f"Found Content: {text[:50]}...")
-    
     if 'message_snapshots' in m:
         for snap in m['message_snapshots']:
             msg = snap.get('message', {})
@@ -62,19 +56,16 @@ def extract_full_content(m):
     return text.strip()
 
 def ask_groq(messages_text):
-    print("--- AI: Consulting Llama-3 ---")
     client = Groq(api_key=GROQ_API_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
-    
     prompt = f"""
-    Today is {today}. Context: Predecessor Game Discord.
-    Extract every event, patch, or stream mentioned. 
+    Today is {today}. Context: Predecessor Game Discord announcements.
+    Identify every upcoming event, patch, or stream.
     
     RULES:
-    1. If the text mentions a specific date (April 7, etc), use it.
-    2. Format dates as YYYY-MM-DD.
-    3. Title must be short and matching the card label.
-    4. Return ONLY a JSON list.
+    1. EXTRACT UNIQUE TITLES: Do not use 'UPDATE'. Use names like 'V1.13 Patch' or 'Adele Reveal'.
+    2. Identify ACTUAL release dates (YYYY-MM-DD). If it says 'April 7th', use 2026-04-07.
+    3. Return ONLY a JSON list of objects.
     
     Messages: {messages_text}
     """
@@ -86,17 +77,11 @@ def ask_groq(messages_text):
         )
         raw = chat.choices[0].message.content
         return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
-    except Exception as e:
-        print(f"AI ERROR: {e}")
-        return []
+    except: return []
 
 def scrape():
     messages = get_discord_messages()
-    master_list = []
-    
-    if not messages:
-        print("No messages to process. Ensure Bot is in the server.")
-    
+    if not messages: return
     intel_pool = {}
     ai_input_list = []
     for m in messages:
@@ -111,33 +96,38 @@ def scrape():
             }
             ai_input_list.append(f"ID: {m['id']} | CONTENT: {text}")
 
-    if ai_input_list:
+    try:
         ai_events = ask_groq("\n---\n".join(ai_input_list))
+        master_list = []
         for ae in ai_events:
+            if not isinstance(ae, dict): continue # THE FIX: Skips strings that caused the error
             mid = ae.get('original_id')
             if mid in intel_pool:
-                # Force format
-                date_str = ae['date']
-                if not re.search(r'\d{4}-\d{2}-\d{2}', date_str):
-                    date_str = intel_pool[mid]['posted'][:10]
+                date = ae.get('date', intel_pool[mid]['posted'][:10])
+                title = ae.get('title', 'NEW UPDATE').upper()
+                etype = "patch" if "patch" in title.lower() else "news"
+                if "twitch" in intel_pool[mid]['text'].lower() or "stream" in intel_pool[mid]['text'].lower(): etype = "twitch"
                 
-                etype = ae.get('type', 'news')
                 eurl = "https://www.twitch.tv/predecessorgame" if etype == "twitch" else intel_pool[mid]['url']
-                
+                iso = date + ("T18:00:00Z" if etype == "twitch" else "T15:00:00Z")
+
                 master_list.append({
-                    "date": date_str,
-                    "iso_date": date_str + ("T18:00:00Z" if etype == "twitch" else "T15:00:00Z"),
-                    "title": ae['title'].upper(),
-                    "type": etype,
-                    "desc": intel_pool[mid]['text'],
-                    "image": intel_pool[mid]['img'],
-                    "url": eurl
+                    "date": date, "iso_date": iso, "title": title, "type": etype,
+                    "desc": intel_pool[mid]['text'], "image": intel_pool[mid]['img'], "url": eurl
                 })
 
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": master_list}
-    with open('events.json', 'w') as f:
-        json.dump(output, f, indent=4)
-    print(f"SUCCESS: Saved {len(master_list)} events.")
+        # Final Deduplication: Merge items on the same day with similar titles
+        unique_map = {}
+        for e in sorted(master_list, key=lambda x: len(x['title']), reverse=True):
+            fingerprint = f"{e['date']}_{re.sub(r'[^A-Z]', '', e['title'][:8])}"
+            if fingerprint not in unique_map: unique_map[fingerprint] = e
+
+        output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(unique_map.values())}
+        with open('events.json', 'w') as f:
+            json.dump(output, f, indent=4)
+        print("Success")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape()

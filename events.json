@@ -1,35 +1,45 @@
 {
-    "last_updated": "2026-04-01 16:08:50",
+    "last_updated": "2026-04-01 19:10:35",
     "events": [
-        {
-            "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13 THRONE OF THORNS",
-            "type": "news",
-            "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69ce10b7&is=69ccbf37&hm=9ab3a9f05415fa93694b74f2fa5d9b6ca2290c9d09384b32ba695e813a745d06&",
-            "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1487885620175966318"
-        },
         {
             "date": "2026-04-01",
             "iso_date": "2026-04-01T18:00:00Z",
-            "title": "V1.13 DEV STREAM",
+            "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
             "type": "twitch",
-            "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69ce27e3&is=69ccd663&hm=9d3dc450916a0cda4bd53fd24635b558f5ffeb1ba56f4d89d5b86ac16209b2b1&",
+            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69ceb0ff&is=69cd5f7f&hm=8e4fb8528a1a3d07c6e743317c8589c0199544fe197f724fbd9612e99bcf143f&",
             "url": "https://www.twitch.tv/predecessorgame",
-            "original_id": "1487185725479714916"
+            "original_id": "1488967151757824192"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T18:00:00Z",
+            "title": "V1.13: THRONE OF THORNS",
+            "type": "twitch",
+            "desc": "Hey everyone!\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
+            "image": "",
+            "url": "https://www.twitch.tv/predecessorgame",
+            "original_id": "1488209609377190051"
         },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "HERO AFFINITY",
+            "title": "HERO AFFINITY LEVEL CAP",
             "type": "news",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69ce24d1&is=69ccd351&hm=117e00d8f09e79e2bcd163a69412ef84cd0a2985c379facb9d4181a4e19c076e&",
             "url": "https://www.predecessorgame.com/en-US/news",
             "original_id": "1487182428824145991"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "ZARUS PLUSH PRE-ORDER",
+            "type": "news",
+            "desc": "He\u2019s here! \ud83e\udd17\nWe\u2019ve teamed up with Youtooz for our very first merch drop - introducing the plush version of our own Nyrian Gladiator, Zarus! \ud83e\udd8e\nPre-orders go live on their website starting April 7, and we\u2019ll let you know the moment they\u2019re available \ud83d\uddd3\ufe0f\nWe\u2019ll also be giving away some plushies to a few lucky winners, so stay tuned for more details!\n @Official News",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69ce9286&is=69cd4106&hm=60dd3d9d61e7874790455beb86f9d7ed7a43d334a4894e383dc82323a3a4bfe4&",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1488570558697181195"
         },
         {
             "date": "2026-04-07",
@@ -44,12 +54,12 @@
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13",
+            "title": "QUESTS",
             "type": "news",
-            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\nhttps://playp.red/3QbwlXe\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
-            "url": "https://playp.red/3QbwlXe",
-            "original_id": "1488526943820316804"
+            "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69ceb977&is=69cd67f7&hm=3bcf01eb42a5dc22f592882e988f6fc455f47e54d1efe0c6bdef98f7c5d3aa69&",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1487885620175966318"
         },
         {
             "date": "2026-04-07",

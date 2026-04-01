@@ -16,24 +16,26 @@ def get_discord_messages():
     res = requests.get(url, headers=headers)
     return res.json() if res.status_code == 200 else []
 
-def force_iso_date(date_str):
-    """Ensures dates are YYYY-MM-DD even if AI fails."""
+def force_iso_date(date_str, posted_date):
+    """Converts any date string (like 'April 7') into YYYY-MM-DD."""
     try:
-        # Standardize month names for parsing
-        date_str = date_str.replace("th", "").replace("st", "").replace("nd", "").replace("rd", "")
-        # Try to parse 'April 7 2026'
-        if not re.search(r'\d{4}', date_str):
-            date_str += f" {datetime.now().year}"
+        # Remove suffixes like 'st', 'nd', 'rd', 'th'
+        clean = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_str, flags=re.I)
         
-        # Using a more flexible regex-based parser
-        match = re.search(r'([a-zA-Z]+)\s+(\d+)\s+(\d{4})', date_str)
+        # If no year is present, assume 2026
+        if not re.search(r'\d{4}', clean):
+            clean += " 2026"
+        
+        # Try to parse standard Month Day Year
+        match = re.search(r'([a-zA-Z]+)\s+(\d+)\s+(\d{4})', clean)
         if match:
             mon, day, year = match.groups()
             dt = datetime.strptime(f"{mon[:3].capitalize()} {day} {year}", "%b %d %Y")
             return dt.strftime("%Y-%m-%d")
     except:
         pass
-    return date_str # Return original if parsing fails
+    # If all else fails, use the date the message was posted
+    return posted_date
 
 def find_deep_img(obj):
     if not obj: return ""
@@ -56,8 +58,7 @@ def find_deep_img(obj):
 def clean_discord_text(text):
     text = re.sub(r'<@&?\d+>', '', text)
     text = text.replace('🔔', '')
-    text = re.sub(r'\n\s*\n', '\n', text)
-    return text.strip()
+    return re.sub(r'\n\s*\n', '\n', text).strip()
 
 def extract_full_content(m):
     text = m.get('content', '')
@@ -79,8 +80,8 @@ def ask_groq(messages_text):
     Today is {today}. Context: "Predecessor" game announcements.
     Identify ACTUAL release/event dates and short titles. 
     RULES: 
-    1. DATE MUST BE FORMATTED AS YYYY-MM-DD. Example: 2026-04-07.
-    2. Format: JSON list only.
+    1. If a message mentions a date like "April 7th", use that.
+    2. Format the response as a JSON list.
     Messages: {messages_text}
     """
     chat = client.chat.completions.create(
@@ -92,16 +93,23 @@ def ask_groq(messages_text):
     return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
 
 def scrape():
-    print("Executing Date-Validation Scrape...")
+    print("Starting Advanced AI Sync...")
     messages = get_discord_messages()
     if not messages: return
+
     intel_pool = {}
     ai_input_list = []
     for m in messages:
         text = extract_full_content(m)
         img = find_deep_img(m)
+        posted_date = m['timestamp'][:10]
         if text:
-            intel_pool[m['id']] = {"text": clean_discord_text(text), "img": img, "url": f"https://discord.com/channels/1055546338907017278/1487129767865225261/{m['id']}"}
+            intel_pool[m['id']] = {
+                "text": clean_discord_text(text),
+                "img": img, 
+                "url": f"https://discord.com/channels/1055546338907017278/1487129767865225261/{m['id']}",
+                "posted": posted_date
+            }
             ai_input_list.append(f"ID: {m['id']} | CONTENT: {text}")
 
     try:
@@ -110,8 +118,8 @@ def scrape():
         for ae in ai_events:
             mid = ae.get('original_id')
             if mid in intel_pool:
-                # FORCE CORRECT DATE FORMAT
-                clean_date = force_iso_date(ae['date'])
+                # FIX: Force correct date format before saving
+                clean_date = force_iso_date(ae.get('date', ''), intel_pool[mid]['posted'])
                 
                 full_text = intel_pool[mid]['text'].lower()
                 etype = ae.get('type', 'news')
@@ -121,14 +129,19 @@ def scrape():
                 iso = clean_date + ("T18:00:00Z" if etype == "twitch" else "T00:00:00Z")
 
                 master_list.append({
-                    "date": clean_date, "iso_date": iso, "title": ae['title'].upper(), "type": etype,
-                    "desc": intel_pool[mid]['text'], "url": eurl, "image": intel_pool[mid]['img']
+                    "date": clean_date, 
+                    "iso_date": iso, 
+                    "title": ae['title'].upper(), 
+                    "type": etype,
+                    "desc": intel_pool[mid]['text'], 
+                    "url": eurl, 
+                    "image": intel_pool[mid]['img']
                 })
 
         output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": master_list}
         with open('events.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print("Scrape and Formatting Complete.")
+        print(f"Success! {len(master_list)} events found and formatted.")
     except Exception as e:
         print(f"Error: {e}")
 

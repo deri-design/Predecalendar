@@ -60,31 +60,13 @@
     <div class="container">
         <header class="header"><h1>PredeCalendar</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
         <div class="countdown-container" id="hud">
-            <div class="hud-left">
-                <span class="next-event-label">NEXT EVENT</span>
-                <div class="next-op-title" id="op-title">STANDBY</div>
-                <div class="timer-hud">
-                    <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
-                </div>
-                <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
-            </div>
+            <div class="hud-left"><span class="next-event-label">NEXT EVENT</span><div class="next-op-title" id="op-title">STANDBY</div><div class="timer-hud"><div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div><div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div><div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div><div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div></div><a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a></div>
             <div class="hud-right"><img id="hud-next-img" class="hud-next-img" src="" alt="Next Operation"></div>
         </div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
-            <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
-            <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
-            <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
-        </div>
+        <div class="legend"><div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div><div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div><div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div><div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div></div>
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
-    <div id="global-briefing">
-        <img id="b-img" class="briefing-img" src="" alt="Visual Record">
-        <div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div>
-    </div>
+    <div id="global-briefing"><img id="b-img" class="briefing-img" src="" alt="Visual Record"><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div></div>
     <script>
         let evData = []; const today = new Date();
         const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
@@ -125,10 +107,8 @@
             while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
-                const isToday = cursor.toDateString() === today.toDateString();
-                const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
                 const cell = document.createElement('div');
-                cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
+                cell.className = `cell active ${cursor.toDateString() === today.toDateString() ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;

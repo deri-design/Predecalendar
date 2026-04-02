@@ -1,9 +1,9 @@
 {
-    "last_updated": "2026-04-02 02:46:08",
+    "last_updated": "2026-04-02 05:07:30",
     "events": [
         {
-            "date": "2026-04-01",
-            "iso_date": "2026-04-01T18:00:00Z",
+            "date": "2026-04-02",
+            "iso_date": "2026-04-02T18:00:00Z",
             "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
             "type": "twitch",
             "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
@@ -20,6 +20,16 @@
             "image": "",
             "url": "https://www.twitch.tv/predecessorgame",
             "original_id": "1488209609377190051"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "HERO AFFINITY LEVEL CAP",
+            "type": "news",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cecd91&is=69cd7c11&hm=6210445f3d65b596d68159731a9d9408febae8bc57d0c68e397a1a8942fdde7b&",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1487182428824145991"
         },
         {
             "date": "2026-04-01",
@@ -47,7 +57,7 @@
             "title": "ZARUS PLUSH",
             "type": "news",
             "desc": "He\u2019s here! \ud83e\udd17\nWe\u2019ve teamed up with Youtooz for our very first merch drop - introducing the plush version of our own Nyrian Gladiator, Zarus! \ud83e\udd8e\nPre-orders go live on their website starting April 7, and we\u2019ll let you know the moment they\u2019re available \ud83d\uddd3\ufe0f\nWe\u2019ll also be giving away some plushies to a few lucky winners, so stay tuned for more details!\n @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69ce9286&is=69cd4106&hm=60dd3d9d61e7874790455beb86f9d7ed7a43d334a4894e383dc82323a3a4bfe4&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69cf3b46&is=69cde9c6&hm=1c787330bd578dc4cbdf35f9f8e64faf78e50a16d0ba7c0813b2916c6a2d6d61&",
             "url": "https://www.predecessorgame.com/en-US/news",
             "original_id": "1488570558697181195"
         },

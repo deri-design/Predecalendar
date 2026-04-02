@@ -1,6 +1,16 @@
 {
-    "last_updated": "2026-04-02 10:04:54",
+    "last_updated": "2026-04-02 13:26:23",
     "events": [
+        {
+            "date": "2026-04-02",
+            "iso_date": "2026-04-02T18:00:00Z",
+            "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
+            "type": "twitch",
+            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69cf59bf&is=69ce083f&hm=2b3a450b460cebc0cb9587b6bdc84ab7981bec3ff0da00e213096ce78ca69d2e&",
+            "url": "https://www.twitch.tv/predecessorgame",
+            "original_id": "1488967151757824192"
+        },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T18:00:00Z",
@@ -14,12 +24,12 @@
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "HERO AFFINITY LEVEL CAP",
-            "type": "news",
-            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cf7651&is=69ce24d1&hm=cbeaebad8d001a0165bb4e0da6685acc8e4ab1b685742fd5e218d04b4fcce6b3&",
-            "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1487182428824145991"
+            "title": "V1.13 PATCH NOTES",
+            "type": "patch",
+            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\nhttps://playp.red/3QbwlXe\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
+            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
+            "url": "https://playp.red/3QbwlXe",
+            "original_id": "1488526943820316804"
         },
         {
             "date": "2026-04-01",

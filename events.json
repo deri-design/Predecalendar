@@ -1,10 +1,10 @@
 {
-    "last_updated": "2026-04-02 19:03:44",
+    "last_updated": "2026-04-02 21:43:49",
     "events": [
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T18:00:00Z",
-            "title": "V1.13 PATCH NOTES",
+            "title": "V1.13: THRONE OF THORNS",
             "type": "twitch",
             "desc": "Hey everyone!\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -17,49 +17,39 @@
             "title": "V1.13 DEV STREAM",
             "type": "twitch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69cf7963&is=69ce27e3&hm=bd748e50305936a6820b9028fbec093f243cb44fcb0c829a57e0d2e49fc0409b&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d02223&is=69ced0a3&hm=3c9359b80425828da3d8a7d6d1dd89d8b6881af03c9ee57abfa6810e47052fda&",
             "url": "https://www.twitch.tv/predecessorgame",
             "original_id": "1487185725479714916"
         },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "ZARUS PLUSHIE",
+            "title": "HERO AFFINITY",
             "type": "news",
-            "desc": "He\u2019s here! \ud83e\udd17\nWe\u2019ve teamed up with Youtooz for our very first merch drop - introducing the plush version of our own Nyrian Gladiator, Zarus! \ud83e\udd8e\nPre-orders go live on their website starting April 7, and we\u2019ll let you know the moment they\u2019re available \ud83d\uddd3\ufe0f\nWe\u2019ll also be giving away some plushies to a few lucky winners, so stay tuned for more details!\n @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69cfe406&is=69ce9286&hm=3f7d000e9529fad38581c229d352527a0dcf360094a9a091d950007bfc5f736b&",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69d01f11&is=69cecd91&hm=f5bf262c035131a83d550784501fbc4155f513a5a7ee25d4f7413c627d2c2389&",
             "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1488570558697181195"
+            "original_id": "1487182428824145991"
         },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13 REVEALS",
+            "title": "DAYBREAK V4",
             "type": "news",
-            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\nhttps://playp.red/3QbwlXe\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
-            "url": "https://playp.red/3QbwlXe",
-            "original_id": "1488526943820316804"
+            "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
+            "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1487885557374914692"
         },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "ADELE",
+            "title": "QUESTS",
             "type": "news",
-            "desc": "Meet the Queen of Thorns, Adele herself - she rules a queendom, but can she conquer the battlefield? \ud83c\udf39 \u2694\ufe0f\nhttps://youtu.be/93kJH55JG5I\n @Official News\nAdele | Hero Overview | Predecessor\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \nPLAY NOW!\nhttps://playp.red/playnow",
-            "image": "https://i.ytimg.com/vi/93kJH55JG5I/maxresdefault.jpg",
-            "url": "https://youtu.be/93kJH55JG5I",
-            "original_id": "1489295679032655912"
-        },
-        {
-            "date": "2026-04-07",
-            "iso_date": "2026-04-07T18:00:00Z",
-            "title": "V1.13",
-            "type": "twitch",
-            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69d0027f&is=69ceb0ff&hm=38113ba78ccd65a072b8a45d5c3af1f2d0a7e359f1c645d7ea9243ca928b9018&",
-            "url": "https://www.twitch.tv/predecessorgame",
-            "original_id": "1488967151757824192"
+            "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69d00af7&is=69ceb977&hm=fe593b1008cb5b593faaf3fcc232183a34aa600012be9a6d37b1b975fbebce53&",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1487885620175966318"
         },
         {
             "date": "2026-04-07",
@@ -74,12 +64,12 @@
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13",
+            "title": "ADELE",
             "type": "news",
-            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cf7651&is=69ce24d1&hm=cbeaebad8d001a0165bb4e0da6685acc8e4ab1b685742fd5e218d04b4fcce6b3&",
-            "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1487182428824145991"
+            "desc": "Meet the Queen of Thorns, Adele herself - she rules a queendom, but can she conquer the battlefield? \ud83c\udf39 \u2694\ufe0f\nhttps://youtu.be/93kJH55JG5I\n @Official News\nAdele | Hero Overview | Predecessor\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \nPLAY NOW!\nhttps://playp.red/playnow",
+            "image": "https://i.ytimg.com/vi/93kJH55JG5I/maxresdefault.jpg",
+            "url": "https://youtu.be/93kJH55JG5I",
+            "original_id": "1489295679032655912"
         }
     ]
 }

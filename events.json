@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-02 07:21:09",
+    "last_updated": "2026-04-02 10:04:54",
     "events": [
         {
             "date": "2026-04-07",
@@ -17,7 +17,7 @@
             "title": "HERO AFFINITY LEVEL CAP",
             "type": "news",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cecd91&is=69cd7c11&hm=6210445f3d65b596d68159731a9d9408febae8bc57d0c68e397a1a8942fdde7b&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69cf7651&is=69ce24d1&hm=cbeaebad8d001a0165bb4e0da6685acc8e4ab1b685742fd5e218d04b4fcce6b3&",
             "url": "https://www.predecessorgame.com/en-US/news",
             "original_id": "1487182428824145991"
         },
@@ -27,7 +27,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "twitch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69ced0a3&is=69cd7f23&hm=a316cc3020f0ae222bc18fdfcbfdac46f2b27b8857b344178a0dc0f37afe5634&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69cf7963&is=69ce27e3&hm=bd748e50305936a6820b9028fbec093f243cb44fcb0c829a57e0d2e49fc0409b&",
             "url": "https://www.twitch.tv/predecessorgame",
             "original_id": "1487185725479714916"
         },

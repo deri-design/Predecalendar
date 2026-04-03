@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-03 18:55:44",
+    "last_updated": "2026-04-03 21:39:29",
     "events": [
         {
             "date": "2026-04-01",
@@ -52,24 +52,24 @@
             "original_id": "1487885557374914692"
         },
         {
-            "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13: THRONE OF THORNS",
-            "type": "news",
-            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\nAnd we\u2019ve got some news to share... here's first of them:\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69d0c7d1&is=69cf7651&hm=30985057bb407c187d93a12da0b0de550a9a2d3d453cdb28e352869aa4a5c071&",
-            "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1487182428824145991"
-        },
-        {
             "date": "2026-04-01",
             "iso_date": "2026-04-01T18:00:00Z",
             "title": "V1.13 DEV STREAM",
             "type": "twitch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d0cae3&is=69cf7963&hm=b6dc2cec60ed09fa2b550cd35e10ec05ccadc834b0e20087123090d81495f1b9&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d173a3&is=69d02223&hm=c93e18d4f99b85c2f087a58a952183d8f73ff08d84c6588f4d86c48bf463795f&",
             "url": "https://www.twitch.tv/predecessorgame",
             "original_id": "1487185725479714916"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "ZARUS PLUSH",
+            "type": "news",
+            "desc": "He\u2019s here! \ud83e\udd17\nWe\u2019ve teamed up with Youtooz for our very first merch drop - introducing the plush version of our own Nyrian Gladiator, Zarus! \ud83e\udd8e\nPre-orders go live on their website starting April 7, and we\u2019ll let you know the moment they\u2019re available \ud83d\uddd3\ufe0f\nWe\u2019ll also be giving away some plushies to a few lucky winners, so stay tuned for more details!\n @Official News",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69d13586&is=69cfe406&hm=f4c15a084d2937eb235c3bd2e07b9fd49695d0dbe9f971873ff3f548d9867dc5&",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1488570558697181195"
         },
         {
             "date": "2026-04-07",

@@ -1,6 +1,16 @@
 {
-    "last_updated": "2026-04-03 15:43:05",
+    "last_updated": "2026-04-03 18:55:44",
     "events": [
+        {
+            "date": "2026-04-01",
+            "iso_date": "2026-04-01T18:00:00Z",
+            "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
+            "type": "twitch",
+            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69d153ff&is=69d0027f&hm=088b3815cb9b1627c57a314661589136ce58c925ed9b3d018ee093cc23197a9b&",
+            "url": "https://www.twitch.tv/predecessorgame",
+            "original_id": "1488967151757824192"
+        },
         {
             "date": "2026-04-07",
             "iso_date": "2026-04-07T18:00:00Z",
@@ -16,8 +26,18 @@
             "iso_date": "2026-04-07T15:00:00Z",
             "title": "V1.13: THRONE OF THORNS",
             "type": "news",
+            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\nhttps://playp.red/3QbwlXe\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
+            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
+            "url": "https://playp.red/3QbwlXe",
+            "original_id": "1488526943820316804"
+        },
+        {
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "V1.13: THRONE OF THORNS",
+            "type": "news",
             "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\nWe\u2019ll find out soon enough \ud83d\udc40",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69d0b3b7&is=69cf6237&hm=c845da5b61842460c5867524c10fb602dd73bb1614da231cb20ad21f1cc2973b&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69d15c77&is=69d00af7&hm=a66e8ea82d6dae80b9bcba87c251ff7d22a09cdeee9782fc55ede07a387bccc5&",
             "url": "https://www.predecessorgame.com/en-US/news",
             "original_id": "1487885620175966318"
         },
@@ -26,10 +46,10 @@
             "iso_date": "2026-04-07T15:00:00Z",
             "title": "V1.13: THRONE OF THORNS",
             "type": "news",
-            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\nhttps://playp.red/3QbwlXe\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
-            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
-            "url": "https://playp.red/3QbwlXe",
-            "original_id": "1488526943820316804"
+            "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
+            "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news",
+            "original_id": "1487885557374914692"
         },
         {
             "date": "2026-04-07",
@@ -50,26 +70,6 @@
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d0cae3&is=69cf7963&hm=b6dc2cec60ed09fa2b550cd35e10ec05ccadc834b0e20087123090d81495f1b9&",
             "url": "https://www.twitch.tv/predecessorgame",
             "original_id": "1487185725479714916"
-        },
-        {
-            "date": "2026-04-01",
-            "iso_date": "2026-04-01T18:00:00Z",
-            "title": "V1.13 DEV STREAM",
-            "type": "twitch",
-            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \nhttps://www.twitch.tv/predecessorgame\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69d0ab3f&is=69cf59bf&hm=cf43fa57728ab86f0b64fe60ce395a20191b995e222bb62e2520d95fd8ee7ef1&",
-            "url": "https://www.twitch.tv/predecessorgame",
-            "original_id": "1488967151757824192"
-        },
-        {
-            "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
-            "title": "DAYBREAK V4",
-            "type": "news",
-            "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
-            "image": "",
-            "url": "https://www.predecessorgame.com/en-US/news",
-            "original_id": "1487885557374914692"
         },
         {
             "date": "2026-04-07",

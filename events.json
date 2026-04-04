@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-04 07:07:51",
+    "last_updated": "2026-04-04 09:44:54",
     "events": [
         {
             "original_id": "1487185725479714916",
@@ -89,6 +89,46 @@
             "type": "patch",
             "desc": "Quests are coming in V1.13: Throne of Thorns! \ud83d\udd25\n\nFrom daily tasks earning you XP to monthly challenges rewarding Quantum Cores, are you ready to complete them all?\n\nWe\u2019ll find out soon enough \ud83d\udc40",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487885619915915314/image_175.png?ex=69d20537&is=69d0b3b7&hm=f30874605daa0d0a4e7566663130687306e73627726bf93faeef852a60a146ed&",
+            "url": "https://www.predecessorgame.com/en-US/news"
+        },
+        {
+            "original_id": "1489295679032655912",
+            "date": "2026-04-02",
+            "iso_date": "2026-04-02T15:00:00Z",
+            "title": "MEET THE QUEEN OF THORNS, ADELE",
+            "type": "youtube",
+            "desc": "Meet the Queen of Thorns, Adele herself - she rules a queendom, but can she conquer the battlefield? \ud83c\udf39 \u2694\ufe0f\n\nhttps://youtu.be/93kJH55JG5I\n\n @Official News\nAdele | Hero Overview | Predecessor\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
+            "image": "https://i.ytimg.com/vi/93kJH55JG5I/maxresdefault.jpg",
+            "url": "https://youtu.be/93kJH55JG5I"
+        },
+        {
+            "original_id": "1488967151757824192",
+            "date": "2026-04-01",
+            "iso_date": "2026-04-01T18:00:00Z",
+            "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
+            "type": "twitch",
+            "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \n\nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \n\nhttps://www.twitch.tv/predecessorgame\n\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69d1fcbf&is=69d0ab3f&hm=53785c62c86783f49a8efae5828c4a593b92664a1428cb99ff87ccefdf312648&",
+            "url": "https://www.twitch.tv/predecessorgame"
+        },
+        {
+            "original_id": "1488103804258746389",
+            "date": "2026-03-30",
+            "iso_date": "2026-03-30T15:00:00Z",
+            "title": "EPIC ONLINE SERVICES CONNECTIVITY ISSUES",
+            "type": "patch",
+            "desc": "The Epic Online Services is currently experiencing connectivity issues, which may be causing login issues for some players in Predecessor.\n\nThe dev team is aware and is working closely with our partners to resolve this as soon as possible.\n\nOur apologies for the inconvenience, and thank you for your patience.",
+            "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news"
+        },
+        {
+            "original_id": "1487975529633026068",
+            "date": "2026-03-30",
+            "iso_date": "2026-03-30T15:00:00Z",
+            "title": "UPCOMING DOWNTIME FOR GAME UPDATE",
+            "type": "patch",
+            "desc": "\u26a0\ufe0f Upcoming Downtime\nPredecessor game servers will enter maintenance mode as we push a new game update. During this time you will be unable to play.",
+            "image": "https://images-ext-1.discordapp.net/external/IbiGZbO6HrmxAaiDrN2yZR_xuzO70SfrpZSR0Ei9Wrs/https/pbs.twimg.com/media/GjA_nkZXMAAPssx.jpg?format=webp&width=1581&height=889",
             "url": "https://www.predecessorgame.com/en-US/news"
         }
     ]

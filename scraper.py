@@ -34,28 +34,6 @@ def find_deep_img(obj):
             if res: return res
     return ""
 
-def clean_discord_text(text):
-    text = re.sub(r'<@&?\d+>', '', text)
-    text = text.replace('🔔', '')
-    text = re.sub(r'\n\s*\n', '\n', text)
-    return text.strip()
-
-def extract_external_link(m, full_text):
-    urls = re.findall(r'(https?://[^\s]+)', full_text)
-    for emb in m.get('embeds', []):
-        if emb.get('url'): urls.append(emb['url'])
-    for snap in m.get('message_snapshots', []):
-        msg = snap.get('message', {})
-        urls.extend(re.findall(r'(https?://[^\s]+)', msg.get('content', '')))
-        for emb in msg.get('embeds', []):
-            if emb.get('url'): urls.append(emb['url'])
-            
-    for url in urls:
-        url = url.rstrip('.,!?"\')')
-        if 'discord.com/channels' not in url and not any(url.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.webp']):
-            return url
-    return "https://www.predecessorgame.com/en-US/news"
-
 def extract_full_content(m):
     text = m.get('content', '')
     if 'message_snapshots' in m:
@@ -74,54 +52,126 @@ def ask_groq(messages_text):
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
     Today is {today}. Context: "Predecessor" game announcements.
-    Identify release dates for patches, hero reveals, or community events.
-    RULES: 1. Only return events with specific dates. 2. Format: JSON list only.
+    TASK: Process Discord messages into structured data.
+    
+    RULES:
+    1. Identify a SPECIFIC START DATE if mentioned in text (YYYY-MM-DD).
+    2. Identify a VERSION NUMBER if mentioned (e.g., "V1.13").
+    3. Extract a short, punchy TITLE.
+    4. Return ONLY a JSON list of objects.
+    
     Messages: {messages_text}
     """
-    chat = client.chat.completions.create(
-        messages=[{"role": "user", "content": prompt}],
-        model="llama-3.3-70b-versatile",
-        temperature=0.1
-    )
-    raw = chat.choices[0].message.content
-    return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
+    try:
+        chat = client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model="llama-3.3-70b-versatile",
+            temperature=0.1
+        )
+        raw = chat.choices[0].message.content
+        return json.loads(re.search(r'\[.*\]', raw, re.DOTALL).group(0))
+    except: return []
 
 def scrape():
     messages = get_discord_messages()
     if not messages: return
-    intel_pool, ai_input_list = {}, []
-    for m in messages:
-        text, img, ext_url = extract_full_content(m), find_deep_img(m), extract_external_link(m, extract_full_content(m))
-        if text:
-            intel_pool[m['id']] = {"text": clean_discord_text(text), "img": img, "url": ext_url, "timestamp": m['timestamp']}
-            ai_input_list.append(f"ID: {m['id']} | CONTENT: {text}")
+
+    # Load existing database for Persistence Rule and Version Sync
     try:
-        ai_events = ask_groq("\n---\n".join(ai_input_list))
-        final_registry = {}
-        for ae in ai_events:
-            mid = ae.get('original_id')
-            if mid in intel_pool:
-                full_text = intel_pool[mid]['text'].lower()
-                eurl = intel_pool[mid]['url']
-                etype = ae['type']
-                
-                # --- YOUTUBE AND TWITCH OVERRIDES ---
-                if "youtube.com" in eurl or "youtu.be" in eurl:
-                    etype = "youtube"
-                elif any(x in full_text for x in ["twitch", "stream"]):
-                    etype, eurl = "twitch", "https://www.twitch.tv/predecessorgame"
-                
-                iso = ae.get('iso_date', ae['date'] + ("T18:00:00Z" if etype == "twitch" else "T00:00:00Z"))
-                event_obj = {"date": ae['date'], "iso_date": iso, "title": ae['title'].upper(), "type": etype, "desc": intel_pool[mid]['text'], "url": eurl, "image": intel_pool[mid]['img'], "original_id": mid}
-                if mid in final_registry:
-                    if len(event_obj['title']) > len(final_registry[mid]['title']): final_registry[mid] = event_obj
-                else: final_registry[mid] = event_obj
+        with open('events.json', 'r') as f:
+            db_data = json.load(f)
+            master_list = db_data.get('events', [])
+    except:
+        master_list = []
+
+    existing_ids = [str(e.get('original_id')) for e in master_list]
+    
+    intel_pool = {}
+    ai_input_list = []
+    for m in messages:
+        # Rule: Card Creation per post
+        # Rule: Persistence - skip if already in DB
+        if str(m['id']) in existing_ids:
+            continue
+
+        content = extract_full_content(m)
+        img = find_deep_img(m)
+        if content:
+            intel_pool[m['id']] = {
+                "raw_text": content,
+                "clean_text": re.sub(r'<@&?\d+>', '', content).replace('🔔', '').strip(),
+                "img": img,
+                "posted": m['timestamp'][:10]
+            }
+            ai_input_list.append(f"ID: {m['id']} | CONTENT: {content}")
+
+    if not ai_input_list:
+        print("No new posts to process.")
+        return
+
+    try:
+        ai_results = ask_groq("\n---\n".join(ai_input_list))
         
-        merged_events = sorted(list(final_registry.values()), key=lambda x: x['date'])
-        output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": merged_events}
-        with open('events.json', 'w') as f: json.dump(output, f, indent=4)
-        print("Scrape and YouTube tagging complete.")
-    except Exception as e: print(f"Error: {e}")
+        for ar in ai_results:
+            mid = ar.get('original_id')
+            if mid not in intel_pool: continue
+            
+            intel = intel_pool[mid]
+            full_text = intel['raw_text']
+            
+            # --- DATE DETERMINATION HIERARCHY ---
+            event_date = ar.get('date') # 1. Direct Mention
+            
+            # 2. Version Sync
+            version = ar.get('version')
+            if (not event_date or event_date == "None") and version:
+                for old in master_list:
+                    if version in old['title'] or version in old['desc']:
+                        event_date = old['date']
+                        break
+            
+            # 3. Creation Date Fallback
+            if not event_date or event_date == "None":
+                event_date = intel['posted']
+
+            # --- CATEGORY & LINK ASSIGNMENT ---
+            etype = "patch" # Default
+            eurl = "https://www.predecessorgame.com/en-US/news" # Default fallback
+            
+            # Link check for YouTube
+            yt_match = re.search(r'(https?://(?:www\.)?(?:youtube\.com|youtu\.be)/[^\s]+)', full_text)
+            
+            # 1.0 Twitch Priority
+            if any(x in full_text.lower() for x in ["twitch", "live stream"]):
+                etype = "twitch"
+                eurl = "https://www.twitch.tv/predecessorgame"
+            # 2.0 YouTube Secondary
+            elif yt_match:
+                etype = "youtube"
+                eurl = yt_match.group(0).rstrip('.,!?"\')')
+            
+            # 3.0 Special Link Handling (playp.red priority)
+            pp_match = re.search(r'(https://playp\.red/[^\s]+)', full_text)
+            if pp_match:
+                eurl = pp_match.group(0).rstrip('.,!?"\')')
+
+            master_list.append({
+                "original_id": mid,
+                "date": event_date,
+                "iso_date": event_date + ("T18:00:00Z" if etype == "twitch" else "T15:00:00Z"),
+                "title": ar.get('title', 'UPDATE').upper(),
+                "type": etype,
+                "desc": intel['clean_text'],
+                "image": intel['img'],
+                "url": eurl
+            })
+
+        output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": master_list}
+        with open('events.json', 'w') as f:
+            json.dump(output, f, indent=4)
+        print("Scrape successful. Persistence and Hierarchies enforced.")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape()

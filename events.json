@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-04 03:47:50",
+    "last_updated": "2026-04-04 04:55:31",
     "events": [
         {
             "original_id": "1487185725479714916",
@@ -59,6 +59,26 @@
             "type": "patch",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\n\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
             "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news"
+        },
+        {
+            "original_id": "1488526943820316804",
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "V1.13: THRONE OF THORNS UPDATE",
+            "type": "patch",
+            "desc": "Catch up on all the V1.13 news so far - and take a look at the brand-new scoreboard too! \ud83d\udc47\n\nhttps://playp.red/3QbwlXe\n\n @Official News\nV1.13 Reveals Round-Up | Predecessor\nCatch up on all the exciting reveals coming to V1.13 on April 7th!",
+            "image": "https://d3tyjtqxpxwenc.cloudfront.net/kVgp1B/1_13_Blogheader_Throne_of_Thorns_3ea33ebc5f.jpg",
+            "url": "https://playp.red/3QbwlXe"
+        },
+        {
+            "original_id": "1487182428824145991",
+            "date": "2026-04-07",
+            "iso_date": "2026-04-07T15:00:00Z",
+            "title": "V1.13: THRONE OF THORNS RELEASE",
+            "type": "patch",
+            "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69d17091&is=69d01f11&hm=5f8e9797b9adfb62572fb3ba726acc658dc5f6a11440c82d9699480d6f9740fe&",
             "url": "https://www.predecessorgame.com/en-US/news"
         }
     ]

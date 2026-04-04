@@ -12,7 +12,7 @@
         :root { --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); --border: #1e2638; --text: #c8d0e0; --glass-blur: blur(25px); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem 1rem; min-height: 100vh; position: relative; overflow-x: hidden; }
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./img/bg.jpg') no-repeat center center; background-size: cover; opacity: 0.10; mix-blend-mode: luminosity; z-index: -1; pointer-events: none; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./img/bg.jpg') no-repeat center center; background-size: cover; opacity: 0.15; mix-blend-mode: luminosity; z-index: -1; pointer-events: none; }
         .container { max-width: 1400px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
         .header h1 { font-family: 'StoricaHeavy', sans-serif; font-size: 4.5rem; text-transform: uppercase; margin: 0; letter-spacing: 2px; background: linear-gradient(to bottom, var(--gold-light) 20%, var(--gold-dark) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8)); }
@@ -21,6 +21,7 @@
         @keyframes hudPulse { 0%, 100% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } }
         .hud-column { display: flex; flex-direction: column; align-items: center; min-width: 300px; max-width: 350px; text-align: center; }
         .next-event-label { font-family: 'Orbitron'; font-size: 0.8rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 10px; }
+        /* Glow removed from title below */
         .next-op-title { font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; font-weight: 700; min-height: 3rem; margin-bottom: 15px; }
         .hud-next-img { width: 100%; height: 160px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; margin-bottom: 15px; }
         .timer-hud { display: flex; gap: 8px; margin-bottom: 15px; }
@@ -51,17 +52,23 @@
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
-        @media (max-width: 1100px) { .countdown-container { flex-direction: column; align-items: center; text-align: center; clip-path: none; border-radius: 4px; padding: 30px; } .hud-left { align-items: center; text-align: center; margin-bottom: 20px; } .hud-right { align-items: center; } .hud-next-img { width: 100%; height: auto; max-width: 400px; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
+        .briefing-date { display: block; margin-top: 25px; font-size: 14px; color: var(--teal); font-family: 'Orbitron'; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header"><h1>PredeCalendar</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
         <div class="countdown-container" id="hud"></div>
-        <div class="legend"><div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div><div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div><div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div><div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div><div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div></div>
+        <div class="legend">
+            <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
+            <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
+            <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
+            <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
+            <div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div>
+        </div>
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
-    <div id="global-briefing"><img id="b-img" class="briefing-img" src=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div></div>
+    <div id="global-briefing"><img id="b-img" class="briefing-img" src=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div><span id="b-date" class="briefing-date"></span></div></div>
     <script>
         let evData = []; const today = new Date();
         const hud = document.getElementById('hud'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
@@ -83,7 +90,18 @@
                 nextEvents.forEach((ev, i) => {
                     const col = document.createElement('div');
                     col.className = 'hud-column';
-                    col.innerHTML = `<span class="next-event-label">NEXT EVENT</span><div class="next-op-title">${ev.title}</div><img src="${ev.image}" class="hud-next-img" style="display: ${ev.image ? 'block' : 'none'}"><div class="timer-hud"><div class="timer-unit"><div class="timer-val" id="d-${i}">00</div><div class="timer-label">DAYS</div></div><div class="timer-unit"><div class="timer-val" id="h-${i}">00</div><div class="timer-label">HRS</div></div><div class="timer-unit"><div class="timer-val" id="m-${i}">00</div><div class="timer-label">MIN</div></div><div class="timer-unit"><div class="timer-val" id="s-${i}">00</div><div class="timer-label">SEC</div></div></div>${ev.type === 'twitch' ? `<a href="${ev.url}" target="_blank" class="twitch-cta">Official Twitch Channel →</a>` : ''}`;
+                    col.innerHTML = `
+                        <span class="next-event-label">NEXT EVENT</span>
+                        <div class="next-op-title">${ev.title}</div>
+                        <img src="${ev.image}" class="hud-next-img" style="display: ${ev.image ? 'block' : 'none'}">
+                        <div class="timer-hud">
+                            <div class="timer-unit"><div class="timer-val" id="d-${i}">00</div><div class="timer-label">DAYS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="h-${i}">00</div><div class="timer-label">HRS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="m-${i}">00</div><div class="timer-label">MIN</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="s-${i}">00</div><div class="timer-label">SEC</div></div>
+                        </div>
+                        ${ev.type === 'twitch' ? `<a href="${ev.url}" target="_blank" class="twitch-cta">Official Twitch Channel →</a>` : ''}
+                    `;
                     hud.appendChild(col);
                 });
                 setInterval(() => {
@@ -110,9 +128,9 @@
             while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
-                const isToday = cursor.toDateString() === today.toDateString();
+                const isT = cursor.toDateString() === today.toDateString();
                 const cell = document.createElement('div');
-                cell.className = `cell active ${isToday ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
+                cell.className = `cell active ${isT ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
@@ -122,6 +140,7 @@
                         let color = "var(--gold)"; if(ev.type === "hero") color = "var(--teal)"; if(ev.type === "season") color = "var(--red)"; if(ev.type === "twitch") color = "var(--twitch)"; if(ev.type === "youtube") color = "var(--youtube)";
                         briefing.style.borderColor = color; document.getElementById('b-tag').style.color = color;
                         document.getElementById('b-tag').innerText = ev.title; document.getElementById('b-desc').innerText = ev.desc;
+                        document.getElementById('b-date').innerText = "TARGET DATE: " + ev.date;
                         if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
                         briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;

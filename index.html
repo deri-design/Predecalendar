@@ -27,7 +27,7 @@
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
         .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 1.8rem; color: #fff; background: rgba(0,0,0,0.4); padding: 8px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 65px; text-align: center; }
         .timer-label { font-size: 0.5rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: bold; }
-        .twitch-cta { padding: 8px 15px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); }
+        .twitch-cta { padding: 8px 15px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); }
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; color: #fff; letter-spacing: 1px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
@@ -41,7 +41,6 @@
         .num { font-family: 'Orbitron'; font-size: 0.85rem; color: #fff; font-weight: bold; }
         .month-tag { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--gold); font-weight: bold; }
         .cell.today { outline: 2px solid var(--gold); background: rgba(220, 182, 59, 0.1); z-index: 2; }
-        .cell.today .num { color: var(--gold); }
         .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: pointer; padding: 8px; }
         .event:hover { border-color: #fff !important; transform: translateY(-2px); }
         .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); } .event.youtube { border-color: var(--youtube); }
@@ -50,7 +49,7 @@
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.95); backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid rgba(255,255,255,0.1); display: none; }
         .briefing-content { padding: 25px; }
-        .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
+        .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
         .briefing-date { display: block; margin-top: 25px; font-size: 14px; color: var(--teal); font-family: 'Orbitron'; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
     </style>
@@ -59,13 +58,7 @@
     <div class="container">
         <header class="header"><h1>PredeCalendar</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
         <div class="countdown-container" id="hud"></div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
-            <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
-            <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
-            <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
-            <div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div>
-        </div>
+        <div class="legend"><div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div><div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div><div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div><div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div><div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div></div>
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
     <div id="global-briefing"><img id="b-img" class="briefing-img" src=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div><span id="b-date" class="briefing-date"></span></div></div>
@@ -108,7 +101,10 @@
                     const diff = targetTime - Date.now();
                     const d = String(Math.floor(diff/864e5)).padStart(2,'0'), h = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0'), m = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0'), s = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
                     nextEvents.forEach((_, i) => {
-                        document.getElementById(`d-${i}`).innerText = d; document.getElementById(`h-${i}`).innerText = h; document.getElementById(`m-${i}`).innerText = m; document.getElementById(`s-${i}`).innerText = s;
+                        const dEl = document.getElementById(`d-${i}`); if(dEl) dEl.innerText = d;
+                        const hEl = document.getElementById(`h-${i}`); if(hEl) hEl.innerText = h;
+                        const mEl = document.getElementById(`m-${i}`); if(mEl) mEl.innerText = m;
+                        const sEl = document.getElementById(`s-${i}`); if(sEl) sEl.innerText = s;
                     });
                 }, 1000);
             } else { hud.innerHTML = '<div class="next-op-title">NO UPCOMING OPS</div>'; }
@@ -125,9 +121,8 @@
             while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
-                const isT = cursor.toDateString() === today.toDateString();
                 const cell = document.createElement('div');
-                cell.className = `cell active ${isT ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
+                cell.className = `cell active ${cursor.toDateString() === today.toDateString() ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;

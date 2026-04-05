@@ -11,46 +11,27 @@
         @font-face { font-family: 'StoricaHeavy'; src: url('./fonts/Storica-Heavy.woff2') format('woff2'); font-weight: normal; font-style: normal; font-display: swap; }
         :root { --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); --border: #1e2638; --text: #c8d0e0; --glass-blur: blur(25px); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
         body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; padding: 2rem 1.5rem; min-height: 100vh; position: relative; overflow-x: hidden; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./img/bg.jpg') no-repeat center center; background-size: cover; opacity: 0.15; mix-blend-mode: luminosity; z-index: -1; pointer-events: none; }
-        
-        .container { max-width: 1500px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
-
-        /* --- HEADER --- */
+        .container { max-width: 1400px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
         .header h1 { font-family: 'StoricaHeavy', sans-serif; font-size: 4.5rem; text-transform: uppercase; margin: 0; letter-spacing: 2px; background: linear-gradient(to bottom, var(--gold-light) 20%, var(--gold-dark) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8)); }
         .subline { font-family: 'Rajdhani', sans-serif; color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
-
-        /* --- REDESIGNED HUD (2 COLUMNS) --- */
-        .countdown-container { 
-            width: 100%; max-width: 1100px; margin: 0 auto 3rem auto; background: var(--cell-glass); backdrop-filter: var(--glass-blur); 
-            border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); padding: 35px 50px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); 
-            display: flex; justify-content: space-between; align-items: center; gap: 40px; animation: hudPulse 4s infinite; 
-        }
+        .countdown-container { width: 100%; max-width: 1100px; margin: 0 auto 3rem auto; background: var(--cell-glass); backdrop-filter: var(--glass-blur); border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); padding: 40px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); display: flex; justify-content: center; gap: 40px; animation: hudPulse 4s infinite; overflow-x: auto; }
         @keyframes hudPulse { 0%, 100% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } }
-
-        .hud-left { flex: 1.2; display: flex; flex-direction: column; align-items: flex-start; }
-        .next-event-label { font-family: 'Orbitron'; font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 10px; }
-        .next-op-title { font-family: 'Orbitron'; font-size: 1.8rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; font-weight: 700; margin-bottom: 15px; }
-
-        .timer-hud { display: flex; gap: 10px; margin: 10px 0 20px 0; }
+        .hud-column { display: flex; flex-direction: column; align-items: center; min-width: 300px; max-width: 350px; text-align: center; }
+        .next-event-label { font-family: 'Orbitron'; font-size: 0.8rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 10px; }
+        .next-op-title { font-family: 'Orbitron'; font-size: 1.4rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; font-weight: 700; min-height: 3rem; margin-bottom: 15px; }
+        .hud-next-img { width: 100%; height: 160px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; margin-bottom: 15px; }
+        .timer-hud { display: flex; gap: 8px; margin-bottom: 15px; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
-        .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 2.2rem; color: #fff; background: rgba(0,0,0,0.4); padding: 10px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 85px; text-align: center; }
-        .timer-label { font-size: 0.55rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: bold; }
-
-        .twitch-cta { display: none; padding: 10px 25px; background: var(--twitch); color: #fff; font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); }
-        .hud-right { flex: 1; display: flex; justify-content: flex-end; }
-        .hud-next-img { width: 320px; height: 170px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-
-        /* --- LEGEND --- */
+        .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 1.8rem; color: #fff; background: rgba(0,0,0,0.4); padding: 8px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 65px; text-align: center; }
+        .timer-label { font-size: 0.5rem; font-family: 'Orbitron'; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: bold; }
+        .twitch-cta { padding: 8px 15px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); }
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
-        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; color: #fff; text-shadow: 0 2px 4px #000; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; color: #fff; letter-spacing: 1px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
         .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); } .dot.twitch { background: var(--twitch); } .dot.youtube { background: var(--youtube); }
-
-        /* --- GRID (ROLLING 10/15) --- */
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.7rem; color: #5d7599; font-family: 'Orbitron'; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { background: #141b2a; color: var(--gold); }
@@ -60,76 +41,62 @@
         .num { font-family: 'Orbitron'; font-size: 0.85rem; color: #fff; font-weight: bold; }
         .month-tag { font-family: 'Orbitron'; font-size: 0.6rem; color: var(--gold); font-weight: bold; }
         .cell.today { outline: 2px solid var(--gold); background: rgba(220, 182, 59, 0.1); z-index: 2; }
-        
         .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: pointer; padding: 8px; }
-        .event:hover { border-color: #fff !important; transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+        .event:hover { border-color: #fff !important; transform: translateY(-2px); }
         .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); } .event.youtube { border-color: var(--youtube); }
         .e-title { font-weight: bold; color: var(--gold); font-family: 'Orbitron'; font-size: 0.55rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; } .event.youtube .e-title { color: #ff6666; }
-
-        /* --- POPUP --- */
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.95); backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid rgba(255,255,255,0.1); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Orbitron'; font-size: 1rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
+        .briefing-date { display: block; margin-top: 25px; font-size: 14px; color: var(--teal); font-family: 'Orbitron'; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header"><h1>PredeCalendar</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
-        <div class="countdown-container" id="hud">
-            <div class="hud-left">
-                <span class="next-event-label">NEXT EVENT</span>
-                <div class="next-op-title" id="op-title">STANDBY</div>
-                <div class="timer-hud">
-                    <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
-                </div>
-                <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
-            </div>
-            <div class="hud-right"><img id="hud-next-img" class="hud-next-img" src="" alt="Tactical HUD"></div>
-        </div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
-            <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
-            <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
-            <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
-            <div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div>
-        </div>
+        <div class="countdown-container" id="hud"></div>
+        <div class="legend"><div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div><div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div><div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div><div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div><div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div></div>
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
-    <div id="global-briefing"><img id="b-img" class="briefing-img" src=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div></div>
+    <div id="global-briefing"><img id="b-img" class="briefing-img" src=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div><span id="b-date" class="briefing-date"></span></div></div>
     <script>
         let evData = []; const today = new Date();
-        const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
+        const hud = document.getElementById('hud'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
         async function init() {
             try {
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
                 evData = data.events || [];
-                setupCountdown(); renderRoadmap();
+                setupHUD(); renderRoadmap();
             } catch(e) { renderRoadmap(); }
         }
-        function setupCountdown() {
+        function setupHUD() {
             const now = Date.now();
             const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
             if (futureEvents.length > 0) {
-                const nextEv = futureEvents[0]; document.getElementById('op-title').innerText = nextEv.title;
-                if (nextEv.image) { hudImg.src = nextEv.image; hudImg.style.display = 'block'; }
-                if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'inline-block'; } 
-                else { document.getElementById('twitch-btn').style.display = 'none'; }
+                const targetTime = futureEvents[0].time;
+                const nextEvents = futureEvents.filter(e => e.time === targetTime);
+                hud.innerHTML = '';
+                nextEvents.forEach((ev, i) => {
+                    const col = document.createElement('div');
+                    col.className = 'hud-column';
+                    col.innerHTML = `<span class="next-event-label">NEXT EVENT</span><div class="next-op-title">${ev.title}</div><img src="${ev.image}" class="hud-next-img" style="display: ${ev.image ? 'block' : 'none'}"><div class="timer-hud"><div class="timer-unit"><div class="timer-val" id="d-${i}">00</div><div class="timer-label">DAYS</div></div><div class="timer-unit"><div class="timer-val" id="h-${i}">00</div><div class="timer-label">HRS</div></div><div class="timer-unit"><div class="timer-val" id="m-${i}">00</div><div class="timer-label">MIN</div></div><div class="timer-unit"><div class="timer-val" id="s-${i}">00</div><div class="timer-label">SEC</div></div></div>${ev.type === 'twitch' ? `<a href="${ev.url}" target="_blank" class="twitch-cta">Official Twitch Channel →</a>` : ''}`;
+                    hud.appendChild(col);
+                });
                 setInterval(() => {
-                    const diff = nextEv.time - Date.now();
-                    if (diff < 0) { window.location.reload(); return; }
-                    document.getElementById('d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
-                    document.getElementById('h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
-                    document.getElementById('m').innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
-                    document.getElementById('s').innerText = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
+                    const diff = targetTime - Date.now();
+                    const d = String(Math.floor(diff/864e5)).padStart(2,'0'), h = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0'), m = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0'), s = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
+                    nextEvents.forEach((_, i) => {
+                        const dEl = document.getElementById(`d-${i}`); if(dEl) dEl.innerText = d;
+                        const hEl = document.getElementById(`h-${i}`); if(hEl) hEl.innerText = h;
+                        const mEl = document.getElementById(`m-${i}`); if(mEl) mEl.innerText = m;
+                        const sEl = document.getElementById(`s-${i}`); if(sEl) sEl.innerText = s;
+                    });
                 }, 1000);
-            } else { document.getElementById('op-title').innerText = "NO UPCOMING OPS"; }
+            } else { hud.innerHTML = '<div class="next-op-title">NO UPCOMING OPS</div>'; }
         }
         function renderRoadmap() {
             const grid = document.getElementById('main-grid');
@@ -143,8 +110,9 @@
             while (cursor <= end) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
+                const isT = cursor.toDateString() === today.toDateString();
                 const cell = document.createElement('div');
-                cell.className = `cell active ${cursor.toDateString() === today.toDateString() ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
+                cell.className = `cell active ${isT ? 'today' : ''} ${cursor.getDay() === 0 || cursor.getDay() === 6 ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
@@ -154,6 +122,7 @@
                         let color = "var(--gold)"; if(ev.type === "hero") color = "var(--teal)"; if(ev.type === "season") color = "var(--red)"; if(ev.type === "twitch") color = "var(--twitch)"; if(ev.type === "youtube") color = "var(--youtube)";
                         briefing.style.borderColor = color; document.getElementById('b-tag').style.color = color;
                         document.getElementById('b-tag').innerText = ev.title; document.getElementById('b-desc').innerText = ev.desc;
+                        document.getElementById('b-date').innerText = "TARGET DATE: " + ev.date;
                         if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
                         briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;

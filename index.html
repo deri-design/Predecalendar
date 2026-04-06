@@ -45,7 +45,7 @@
         #hud-daily .timer-val { border-bottom: 2px solid var(--teal); }
         #hud-daily .timer-label { color: var(--teal); }
 
-        .twitch-cta { display: none; padding: 10px 25px; background: var(--twitch); color: #fff; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); }
+        .twitch-cta { padding: 8px 15px; background: var(--twitch); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); margin-top: 5px; }
         .twitch-cta:hover { background: #a970ff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); }
         
         .hud-right { flex: 1; display: flex; justify-content: flex-end; }
@@ -110,6 +110,7 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <header class="header">
             <h1>PredeCalendar</h1>
@@ -118,6 +119,7 @@
 
         <!-- DUAL HUD LAYOUT -->
         <div class="huds-wrapper">
+            
             <!-- NEXT EVENT HUD -->
             <div class="countdown-container" id="hud">
                 <div class="hud-left">
@@ -131,7 +133,9 @@
                     </div>
                     <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
                 </div>
-                <div class="hud-right"><img id="hud-next-img" class="hud-next-img" src="" alt="Next Operation"></div>
+                <div class="hud-right">
+                    <img id="hud-next-img" class="hud-next-img" src="" alt="Next Operation">
+                </div>
             </div>
 
             <!-- DAILY ION LOOT CORE HUD -->
@@ -140,6 +144,7 @@
                     <span class="next-event-label" style="color: var(--teal);">REFRESHES DAILY (10 AM CEST)</span>
                     <div class="next-op-title">DAILY ION LOOT CORE</div>
                     <div class="timer-hud">
+                        <!-- Days hidden for Daily Reset -->
                         <div class="timer-unit"><div class="timer-val" id="daily-h">00</div><div class="timer-label">HRS</div></div>
                         <div class="timer-unit"><div class="timer-val" id="daily-m">00</div><div class="timer-label">MIN</div></div>
                         <div class="timer-unit"><div class="timer-val" id="daily-s">00</div><div class="timer-label">SEC</div></div>
@@ -149,6 +154,7 @@
                     <img class="hud-next-img" src="./img/ion-loot-core.png" alt="Ion Loot Core" style="display: block;">
                 </div>
             </div>
+
         </div>
 
         <div class="legend">
@@ -177,7 +183,7 @@
     <script>
         let evData =[]; 
         const today = new Date();
-        let currentWeekOffset = 0; // Tracks the 3-week sliding window
+        let currentWeekOffset = 0; 
         
         const grid = document.getElementById('main-grid');
         const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
@@ -195,13 +201,14 @@
 
         // --- CALENDAR NAVIGATION LOGIC ---
         function updateNavButtons() {
+            if (currentWeekOffset === 0) {
+                document.getElementById('btn-curr').classList.add('active');
+            } else {
+                document.getElementById('btn-curr').classList.remove('active');
+            }
+            // Removed 'active' logic from prev and next so they can be clicked infinite times
             document.getElementById('btn-prev').classList.remove('active');
-            document.getElementById('btn-curr').classList.remove('active');
             document.getElementById('btn-next').classList.remove('active');
-
-            if (currentWeekOffset < 0) document.getElementById('btn-prev').classList.add('active');
-            else if (currentWeekOffset > 0) document.getElementById('btn-next').classList.add('active');
-            else document.getElementById('btn-curr').classList.add('active');
         }
 
         function shiftView(weeks) {
@@ -221,7 +228,7 @@
 
         function animateAndRender(direction) {
             grid.style.animation = 'none';
-            void grid.offsetWidth; // Trigger reflow to restart animation
+            void grid.offsetWidth; // Trigger reflow
             
             if (direction === 'right') grid.style.animation = 'slideInR 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards';
             else if (direction === 'left') grid.style.animation = 'slideInL 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards';
@@ -280,18 +287,18 @@
             }, 1000);
         }
 
-        // --- GRID RENDER (Sliding 3-Week Window) ---
+        // --- GRID RENDER (Sliding Window) ---
         function renderRoadmap() {
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
 
-            // START DATE: 10 days ago + (offset * 7 days), then snap back to Monday
+            // START DATE: 10 days ago + (offset * 7 days), snap to Monday
             let start = new Date(); 
             start.setDate(start.getDate() - 10 + (currentWeekOffset * 7));
             let dayOffset = start.getDay(); 
             start.setDate(start.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
-            start.setDate(start.getDate() + 7); // Remove top row to keep it strictly 3 weeks
+            start.setDate(start.getDate() + 7); // Remove top row
             
-            // END DATE: Exactly 20 days after start (21 days total = 3 weeks)
+            // END DATE: 20 days after start (21 days total = 3 weeks = 3 rows)
             let end = new Date(start);
             end.setDate(end.getDate() + 20);
 
@@ -304,8 +311,14 @@
 
                 const cell = document.createElement('div');
                 cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
-                cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
                 
+                let cellHtml = `
+                    <div class="num-container">
+                        <span class="num">${cursor.getDate()}</span>
+                        <span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span>
+                    </div>
+                `;
+
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
                     a.innerHTML = `<div class="e-title">${ev.title}</div>`;
@@ -328,6 +341,30 @@
                         
                         briefing.style.display = 'block';
                         
+                        let x = rect.left + rect.width + 20, y = rect.top;
+                        if (x + 450 > window.innerWidth) x = rect.left - 470;
+                        if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;
+                        briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
+                    });
+                    a.addEventListener('mouseleave', () => briefing.style.display = 'none');
+                    cell.appendChild(a);
+                });
+                
+                cell.innerHTML += cellHtml; // Append number last so it stays on top
+                cell.innerHTML = cellHtml; // Actually rewrite inner HTML properly
+                
+                // Re-append to fix the cellHtml overwrite above
+                cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
+                items.forEach(ev => {
+                    let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
+                    a.innerHTML = `<div class="e-title">${ev.title}</div>`;
+                    a.addEventListener('mouseenter', (e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        let color = "var(--gold)"; if(ev.type === "hero") color = "var(--teal)"; if(ev.type === "season") color = "var(--red)"; if(ev.type === "twitch") color = "var(--twitch)"; if(ev.type === "youtube") color = "var(--youtube)";
+                        briefing.style.borderColor = color; document.getElementById('b-tag').style.color = color;
+                        document.getElementById('b-tag').innerText = ev.title; document.getElementById('b-desc').innerText = ev.desc;
+                        if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
+                        briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;
                         if (x + 450 > window.innerWidth) x = rect.left - 470;
                         if (y + briefing.offsetHeight > window.innerHeight) y = window.innerHeight - briefing.offsetHeight - 40;

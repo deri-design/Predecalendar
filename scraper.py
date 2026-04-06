@@ -19,11 +19,11 @@ def get_discord_messages():
 def find_deep_img(obj):
     if not obj: return ""
     if isinstance(obj, str):
-        if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj:
+        if any(ext in obj.lower() for ext in['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj:
             return obj
     if isinstance(obj, dict):
         for key in ['url', 'proxy_url']:
-            if key in obj and isinstance(obj[key], str) and any(ext in obj[key].lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
+            if key in obj and isinstance(obj[key], str) and any(ext in obj[key].lower() for ext in['.png', '.jpg', '.jpeg', '.webp']):
                 return obj[key]
         for v in obj.values():
             res = find_deep_img(v)
@@ -34,7 +34,7 @@ def find_deep_img(obj):
             if res: return res
     return ""
 
-def extract_all_content_and_links(m):
+def extract_all_text_and_links(m):
     text_segments = [m.get('content', '')]
     urls = re.findall(r'(https?://[^\s]+)', m.get('content', ''))
     def process_obj(obj):
@@ -51,22 +51,21 @@ def extract_all_content_and_links(m):
                 if emb.get('url'): urls.append(emb['url'])
     process_obj(m)
     full_text = "\n".join(filter(None, text_segments))
-    clean_urls =[u.rstrip('.,!?"\')') for u in urls]
-    return full_text, clean_urls
+    return full_text, [u.rstrip('.,!?"\')') for u in urls]
 
 def ask_groq(messages_text):
     client = Groq(api_key=GROQ_API_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
     Today is {today}. Context: "Predecessor" game announcements.
-    TASK: Extract event dates and versions.
+    TASK: Extract precise event data.
     
     RULES:
-    1. If the message explicitly mentions a FUTURE START DATE (like "April 7th"), return it as YYYY-MM-DD.
-    2. If the message says "Live Now", "Available Now", or does NOT mention a specific future date, you MUST set "date" to "None".
-    3. Identify a VERSION NUMBER (e.g., V1.13) if mentioned.
-    4. Return a short, uppercase TITLE.
-    5. Return ONLY a JSON list of objects:[{{"idx": 0, "date": "YYYY-MM-DD or None", "version": "V1.xx or None", "title": "..."}}]
+    1. "date": If a specific future date is mentioned, use YYYY-MM-DD. If it says "LIVE NOW", "Today", or "is live!", output exactly "TODAY". If neither, output "NONE".
+    2. "time": Extract the UTC time in 24-hour format (HH:MM:SS). e.g., 6PM UTC = "18:00:00". If no time, output "NONE".
+    3. "version": Extract version (e.g., V1.13). If none, output "NONE".
+    4. "title": Short and specific. DO NOT add words like "Announcement", "Update", or "Release". Examples of good titles: "V1.13 PATCH", "DAYBREAK V4", "ADELE REVEAL".
+    5. "original_id": The EXACT BLOCK_ID.
     
     Messages:
     {messages_text}
@@ -82,84 +81,94 @@ def ask_groq(messages_text):
     except: return[]
 
 def scrape():
-    print("--- Starting Discord Timestamp Sync ---")
+    print("--- Starting Date & Title Enforcement Scrape ---")
     messages = get_discord_messages()
     if not messages: return
 
     try:
         with open('events.json', 'r') as f:
-            db = json.load(f).get('events',[])
-    except: db = []
+            db_data = json.load(f)
+            master_events = db_data.get('events',[])
+    except: master_events = []
 
-    existing_ids = [str(e.get('original_id')) for e in db]
-    to_process =[]
-    ai_input = ""
+    existing_ids =[str(e.get('original_id')) for e in master_events]
+    intel_pool = {}
+    ai_input_list =[]
     
     for m in messages:
-        if str(m['id']) in existing_ids: continue # Persistence Rule
+        if str(m['id']) in existing_ids: continue # Persistence
         
-        full_text, all_urls = extract_all_content_and_links(m)
+        full_text, all_urls = extract_all_text_and_links(m)
         if full_text:
-            to_process.append({
-                "id": m['id'], "raw": full_text, "urls": all_urls,
+            intel_pool[str(m['id'])] = {
+                "raw": full_text,
                 "clean": re.sub(r'<@&?\d+>', '', full_text).replace('🔔', '').strip(),
-                "img": find_deep_img(m), 
-                "posted": m['timestamp'][:10] # EXACT DISCORD CREATION DATE (YYYY-MM-DD)
-            })
-            ai_input += f"BLOCK_INDEX: {len(to_process)-1}\nCONTENT: {full_text}\n---\n"
+                "all_urls": all_urls,
+                "img": find_deep_img(m),
+                "posted": m['timestamp'][:10]
+            }
+            ai_input_list.append(f"BLOCK_ID: {m['id']}\nCONTENT: {full_text}")
 
-    if not to_process:
-        print("Persistence active. No new messages.")
+    if not ai_input_list:
+        print("No new events.")
         return
 
-    ai_results = ask_groq(ai_input)
+    ai_results = ask_groq("\n---\n".join(ai_input_list))
     new_entries =[]
 
     for ar in ai_results:
-        idx = ar.get('idx')
-        if idx is None or idx >= len(to_process): continue
+        mid = str(ar.get('original_id') or ar.get('BLOCK_ID'))
+        if mid not in intel_pool: continue
         
-        intel = to_process[idx]
+        intel = intel_pool[mid]
         text_lower = intel['raw'].lower()
+        urls = intel['all_urls']
         
-        # 1. DATE HIERARCHY
-        event_date = str(ar.get('date')).strip()
-        version = str(ar.get('version')).strip()
+        # --- DATE HIERARCHY ---
+        ai_date = str(ar.get('date')).strip().upper()
+        version = str(ar.get('version')).strip().upper()
         
-        # Nullify bad AI guesses
-        if event_date.lower() == "none" or not re.match(r'^\d{4}-\d{2}-\d{2}$', event_date):
+        if ai_date == "TODAY":
+            event_date = intel['posted']
+        elif re.match(r'^\d{4}-\d{2}-\d{2}$', ai_date):
+            event_date = ai_date
+        else:
             event_date = None
         
-        # Version Sync
-        if not event_date and version and version.lower() != "none":
-            for old in (db + new_entries):
-                if version.lower() in old['title'].lower() or version.lower() in old.get('desc', '').lower():
+        # Version Sync (Only if date is entirely missing)
+        if not event_date and version and version != "NONE":
+            for old in (master_events + new_entries):
+                if version in old['title'].upper() or version in old['desc'].upper():
                     event_date = old['date']
                     break
         
-        # Final Fallback -> Discord Post Date
+        # Absolute Fallback
         if not event_date:
             event_date = intel['posted']
 
-        # 2. CATEGORY & LINK ASSIGNMENT
-        etype = "patch"
+        # --- CATEGORY & LINK ASSIGNMENT ---
+        etype = "patch" 
         eurl = "https://www.predecessorgame.com/en-US/news"
         
-        yt_url = next((u for u in intel['urls'] if "youtube.com" in u or "youtu.be" in u), None)
-        pp_url = next((u for u in intel['urls'] if "playp.red" in u), None)
+        yt_url = next((u for u in urls if "youtube.com" in u or "youtu.be" in u), None)
+        pp_url = next((u for u in urls if "playp.red" in u), None)
 
-        if "twitch" in text_lower or "live stream" in text_lower or "livestream" in text_lower:
+        if any(x in text_lower for x in ["twitch", "live stream"]):
             etype, eurl = "twitch", "https://www.twitch.tv/predecessorgame"
         elif yt_url:
-            etype, eurl = "youtube", yt_url
+            etype, eurl = "youtube", yt_url.rstrip('.,!?"\')')
         
-        if pp_url: # playp.red priority override
-            eurl = pp_url
+        if pp_url: eurl = pp_url.rstrip('.,!?"\')')
+
+        # --- TIME PARSING ---
+        ai_time = str(ar.get('time')).strip()
+        if not re.match(r'^\d{2}:\d{2}:\d{2}$', ai_time):
+            ai_time = "18:00:00" if etype == "twitch" else "15:00:00"
 
         new_entries.append({
-            "original_id": intel['id'],
+            "original_id": mid,
             "date": event_date,
-            "iso_date": event_date + ("T18:00:00Z" if etype == "twitch" else "T00:00:00Z"),
+            "iso_date": f"{event_date}T{ai_time}Z",
             "title": ar.get('title', 'UPDATE').upper(),
             "type": etype,
             "desc": intel['clean'],
@@ -167,12 +176,10 @@ def scrape():
             "url": eurl
         })
 
-    # Combine and Save
-    final_list = db + new_entries
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_list}
+    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": master_events + new_entries}
     with open('events.json', 'w') as f:
         json.dump(output, f, indent=4)
-    print(f"Success: {len(new_entries)} new events added.")
+    print(f"Success. Added {len(new_entries)} items.")
 
 if __name__ == "__main__":
     scrape()

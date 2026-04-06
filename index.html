@@ -4,163 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PredeCalendar | Live Roadmap</title>
-    <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- CUSTOM FONT LOADING --- */
-        @font-face {
-            font-family: 'StoricaHeavy';
-            src: url('./fonts/Storica-Heavy.woff2') format('woff2');
-            font-weight: normal; font-style: normal; font-display: swap;
-        }
-
-        :root { 
-            --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; 
-            --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; 
-            --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); --border: #1e2638; 
-            --text: #c8d0e0; --hud-glow: rgba(220, 182, 59, 0.4); --glass-blur: blur(25px);
-        }
-
+        @font-face { font-family: 'StoricaHeavy'; src: url('./fonts/Storica-Heavy.woff2') format('woff2'); font-weight: normal; font-style: normal; font-display: swap; }
+        :root { --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); --border: #1e2638; --text: #c8d0e0; --glass-blur: blur(25px); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; /* Global font set to Inter */
-            padding: 2rem 1rem; min-height: 100vh; position: relative; overflow-x: hidden;
-        }
-
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('./img/bg.jpg') no-repeat center center; background-size: cover;
-            opacity: 0.15; mix-blend-mode: luminosity; z-index: -1; pointer-events: none;
-        }
-        
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 2rem 1rem; min-height: 100vh; position: relative; overflow-x: hidden; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./img/bg.jpg') no-repeat center center; background-size: cover; opacity: 0.10; mix-blend-mode: luminosity; z-index: -1; pointer-events: none; }
         .container { max-width: 1400px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
-
-        /* --- HEADER SECTION --- */
         .header { text-align: center; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
-        .header h1 { 
-            font-family: 'StoricaHeavy', sans-serif; font-size: 4.5rem; text-transform: uppercase; margin: 0; letter-spacing: 2px;
-            background: linear-gradient(to bottom, var(--gold-light) 20%, var(--gold-dark) 90%);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
-        }
+        .header h1 { font-family: 'StoricaHeavy', sans-serif; font-size: 4.5rem; text-transform: uppercase; margin: 0; letter-spacing: 2px; background: linear-gradient(to bottom, var(--gold-light) 20%, var(--gold-dark) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8)); }
         .subline { font-family: 'Inter', sans-serif; color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
-
-        /* --- 2-COLUMN COUNTDOWN HUD --- */
-        .countdown-container { 
-            width: 100%; max-width: 1100px; margin: 0 auto 3rem auto; 
-            background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); 
-            padding: 35px 50px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
-            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); 
-            display: flex; justify-content: space-between; align-items: center; gap: 40px; 
-            animation: hudPulse 4s infinite; 
-        }
-        
+        .countdown-container { width: 100%; max-width: 1100px; margin: 0 auto 3rem auto; background: var(--cell-glass); backdrop-filter: var(--glass-blur); border: 1px solid var(--gold); border-bottom: 3px solid var(--gold); padding: 35px 50px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%); display: flex; justify-content: space-between; align-items: center; gap: 40px; animation: hudPulse 4s infinite; overflow-x: auto; }
         @keyframes hudPulse { 0%, 100% { border-color: var(--gold); } 50% { border-color: var(--gold-light); } }
-
         .hud-left { flex: 1.2; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
         .next-event-label { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 8px; font-weight: 800; }
         .next-op-title { font-family: 'Inter', sans-serif; font-size: 1.8rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; font-weight: 900; margin-bottom: 20px; }
-
         .timer-hud { display: flex; gap: 10px; margin: 5px 0; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
-        .timer-val { 
-            font-family: 'StoricaHeavy', sans-serif; font-size: 2.2rem; color: #fff; 
-            background: rgba(0,0,0,0.4); padding: 10px 0; border-radius: 4px; 
-            border-bottom: 2px solid var(--gold); width: 85px; text-align: center; 
-        }
+        .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 2.2rem; color: #fff; background: rgba(0,0,0,0.4); padding: 10px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 85px; text-align: center; }
         .timer-label { font-size: 0.6rem; font-family: 'Inter', sans-serif; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: 900; }
-
-        .twitch-cta {
-            display: none; padding: 10px 25px; background: var(--twitch); color: #fff; font-family: 'Inter', sans-serif; 
-            font-size: 0.75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; 
-            border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4);
-        }
+        .twitch-cta { display: none; padding: 10px 25px; background: var(--twitch); color: #fff; font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); }
         .twitch-cta:hover { background: #a970ff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); }
-
         .hud-right { flex: 1; display: flex; justify-content: flex-end; }
         .hud-next-img { width: 340px; height: 190px; object-fit: cover; border: 1px solid var(--gold); border-radius: 2px; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-
-        /* --- LEGEND --- */
         .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
         .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); } .dot.twitch { background: var(--twitch); } .dot.youtube { background: var(--youtube); }
-
-        /* --- ROADMAP GRID --- */
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); position: relative; z-index: 1; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .h-cell { background: #0d131f; padding: 15px; text-align: center; font-size: 0.75rem; color: #5d7599; font-family: 'Inter', sans-serif; font-weight: 900; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { color: var(--gold-light); }
         .cell { background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
         .cell.weekend { background: rgba(13, 19, 31, 0.95); }
-
         .num-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .num { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #fff; font-weight: 900; text-shadow: 0 1px 3px #000; }
         .month-tag { font-family: 'Inter', sans-serif; font-size: 0.65rem; color: var(--gold); font-weight: 900; }
-        
         .cell.today { outline: 2px solid var(--gold); background: rgba(220, 182, 59, 0.1); z-index: 2; }
         .cell.today .num { color: var(--gold); }
-        
         .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--gold); margin-bottom: 8px; flex-shrink: 0; overflow: hidden; border-radius: 2px; transition: 0.2s; cursor: pointer; padding: 8px; }
         .event:hover { border-color: #fff !important; transform: translateY(-2px); background: rgba(255,255,255,0.05); }
         .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); } .event.youtube { border-color: var(--youtube); }
         .e-title { font-weight: 900; color: var(--gold); font-family: 'Inter', sans-serif; font-size: 0.6rem; line-height: 1.2; text-transform: uppercase; }
         .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; } .event.youtube .e-title { color: #ff6666; }
-
-        /* --- POPUP OVERLAY --- */
-        #global-briefing { 
-            display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; 
-            background: rgba(13, 19, 31, 0.9); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); 
-            pointer-events: none; scrollbar-width: thin; 
-        }
+        
+        #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.9); backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); padding: 0; z-index: 10000; box-shadow: 0 0 100px rgba(0,0,0,1); pointer-events: none; scrollbar-width: thin; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 2px solid rgba(255,255,255,0.1); display: none; }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; font-weight: 900; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
-        .briefing-date { display: block; margin-top: 25px; font-size: 14px; color: var(--teal); font-family: 'Inter', sans-serif; font-weight: 800; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
 
-        @media (max-width: 1100px) { 
-            .countdown-container { flex-direction: column; align-items: center; text-align: center; clip-path: none; border-radius: 4px; padding: 30px; } 
-            .hud-left { align-items: center; text-align: center; margin-bottom: 20px; }
-            .hud-right { align-items: center; }
-            .hud-next-img { width: 100%; height: auto; max-width: 400px; }
-            .roadmap-grid { grid-template-columns: repeat(1, 1fr); } 
-            #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } 
-        }
+        @media (max-width: 1100px) { .countdown-container { flex-direction: column; align-items: center; text-align: center; clip-path: none; border-radius: 4px; padding: 30px; } .hud-left { align-items: center; text-align: center; margin-bottom: 20px; } .hud-right { align-items: center; } .hud-next-img { width: 100%; height: auto; max-width: 400px; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } #global-briefing { width: 95%; left: 2.5% !important; top: 50% !important; transform: translateY(-50%); } }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header class="header">
             <h1>PredeCalendar</h1>
             <div class="subline">Unofficial Predecessor Event Calendar</div>
         </header>
 
-        <!-- 2-COLUMN HUD -->
         <div class="countdown-container" id="hud">
             <div class="hud-left">
                 <span class="next-event-label">NEXT EVENT</span>
                 <div class="next-op-title" id="op-title">STANDBY</div>
-                
                 <div class="timer-hud">
                     <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
                     <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
                     <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
                     <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
                 </div>
-
                 <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="twitch-cta" id="twitch-btn">Official Twitch Channel →</a>
             </div>
-
-            <div class="hud-right">
-                <img id="hud-next-img" class="hud-next-img" src="" alt="Upcoming Visual">
-            </div>
+            <div class="hud-right"><img id="hud-next-img" class="hud-next-img" src="" alt="Next Operation"></div>
         </div>
 
         <div class="legend">
@@ -176,19 +94,22 @@
 
     <div id="global-briefing">
         <img id="b-img" class="briefing-img" src="" alt="Visual Record">
-        <div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div><span id="b-date" class="briefing-date"></span></div>
+        <div class="briefing-content">
+            <span id="b-tag" class="briefing-tag"></span>
+            <div id="b-desc" class="briefing-desc"></div>
+        </div>
     </div>
 
     <script>
-        let evData = []; const today = new Date();
-        const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img');
-        const hudImg = document.getElementById('hud-next-img');
+        let evData =[]; const today = new Date();
+        let viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        const briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
 
         async function init() {
             try {
                 const r = await fetch('./events.json?t=' + Date.now());
                 const data = await r.json();
-                evData = data.events || [];
+                evData = data.events ||[];
                 setupCountdown();
                 renderRoadmap();
             } catch(e) { renderRoadmap(); }
@@ -197,12 +118,22 @@
         function setupCountdown() {
             const now = Date.now();
             const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date || e.date + "T00:00:00Z") })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
+            
             if (futureEvents.length > 0) {
                 const nextEv = futureEvents[0]; 
                 document.getElementById('op-title').innerText = nextEv.title;
-                if (nextEv.image) { hudImg.src = nextEv.image; hudImg.style.display = 'block'; }
-                if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'inline-block'; } 
-                else { document.getElementById('twitch-btn').style.display = 'none'; }
+
+                if (nextEv.image) {
+                    hudImg.src = nextEv.image;
+                    hudImg.style.display = 'block';
+                }
+
+                if (nextEv.type === 'twitch') {
+                    document.getElementById('twitch-btn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('twitch-btn').style.display = 'none';
+                }
+
                 setInterval(() => {
                     const diff = nextEv.time - Date.now();
                     if (diff < 0) { window.location.reload(); return; }
@@ -211,36 +142,54 @@
                     document.getElementById('m').innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
                     document.getElementById('s').innerText = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
                 }, 1000);
-            } else { document.getElementById('op-title').innerText = "NO UPCOMING OPS"; document.getElementById('twitch-btn').style.display = 'none'; }
+            } else { 
+                document.getElementById('op-title').innerText = "NO UPCOMING OPS"; 
+                document.getElementById('twitch-btn').style.display = 'none';
+            }
         }
 
         function renderRoadmap() {
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
-            let start = new Date(); start.setDate(start.getDate() - 10);
-            let dayOffset = start.getDay(); start.setDate(start.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
-            start.setDate(start.getDate() + 7);
-            let end = new Date(); end.setDate(end.getDate() + 15);
-            let endDayOffset = end.getDay(); end.setDate(end.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset) + 7);
-            let cursor = new Date(start);
-            while (cursor <= end) {
+
+            let startDate = new Date(); startDate.setDate(startDate.getDate() - 10);
+            let dayOffset = startDate.getDay(); startDate.setDate(startDate.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
+            startDate.setDate(startDate.getDate() + 7);
+            
+            let endDate = new Date(); endDate.setDate(endDate.getDate() + 15);
+            let endDayOffset = endDate.getDay(); endDate.setDate(endDate.getDate() + (endDayOffset === 0 ? 0 : 7 - endDayOffset) + 7);
+
+            let cursor = new Date(startDate);
+            while (cursor <= endDate) {
                 const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
                 const items = evData.filter(e => e.date === dStr);
                 const isToday = cursor.toDateString() === today.toDateString();
                 const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+
                 const cell = document.createElement('div');
                 cell.className = `cell active ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}`;
                 cell.innerHTML = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
+                
                 items.forEach(ev => {
                     let a = document.createElement('a'); a.href = ev.url || '#'; a.target = "_blank"; a.className = `event ${ev.type}`;
                     a.innerHTML = `<div class="e-title">${ev.title}</div>`;
                     a.addEventListener('mouseenter', (e) => {
                         const rect = e.currentTarget.getBoundingClientRect();
-                        let color = "var(--gold)"; if(ev.type === "hero") color = "var(--teal)"; if(ev.type === "season") color = "var(--red)"; if(ev.type === "twitch") color = "var(--twitch)"; if(ev.type === "youtube") color = "var(--youtube)";
-                        briefing.style.borderColor = color; document.getElementById('b-tag').style.color = color;
-                        document.getElementById('b-tag').innerText = ev.title; document.getElementById('b-desc').innerText = ev.desc;
-                        document.getElementById('b-date').innerText = "TARGET DATE: " + ev.date;
-                        if (ev.image) { bImg.src = ev.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
+                        let color = "var(--gold)"; 
+                        if(ev.type === "hero") color = "var(--teal)"; 
+                        if(ev.type === "season") color = "var(--red)"; 
+                        if(ev.type === "twitch") color = "var(--twitch)"; 
+                        if(ev.type === "youtube") color = "var(--youtube)";
+                        
+                        briefing.style.borderColor = color; 
+                        document.getElementById('b-tag').style.color = color;
+                        document.getElementById('b-tag').innerText = ev.title; 
+                        document.getElementById('b-desc').innerText = ev.desc;
+                        
+                        if (ev.image) { 
+                            bImg.src = ev.image; bImg.style.display = 'block'; 
+                        } else { bImg.style.display = 'none'; }
+                        
                         briefing.style.display = 'block';
                         let x = rect.left + rect.width + 20, y = rect.top;
                         if (x + 450 > window.innerWidth) x = rect.left - 470;
@@ -250,7 +199,8 @@
                     a.addEventListener('mouseleave', () => briefing.style.display = 'none');
                     cell.appendChild(a);
                 });
-                grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
+                grid.appendChild(cell);
+                cursor.setDate(cursor.getDate() + 1);
             }
         }
         init();

@@ -6,13 +6,13 @@ def fetch_drops():
     print("--- Connecting to Twitch Internal GraphQL ---")
     
     url = "https://gql.twitch.tv/gql"
-    # Twitch's universal public Client-ID
+    # kimne78kx3ncx6brgo4mv6wki5h1ko is Twitch's public web client ID
     headers = {
         "Client-Id": "kimne78kx3ncx6brgo4mv6wki5h1ko",
         "Content-Type": "application/json"
     }
     
-    # Querying Predecessor (ID: 515056) specifically for active drops
+    # Using Predecessor's Twitch ID: 515056
     payload = {
         "query": """
         query {
@@ -48,37 +48,48 @@ def fetch_drops():
         active_drops = []
         game_data = data.get("data", {}).get("game")
         
-        if game_data and game_data.get("dropCampaigns"):
+        if not game_data:
+            print("Twitch returned no data for Predecessor.")
+        elif not game_data.get("dropCampaigns"):
+            print("No campaigns found for Predecessor.")
+        else:
             now = datetime.now(timezone.utc)
             
             for camp in game_data["dropCampaigns"]:
+                c_name = camp.get('name', 'Unknown')
                 c_status = camp.get('status', '').upper()
                 c_start = camp.get('startAt', '')
                 c_end = camp.get('endAt', '')
                 
-                is_actually_active = False
+                print(f"Checking Campaign: {c_name} | Status: {c_status}")
+                
+                is_active = False
                 if c_status == "ACTIVE":
-                    is_actually_active = True
+                    is_active = True
                 elif c_start and c_end:
-                    # Fallback check for time window if status is lagging
-                    st = datetime.strptime(c_start, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-                    en = datetime.strptime(c_end, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-                    if st <= now <= en:
-                        is_actually_active = True
+                    try:
+                        start_dt = datetime.strptime(c_start, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                        end_dt = datetime.strptime(c_end, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                        if start_dt <= now <= end_dt:
+                            print("-> Campaign within time window. Mark as active.")
+                            is_active = True
+                    except: pass
 
-                if is_actually_active:
+                if is_active:
                     rewards = []
                     for drop in camp.get("timeBasedDrops", []):
                         for edge in drop.get("benefitEdges", []):
                             benefit = edge.get("benefit", {})
                             rewards.append({
-                                "name": benefit.get("name") or drop.get("name"),
-                                "image": benefit.get("imageAssetURL"),
+                                "name": benefit.get("name") or drop.get("name", "Reward"),
+                                "image": benefit.get("imageAssetURL") or "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
                                 "minutes": drop.get("requiredMinutesWatched")
                             })
                     
                     active_drops.append({
-                        "campaign_name": camp.get("name"),
+                        "campaign_name": c_name,
+                        "start": c_start,
+                        "end": c_end,
                         "rewards": rewards
                     })
         
@@ -90,13 +101,14 @@ def fetch_drops():
         
         with open('drops.json', 'w') as f:
             json.dump(output, f, indent=4)
-        print(f"Success! Active campaigns: {len(active_drops)}")
+            
+        print(f"Scrape Complete. Active Drops Found: {output['active']}")
         
     except Exception as e:
         print(f"Error: {e}")
-        # Safeguard: Write empty file if it fails
+        # Fallback to empty file so the site doesn't break
         with open('drops.json', 'w') as f:
-            json.dump({"active": False, "campaigns": []}, f, indent=4)
+            json.dump({"active": False, "campaigns": [], "last_updated": "Error"}, f, indent=4)
 
 if __name__ == "__main__":
     fetch_drops()

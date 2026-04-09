@@ -59,10 +59,9 @@ def ask_groq(messages_text):
     
     RULES:
     1. Identify START DATE (YYYY-MM-DD).
-    2. Identify START TIME (HH:MM) from text (e.g., "2:00 PM" is 14:00).
-    3. If multiple times are mentioned, use the "START" or "BEGIN" time. 
-    4. If no time is found, default to 14:00.
-    5. Return ONLY a valid JSON list of objects.
+    2. Identify START TIME in CEST (e.g. "2:00 PM" is 14:00).
+    3. If no time is mentioned, use 14:00.
+    4. Return ONLY a valid JSON list of objects.
     
     Messages:
     {messages_text}
@@ -95,10 +94,10 @@ def scrape():
             old_db = json.load(f).get('events', [])
     except: old_db = []
 
-    # We use a map to overwrite existing events if the same ID is found (Updates time accuracy)
+    # Map existing events by ID so we can OVERWRITE/UPDATE them
     event_map = {str(e['original_id']): e for e in old_db}
-    to_process, ai_input_list = [], []
     
+    to_process, ai_input_list = [], []
     for i, m in enumerate(messages):
         full_text, all_urls = extract_all_text_and_links(m)
         if full_text:
@@ -121,12 +120,13 @@ def scrape():
         event_date = ar.get('date') or intel['posted']
         event_time = ar.get('time', '14:00')
         
-        # Predecessor typically uses CEST (+02:00)
+        # PRECISE ISO STRING WITH CEST OFFSET (+02:00)
         iso_date = f"{event_date}T{event_time}:00+02:00"
 
         etype = ar.get('type', 'news')
         eurl = next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
 
+        # This will update the existing entry with corrected time
         event_map[str(intel['id'])] = {
             "original_id": intel['id'],
             "date": event_date,
@@ -141,7 +141,7 @@ def scrape():
     output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}
     with open('events.json', 'w') as f:
         json.dump(output, f, indent=4)
-    print("Events updated successfully.")
+    print("Scrape complete. Correction applied.")
 
 if __name__ == "__main__":
     scrape()

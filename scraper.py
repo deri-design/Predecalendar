@@ -53,10 +53,10 @@ def extract_all_text_and_links(m):
                 text_segments.append(emb.get('description', ''))
                 if emb.get('url'): urls.append(emb['url'])
     process_obj(m)
-    return "\n".join(filter(None, text_segments)), [u.rstrip('.,!?"\')') for u in urls]
+    full_text = "\n".join(filter(None, text_segments))
+    return full_text, [u.rstrip('.,!?"\')') for u in urls]
 
 def ask_groq(messages_text):
-    print("Sending data to Groq AI...")
     client = Groq(api_key=GROQ_API_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
@@ -77,50 +77,59 @@ def ask_groq(messages_text):
         chat = client.chat.completions.create(messages=[{"role": "user", "content": prompt}], model="llama-3.3-70b-versatile", temperature=0.0)
         raw = chat.choices[0].message.content
         json_match = re.search(r'\[.*\]', raw, re.DOTALL)
-        return json.loads(json_match.group(0)) if json_match else []
-    except: return []
+        if json_match: return json.loads(json_match.group(0))
+        return[]
+    except: return[]
 
 def scrape():
     messages = get_discord_messages()
     if not messages: return
+
     try:
         with open('events.json', 'r') as f:
             old_db = json.load(f).get('events', [])
     except: old_db = []
 
-    # Map existing events by ID to allow UPDATING/OVERWRITING times
+    # Map existing events by ID to allow UPDATING times
     event_map = {str(e['original_id']): e for e in old_db}
     to_process, ai_input_list = [], []
     
     for i, m in enumerate(messages):
         full_text, all_urls = extract_all_text_and_links(m)
         if full_text:
-            to_process.append({"index": i, "id": m['id'], "raw": full_text, "clean": re.sub(r'<@&?\d+>', '', full_text).strip(), "urls": all_urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]})
+            to_process.append({
+                "index": i, "id": m['id'], "raw": full_text,
+                "clean": re.sub(r'<@&?\d+>', '', full_text).replace('🔔', '').strip(),
+                "urls": all_urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]
+            })
             ai_input_list.append(f"INDEX: [{i}]\nCONTENT: {full_text}")
 
     if not ai_input_list: return
     ai_results = ask_groq("\n---\n".join(ai_input_list))
 
     for ar in ai_results:
-        intel = next((x for x in to_process if x['index'] == ar.get('index')), None)
+        idx = ar.get('index')
+        intel = next((x for x in to_process if x['index'] == idx), None)
         if not intel: continue
         
         event_date = ar.get('date') or intel['posted']
         event_time = ar.get('time', '14:00')
-        # PRECISION: CEST Offset (+02:00)
+        # FORCE CEST OFFSET (+02:00)
         iso_date = f"{event_date}T{event_time}:00+02:00"
+
+        etype = ar.get('type', 'news')
+        eurl = next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
+        if "twitch" in intel['raw'].lower(): etype = "twitch"
 
         event_map[str(intel['id'])] = {
             "original_id": intel['id'], "date": event_date, "iso_date": iso_date,
-            "title": str(ar.get('title', 'UPDATE')).upper()[:40], "type": ar.get('type', 'news'),
-            "desc": intel['clean'], "image": intel['img'],
-            "url": next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
+            "title": str(ar.get('title', 'UPDATE')).upper()[:40], "type": etype,
+            "desc": intel['clean'], "image": intel['img'], "url": eurl
         }
 
     output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}
     with open('events.json', 'w') as f:
         json.dump(output, f, indent=4)
-    print("Events updated successfully.")
 
 if __name__ == "__main__":
     scrape()

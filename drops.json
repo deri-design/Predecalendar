@@ -1,38 +1,5 @@
 {
-    "last_updated": "2026-04-09 08:38:37 (CEST)",
-    "active": true,
-    "campaigns": [
-        {
-            "campaign_name": "1.13 Premium Drops",
-            "start": "2026-04-07T18:00:00Z",
-            "end": "2026-05-04T18:00:00Z",
-            "rewards": [
-                {
-                    "name": "Ion Loot Core",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                    "minutes": 60
-                },
-                {
-                    "name": "Purple Adele Profile Icon",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                    "minutes": 120
-                },
-                {
-                    "name": "Purple Adele Banner",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                    "minutes": 240
-                },
-                {
-                    "name": "Quantum Loot Core",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                    "minutes": 360
-                },
-                {
-                    "name": "Purple Adele Skin Variant",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                    "minutes": 480
-                }
-            ]
-        }
-    ]
+    "last_updated": "2026-04-09 09:00:06 (CEST)",
+    "active": false,
+    "campaigns": []
 }

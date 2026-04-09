@@ -28,10 +28,6 @@ def find_deep_img(obj):
         for v in obj.values():
             res = find_deep_img(v)
             if res: return res
-    if isinstance(obj, list):
-        for i in obj:
-            res = find_deep_img(i)
-            if res: return res
     return ""
 
 def extract_all_text_and_links(m):
@@ -50,8 +46,7 @@ def extract_all_text_and_links(m):
                 text_segments.append(emb.get('description', ''))
                 if emb.get('url'): urls.append(emb['url'])
     process_obj(m)
-    full_text = "\n".join(filter(None, text_segments))
-    return full_text, [u.rstrip('.,!?"\')') for u in urls]
+    return "\n".join(filter(None, text_segments)), [u.rstrip('.,!?"\')') for u in urls]
 
 def ask_groq(messages_text):
     print("Sending data to Groq AI...")
@@ -60,13 +55,14 @@ def ask_groq(messages_text):
     
     prompt = f"""
     Today is {today}. Context: "Predecessor" game announcements.
-    TASK: Extract events with exact times.
+    TASK: Extract events with HIGH PRECISION time.
     
     RULES:
     1. Identify START DATE (YYYY-MM-DD).
-    2. Identify START TIME (HH:MM) in 24h format. (e.g. 2:00 PM -> 14:00). 
-    3. If no time is found, use 14:00.
-    4. Return JSON only. "index" must match the block header index.
+    2. Identify START TIME (HH:MM) from text (e.g., "2:00 PM" is 14:00).
+    3. If multiple times are mentioned, use the "START" or "BEGIN" time. 
+    4. If no time is found, default to 14:00.
+    5. Return ONLY a valid JSON list of objects.
     
     Messages:
     {messages_text}
@@ -99,11 +95,11 @@ def scrape():
             old_db = json.load(f).get('events', [])
     except: old_db = []
 
-    existing_ids =[str(e.get('original_id')) for e in old_db]
+    # We use a map to overwrite existing events if the same ID is found (Updates time accuracy)
+    event_map = {str(e['original_id']): e for e in old_db}
     to_process, ai_input_list = [], []
     
     for i, m in enumerate(messages):
-        if str(m['id']) in existing_ids: continue
         full_text, all_urls = extract_all_text_and_links(m)
         if full_text:
             to_process.append({
@@ -116,7 +112,6 @@ def scrape():
     if not ai_input_list: return
 
     ai_results = ask_groq("\n---\n".join(ai_input_list))
-    new_entries =[]
 
     for ar in ai_results:
         idx = ar.get('index')
@@ -126,13 +121,13 @@ def scrape():
         event_date = ar.get('date') or intel['posted']
         event_time = ar.get('time', '14:00')
         
-        # Predecessor events use CEST (+02:00)
+        # Predecessor typically uses CEST (+02:00)
         iso_date = f"{event_date}T{event_time}:00+02:00"
 
         etype = ar.get('type', 'news')
         eurl = next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
 
-        new_entries.append({
+        event_map[str(intel['id'])] = {
             "original_id": intel['id'],
             "date": event_date,
             "iso_date": iso_date,
@@ -141,12 +136,12 @@ def scrape():
             "desc": intel['clean'],
             "image": intel['img'],
             "url": eurl
-        })
+        }
 
-    final_events = old_db + new_entries
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_events}
+    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}
     with open('events.json', 'w') as f:
         json.dump(output, f, indent=4)
+    print("Events updated successfully.")
 
 if __name__ == "__main__":
     scrape()

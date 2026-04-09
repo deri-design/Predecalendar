@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-09 14:19:29",
+    "last_updated": "2026-04-09 17:01:17",
     "events": [
         {
             "original_id": "1488967151757824192",
@@ -34,12 +34,12 @@
         {
             "original_id": "1488193504562774108",
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
-            "title": "ADELE REVEAL TRAILER",
-            "type": "youtube",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "ADELE QUEEN OF THORNS",
+            "type": "hero",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
-            "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
-            "url": "https://youtu.be/_mxjJioNuhI"
+            "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
             "original_id": "1489295679032655912",
@@ -64,19 +64,19 @@
         {
             "original_id": "1487182428824145991",
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
-            "title": "V1.13 HERO AFFINITY",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69d41391&is=69d2c211&hm=66e581af6238b8a58020aa7d6157bba1dafabdd209ff25f909a263f3cb1c9f79&",
+            "image": "",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
             "original_id": "1488209609377190051",
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
+            "iso_date": "2026-04-07T14:00:00+02:00",
             "title": "V1.13 PATCH NOTES",
-            "type": "patch",
+            "type": "news",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
             "url": "https://www.predecessorgame.com/en-US/news"
@@ -114,12 +114,12 @@
         {
             "original_id": "1487185725479714916",
             "date": "2026-04-01",
-            "iso_date": "2026-04-01T18:00:00Z",
+            "iso_date": "2026-04-01T18:00:00+02:00",
             "title": "V1.13 DEV STREAM",
             "type": "twitch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d416a3&is=69d2c523&hm=e118d4d8fc46bef376dec584fcb2341fd94b7a180dccf485257bcad396549d76&",
-            "url": "https://www.twitch.tv/predecessorgame"
+            "image": "",
+            "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
             "original_id": "1487885620175966318",
@@ -144,9 +144,9 @@
         {
             "original_id": "1487885557374914692",
             "date": "2026-04-07",
-            "iso_date": "2026-04-07T15:00:00Z",
+            "iso_date": "2026-04-07T14:00:00+02:00",
             "title": "DAYBREAK V4",
-            "type": "patch",
+            "type": "news",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\n\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
             "image": "",
             "url": "https://www.predecessorgame.com/en-US/news"

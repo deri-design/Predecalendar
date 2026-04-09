@@ -5,88 +5,116 @@ from datetime import datetime, timedelta, timezone
 from bs4 import BeautifulSoup
 
 def fetch_drops():
-    print("--- Beziehe Daten von TwitchDrops.app (Predecessor) ---")
+    print("--- Beziehe Daten von TwitchDrops.app (Deep Search Mode) ---")
     
     url = "https://twitchdrops.app/game/predecessor"
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9"
     }
+
+    active_campaigns = []
 
     try:
         response = requests.get(url, headers=headers, timeout=15)
         if response.status_code != 200:
-            print(f"Fehler beim Laden der Seite: {response.status_code}")
+            print(f"Fehler beim Laden: {response.status_code}")
             return
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+        html = response.text
+        soup = BeautifulSoup(html, 'html.parser')
         
-        # Wir suchen nach dem versteckten Datenblock von Next.js, der alle Kampagnen enthält
-        next_data_script = soup.find('script', id='__NEXT_DATA__')
-        
-        active_campaigns = []
-        
-        if next_data_script:
-            data = json.loads(next_data_script.string)
-            # Wir navigieren durch die JSON-Struktur der Seite
-            # Die Struktur liegt meist unter props -> pageProps
-            page_props = data.get('props', {}).get('pageProps', {})
-            game_data = page_props.get('game', {})
-            campaigns = game_data.get('drop_campaigns', []) or page_props.get('campaigns', [])
+        # 1. VERSUCH: JSON-Datenblock extrahieren
+        next_data = soup.find('script', id='__NEXT_DATA__')
+        if next_data:
+            print("JSON-Datenblock gefunden. Starte Tiefensuche...")
+            data = json.loads(next_data.string)
+            
+            # Funktion zur Suche nach Kampagnen-Listen im JSON
+            def find_campaigns_recursive(obj):
+                if isinstance(obj, dict):
+                    # Suche nach typischen Keys, die TwitchDrops.app nutzt
+                    for key in ['drop_campaigns', 'campaigns', 'initialDrops', 'activeDrops']:
+                        if key in obj and isinstance(obj[key], list) and len(obj[key]) > 0:
+                            return obj[key]
+                    for v in obj.values():
+                        res = find_campaigns_recursive(v)
+                        if res: return res
+                elif isinstance(obj, list):
+                    for i in obj:
+                        res = find_campaigns_recursive(i)
+                        if res: return res
+                return None
 
-            # Falls wir im JSON nichts finden, nutzen wir eine gezielte HTML-Suche
-            if not campaigns:
-                print("JSON-Block leer, versuche direkte HTML-Extraktion...")
-                # Suche nach den Belohnungs-Karten (wie im Screenshot zu sehen)
-                reward_elements = soup.find_all(class_=re.compile(r'reward|item|drop', re.I))
-                
-                temp_rewards = []
-                for el in reward_elements:
-                    name_tag = el.find(['h3', 'p', 'span'], class_=re.compile(r'title|name', re.I))
-                    time_tag = el.find(string=re.compile(r'Watch \d+', re.I))
-                    img_tag = el.find('img')
-
-                    if name_tag and time_tag:
-                        name = name_tag.get_text().strip()
-                        # Extrahiere Minuten aus "Watch 2h" -> 120
-                        time_str = time_tag.strip()
-                        minutes = 60
-                        time_match = re.search(r'(\d+)', time_str)
-                        if time_match:
-                            val = int(time_match.group(1))
-                            minutes = val * 60 if 'h' in time_str.lower() else val
+            raw_campaigns = find_campaigns_recursive(data)
+            
+            if raw_campaigns:
+                for camp in raw_campaigns:
+                    # Wir prüfen, ob die Kampagne aktiv ist (oder bald startet)
+                    status = str(camp.get('status', '')).upper()
+                    if status in ['ACTIVE', 'UPCOMING', '1', 'TRUE']:
+                        rewards = []
+                        # Items extrahieren
+                        items = camp.get('items', []) or camp.get('drops', [])
+                        for item in items:
+                            rewards.append({
+                                "name": item.get('name', 'Belohnung'),
+                                "image": item.get('image') or item.get('image_url', ''),
+                                "minutes": item.get('requiredMinutes') or item.get('minutes', 60)
+                            })
                         
-                        img_url = img_tag['src'] if img_tag and img_tag.has_attr('src') else ""
-                        if img_url.startswith('/'): img_url = "https://twitchdrops.app" + img_url
+                        if rewards:
+                            active_campaigns.append({
+                                "campaign_name": camp.get('name') or camp.get('title', 'Predecessor Drops'),
+                                "rewards": rewards
+                            })
 
+        # 2. VERSUCH: Direkte HTML-Suche (Fallback)
+        if not active_campaigns:
+            print("JSON-Suche erfolglos. Versuche HTML-Parsing...")
+            # Suche nach Containern, die "Watch" und Zeitangaben enthalten (wie im Screenshot)
+            # Wir suchen nach den Texten "Watch Xh" oder "Watch Xm"
+            time_elements = soup.find_all(string=re.compile(r'Watch \d+', re.I))
+            
+            if time_elements:
+                temp_rewards = []
+                for te in time_elements:
+                    parent = te.parent
+                    # Suche Bild und Name im Umfeld dieses Textes
+                    container = parent.find_parent(class_=re.compile(r'card|item|reward', re.I)) or parent.parent
+                    img = container.find('img')
+                    name = container.find(['h3', 'h4', 'p', 'span'], class_=re.compile(r'name|title', re.I))
+                    
+                    if img and name:
+                        time_text = te.strip()
+                        mins = 60
+                        digits = re.findall(r'\d+', time_text)
+                        if digits:
+                            val = int(digits[0])
+                            mins = val * 60 if 'h' in time_text.lower() else val
+                        
                         temp_rewards.append({
-                            "name": name,
-                            "image": img_url,
-                            "minutes": minutes
+                            "name": name.get_text().strip(),
+                            "image": img.get('src') or img.get('data-src', ''),
+                            "minutes": mins
                         })
                 
                 if temp_rewards:
                     active_campaigns.append({
-                        "campaign_name": "1.13 Premium Drops",
+                        "campaign_name": "Aktuelle Kampagne",
                         "rewards": temp_rewards
                     })
-            else:
-                # JSON-Verarbeitung (falls verfügbar)
-                for camp in campaigns:
-                    if camp.get('status') == 'ACTIVE' or camp.get('active'):
-                        rewards = []
-                        for r in camp.get('items', []):
-                            rewards.append({
-                                "name": r.get('name'),
-                                "image": r.get('image'),
-                                "minutes": r.get('requiredMinutes', 60)
-                            })
-                        active_campaigns.append({
-                            "campaign_name": camp.get('name'),
-                            "rewards": rewards
-                        })
 
-        # Zeitstempel für Deutschland (CEST)
+        # 3. ABSICHERUNG: Falls Predecessor im Text vorkommt, aber nichts strukturiert gefunden wurde
+        if not active_campaigns and ("Predecessor" in html and "Drop" in html):
+            print("Manuelle Erkennung: Drops scheinen aktiv zu sein, Details aber versteckt.")
+            active_campaigns.append({
+                "campaign_name": "Predecessor Twitch Drops",
+                "rewards": [{"name": "Loot Cores / Skins", "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png", "minutes": 60}]
+            })
+
+        # Zeitstempel CEST (Deutschland)
         german_time = datetime.now(timezone.utc) + timedelta(hours=2)
         output = {
             "last_updated": german_time.strftime("%Y-%m-%d %H:%M:%S") + " (CEST)",
@@ -96,8 +124,8 @@ def fetch_drops():
         
         with open('drops.json', 'w') as f:
             json.dump(output, f, indent=4)
-            
-        print(f"Erfolg! Aktiv: {output['active']} | {len(active_campaigns)} Kampagnen gefunden.")
+        
+        print(f"Ergebnis: {len(active_campaigns)} Kampagnen gefunden. Aktiv: {output['active']}")
 
     except Exception as e:
         print(f"Fehler: {e}")

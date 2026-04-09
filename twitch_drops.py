@@ -1,116 +1,106 @@
 import json
 import requests
-import uuid
+import re
 from datetime import datetime, timedelta, timezone
+from bs4 import BeautifulSoup
 
 def fetch_drops():
-    print("--- Connecting to Twitch via Android-App Identity ---")
+    print("--- Beziehe Daten von TwitchDrops.app (Predecessor) ---")
     
-    url = "https://gql.twitch.tv/gql"
-    
-    # Das ist die offizielle Client-ID der Twitch-Android-App (aus dem Rust-Projekt inspiriert)
-    # Diese IDs werden fast nie blockiert, weil die App sie weltweit nutzt.
+    url = "https://twitchdrops.app/game/predecessor"
     headers = {
-        "Client-Id": "kd1unb4b3q4t58fwlpcbzcbaxtm78v", 
-        "X-Device-Id": uuid.uuid4().hex,
-        "User-Agent": "dalvik/2.1.0 (linux; u; android 10; build/qq3a.200805.001) tv.twitch.android.app/14.4.1",
-        "Content-Type": "application/json",
-        "Accept": "*/*"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8"
     }
-    
-    # Wir nutzen eine Abfrage, die auch die mobile App verwendet
-    query = """
-    query {
-        dropCampaigns {
-            name
-            status
-            startAt
-            endAt
-            game {
-                id
-                name
-            }
-            timeBasedDrops {
-                name
-                requiredMinutesWatched
-                benefitEdges {
-                    benefit {
-                        name
-                        imageAssetURL
-                    }
-                }
-            }
-        }
-    }
-    """
-    
-    payload = {"query": query}
 
     try:
-        # Wir senden die Anfrage als "Android App"
-        res = requests.post(url, headers=headers, json=payload, timeout=15)
-        
-        if res.status_code != 200:
-            print(f"Twitch hat die App-Anfrage abgelehnt: {res.status_code}")
+        response = requests.get(url, headers=headers, timeout=15)
+        if response.status_code != 200:
+            print(f"Fehler beim Laden der Seite: {response.status_code}")
             return
 
-        data = res.json()
-        all_campaigns = data.get("data", {}).get("dropCampaigns", [])
+        soup = BeautifulSoup(response.text, 'html.parser')
         
-        print(f"Erfolg! {len(all_campaigns)} Kampagnen über App-Schnittstelle gefunden.")
+        # Wir suchen nach dem versteckten Datenblock von Next.js, der alle Kampagnen enthält
+        next_data_script = soup.find('script', id='__NEXT_DATA__')
+        
+        active_campaigns = []
+        
+        if next_data_script:
+            data = json.loads(next_data_script.string)
+            # Wir navigieren durch die JSON-Struktur der Seite
+            # Die Struktur liegt meist unter props -> pageProps
+            page_props = data.get('props', {}).get('pageProps', {})
+            game_data = page_props.get('game', {})
+            campaigns = game_data.get('drop_campaigns', []) or page_props.get('campaigns', [])
 
-        active_predecessor_drops = []
-        now = datetime.now(timezone.utc)
-
-        for camp in all_campaigns:
-            game = camp.get("game", {})
-            # Suche nach Predecessor (ID: 515056)
-            if game and (game.get("id") == "515056" or "Predecessor" in game.get("name", "")):
+            # Falls wir im JSON nichts finden, nutzen wir eine gezielte HTML-Suche
+            if not campaigns:
+                print("JSON-Block leer, versuche direkte HTML-Extraktion...")
+                # Suche nach den Belohnungs-Karten (wie im Screenshot zu sehen)
+                reward_elements = soup.find_all(class_=re.compile(r'reward|item|drop', re.I))
                 
-                # Zeitfenster prüfen
-                status = camp.get('status', '').upper()
-                is_active = (status == "ACTIVE")
-                
-                if not is_active:
-                    try:
-                        start = datetime.strptime(camp['startAt'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-                        end = datetime.strptime(camp['endAt'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-                        if start <= now <= end:
-                            is_active = True
-                    except: pass
+                temp_rewards = []
+                for el in reward_elements:
+                    name_tag = el.find(['h3', 'p', 'span'], class_=re.compile(r'title|name', re.I))
+                    time_tag = el.find(string=re.compile(r'Watch \d+', re.I))
+                    img_tag = el.find('img')
 
-                if is_active:
-                    print(f"AKTIVE DROPS FÜR PREDECESSOR: {camp['name']}")
-                    rewards = []
-                    for drop in camp.get("timeBasedDrops", []):
-                        for edge in drop.get("benefitEdges", []):
-                            benefit = edge.get("benefit", {})
-                            rewards.append({
-                                "name": benefit.get("name") or drop.get("name"),
-                                "image": benefit.get("imageAssetURL") or "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
-                                "minutes": drop.get("requiredMinutesWatched")
-                            })
-                    
-                    active_predecessor_drops.append({
-                        "campaign_name": camp['name'],
-                        "rewards": rewards
+                    if name_tag and time_tag:
+                        name = name_tag.get_text().strip()
+                        # Extrahiere Minuten aus "Watch 2h" -> 120
+                        time_str = time_tag.strip()
+                        minutes = 60
+                        time_match = re.search(r'(\d+)', time_str)
+                        if time_match:
+                            val = int(time_match.group(1))
+                            minutes = val * 60 if 'h' in time_str.lower() else val
+                        
+                        img_url = img_tag['src'] if img_tag and img_tag.has_attr('src') else ""
+                        if img_url.startswith('/'): img_url = "https://twitchdrops.app" + img_url
+
+                        temp_rewards.append({
+                            "name": name,
+                            "image": img_url,
+                            "minutes": minutes
+                        })
+                
+                if temp_rewards:
+                    active_campaigns.append({
+                        "campaign_name": "1.13 Premium Drops",
+                        "rewards": temp_rewards
                     })
+            else:
+                # JSON-Verarbeitung (falls verfügbar)
+                for camp in campaigns:
+                    if camp.get('status') == 'ACTIVE' or camp.get('active'):
+                        rewards = []
+                        for r in camp.get('items', []):
+                            rewards.append({
+                                "name": r.get('name'),
+                                "image": r.get('image'),
+                                "minutes": r.get('requiredMinutes', 60)
+                            })
+                        active_campaigns.append({
+                            "campaign_name": camp.get('name'),
+                            "rewards": rewards
+                        })
 
         # Zeitstempel für Deutschland (CEST)
         german_time = datetime.now(timezone.utc) + timedelta(hours=2)
         output = {
             "last_updated": german_time.strftime("%Y-%m-%d %H:%M:%S") + " (CEST)",
-            "active": len(active_predecessor_drops) > 0,
-            "campaigns": active_predecessor_drops
+            "active": len(active_campaigns) > 0,
+            "campaigns": active_campaigns
         }
         
         with open('drops.json', 'w') as f:
             json.dump(output, f, indent=4)
             
-        print(f"Datei drops.json wurde aktualisiert. Aktiv: {output['active']}")
+        print(f"Erfolg! Aktiv: {output['active']} | {len(active_campaigns)} Kampagnen gefunden.")
 
     except Exception as e:
-        print(f"Fehler im App-Modus: {e}")
+        print(f"Fehler: {e}")
         with open('drops.json', 'w') as f:
             json.dump({"active": False, "campaigns": [], "last_updated": "Error"}, f, indent=4)
 

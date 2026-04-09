@@ -19,6 +19,7 @@
         :root { 
             --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; 
             --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; 
+            --quest: #3498db;
             --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); --border: #1e2638; 
             --text: #c8d0e0; --hud-glow: rgba(220, 182, 59, 0.4); --glass-blur: blur(25px);
         }
@@ -42,7 +43,6 @@
         /* --- HEADER SECTION --- */
         .header { text-align: center; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
         
-        /* UPDATED HEADLINE */
         .header h1 { 
             font-family: 'StoricaHeavy', sans-serif; 
             font-size: 4.5rem; 
@@ -56,26 +56,50 @@
 
         .subline { font-family: 'Inter', sans-serif; color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
 
-        /* --- 3-COLUMN HUD WRAPPER --- */
-        .huds-wrapper { display: flex; justify-content: space-between; gap: 20px; width: 100%; margin-bottom: 2rem; align-items: stretch; }
+        /* --- 3-COLUMN HUD WRAPPER (SKETCH LAYOUT) --- */
+        .huds-wrapper { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 20px; 
+            width: 100%; 
+            margin-bottom: 2rem; 
+        }
+
+        .hud-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
         .hud-card { 
-            flex: 1; min-width: 0; background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); 
+            flex: 1; background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); 
             border: 1px solid var(--gold); border-bottom: 4px solid var(--gold); padding: 25px 20px; position: relative; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); border-radius: 4px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
         }
 
+        /* Adjustments for stacked middle cards to prevent them being too tall */
+        .hud-column.center .hud-card {
+            flex: none;
+            padding: 15px 20px;
+        }
+
         #hud-next { border-color: var(--gold); animation: pulseGold 4s infinite; }
         #hud-daily { border-color: var(--teal); border-bottom: 4px solid var(--teal); animation: pulseTeal 4s infinite; }
+        #hud-quests { border-color: var(--quest); border-bottom: 4px solid var(--quest); animation: pulseQuest 4s infinite; }
         #hud-drops { border-color: var(--twitch); border-bottom: 4px solid var(--twitch); animation: pulseTwitch 4s infinite; }
         
         @keyframes pulseGold { 0%, 100% { border-color: var(--gold); box-shadow: 0 0 15px rgba(220,182,59,0.1); } 50% { border-color: var(--gold-light); box-shadow: 0 0 30px rgba(220,182,59,0.25); } }
         @keyframes pulseTeal { 0%, 100% { border-color: var(--teal); box-shadow: 0 0 15px rgba(55,169,169,0.1); } 50% { border-color: #64ffff; box-shadow: 0 0 30px rgba(55,169,169,0.25); } }
+        @keyframes pulseQuest { 0%, 100% { border-color: var(--quest); box-shadow: 0 0 15px rgba(52,152,219,0.1); } 50% { border-color: #5dade2; box-shadow: 0 0 30px rgba(52,152,219,0.25); } }
         @keyframes pulseTwitch { 0%, 100% { border-color: var(--twitch); box-shadow: 0 0 15px rgba(145,70,255,0.1); } 50% { border-color: #b985ff; box-shadow: 0 0 30px rgba(145,70,255,0.25); } }
 
         .hud-label { font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
         .hud-title { font-family: 'Inter', sans-serif; font-size: 1.3rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; font-weight: 900; margin-bottom: 15px; min-height: 3rem; display: flex; align-items: center; justify-content: center; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        
+        /* Middle column title adjustment */
+        .center .hud-title { font-size: 1.1rem; margin-bottom: 10px; min-height: 0; }
+
         .hud-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); background: #0a0f18; }
         
         .timer-hud { display: flex; gap: 8px; margin-top: auto; }
@@ -84,12 +108,16 @@
         .timer-label { font-size: 0.5rem; font-family: 'Inter', sans-serif; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: 900; }
         
         #hud-daily .timer-val { border-color: var(--teal); } #hud-daily .timer-label { color: var(--teal); }
+        #hud-quests .timer-val { border-color: var(--quest); } #hud-quests .timer-label { color: var(--quest); }
+        
+        /* Smaller timers for stacked view */
+        .center .timer-val { font-size: 1.4rem; width: 45px; padding: 4px 0; }
 
         .cta-btn { margin-top: 15px; padding: 10px 20px; background: var(--twitch); color: #fff; font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); width: 100%; text-align: center; box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); }
         .cta-btn:hover { background: #a970ff; transform: translateY(-2px); box-shadow: 0 0 25px rgba(145, 70, 255, 0.7); }
 
         /* DROPS STYLING */
-        .drops-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; flex: 1; overflow-y: auto; max-height: 200px; scrollbar-width: thin; }
+        .drops-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; flex: 1; overflow-y: auto; max-height: 250px; scrollbar-width: thin; }
         .reward-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(145, 70, 255, 0.3); border-radius: 4px; padding: 8px; display: flex; align-items: center; gap: 12px; text-align: left; }
         .reward-img { width: 40px; height: 40px; object-fit: contain; }
         .reward-info { display: flex; flex-direction: column; }
@@ -140,7 +168,7 @@
         .briefing-tag { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; text-transform: uppercase; font-weight: 900; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; text-shadow: 0 1px 2px #000; font-weight: 500; white-space: pre-wrap; word-wrap: break-word; }
 
-        @media (max-width: 1300px) { .huds-wrapper { flex-direction: column; align-items: center; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } }
+        @media (max-width: 1300px) { .huds-wrapper { grid-template-columns: 1fr; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } }
     </style>
 </head>
 <body>
@@ -151,44 +179,63 @@
         </header>
 
         <div class="huds-wrapper">
-            <div class="hud-card" id="hud-next">
-                <span class="hud-label" style="color: var(--gold);">NEXT EVENT</span>
-                <div class="hud-title" id="op-title">STANDBY</div>
-                <img id="hud-next-img" class="hud-img" src="" alt="Visual" style="display: none;">
-                <div class="timer-hud">
-                    <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
-                </div>
-                <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="cta-btn" id="twitch-btn" style="display: none;">Official Twitch Channel →</a>
-            </div>
-
-            <div class="hud-card" id="hud-daily">
-                <span class="hud-label" style="color: var(--teal);">REFRESHES DAILY (10 AM CEST)</span>
-                <div class="hud-title">DAILY ION LOOT CORE</div>
-                <img class="hud-img" src="./img/ion-loot-core.png" alt="Ion" style="object-fit: contain; border: none; background: transparent; box-shadow: none; height: 120px; margin-bottom: 25px; display: block;">
-                <div class="timer-hud">
-                    <div class="timer-unit"><div class="timer-val" id="daily-h">00</div><div class="timer-label">HRS</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="daily-m">00</div><div class="timer-label">MIN</div></div>
-                    <div class="timer-unit"><div class="timer-val" id="daily-s">00</div><div class="timer-label">SEC</div></div>
-                </div>
-            </div>
-
-            <div class="hud-card" id="hud-drops">
-                <span class="hud-label" style="color: var(--twitch);">TWITCH DROPS</span>
-                <div class="hud-title" id="drops-title">SCANNING...</div>
-                <div id="drops-rewards" class="drops-list"></div>
-                <div id="drops-timer-container" style="margin-top:10px; display:none;">
-                    <div style="font-size:0.6rem; font-family:'Inter'; color:var(--twitch); margin-bottom:5px; font-weight:900;">ENDS IN:</div>
+            <!-- COLUMN 1: NEXT EVENT (Tall) -->
+            <div class="hud-column">
+                <div class="hud-card" id="hud-next">
+                    <span class="hud-label" style="color: var(--gold);">NEXT EVENT</span>
+                    <div class="hud-title" id="op-title">STANDBY</div>
+                    <img id="hud-next-img" class="hud-img" src="" alt="Visual" style="display: none;">
                     <div class="timer-hud">
-                        <div class="timer-unit"><div class="timer-val" id="dr-d" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">DAYS</div></div>
-                        <div class="timer-unit"><div class="timer-val" id="dr-h" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">HRS</div></div>
-                        <div class="timer-unit"><div class="timer-val" id="dr-m" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">MIN</div></div>
-                        <div class="timer-unit"><div class="timer-val" id="dr-s" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">SEC</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="d">00</div><div class="timer-label">DAYS</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="h">00</div><div class="timer-label">HRS</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
+                    </div>
+                    <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="cta-btn" id="twitch-btn" style="display: none;">Official Twitch Channel →</a>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: DAILY HUB (Stacked) -->
+            <div class="hud-column center">
+                <!-- DAILY LOOT CORE -->
+                <div class="hud-card" id="hud-daily">
+                    <span class="hud-label" style="color: var(--teal);">DAILY RESET (10 AM CEST)</span>
+                    <div class="hud-title">ION LOOT CORE</div>
+                    <div class="timer-hud">
+                        <div class="timer-unit"><div class="timer-val" id="daily-h">00</div><div class="timer-label">HRS</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="daily-m">00</div><div class="timer-label">MIN</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="daily-s">00</div><div class="timer-label">SEC</div></div>
                     </div>
                 </div>
-                <a href="https://www.twitch.tv/directory/category/predecessor" target="_blank" class="cta-btn" id="drops-btn" style="display: none; background: var(--twitch);">Watch Live Streams →</a>
+                <!-- DAILY QUESTS -->
+                <div class="hud-card" id="hud-quests">
+                    <span class="hud-label" style="color: var(--quest);">DAILY RESET (12 PM CEST)</span>
+                    <div class="hud-title">DAILY QUESTS</div>
+                    <div class="timer-hud">
+                        <div class="timer-unit"><div class="timer-val" id="quest-h">00</div><div class="timer-label">HRS</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="quest-m">00</div><div class="timer-label">MIN</div></div>
+                        <div class="timer-unit"><div class="timer-val" id="quest-s">00</div><div class="timer-label">SEC</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 3: TWITCH DROPS (Tall) -->
+            <div class="hud-column">
+                <div class="hud-card" id="hud-drops">
+                    <span class="hud-label" style="color: var(--twitch);">TWITCH DROPS</span>
+                    <div class="hud-title" id="drops-title">SCANNING...</div>
+                    <div id="drops-rewards" class="drops-list"></div>
+                    <div id="drops-timer-container" style="margin-top:10px; display:none;">
+                        <div style="font-size:0.6rem; font-family:'Inter'; color:var(--twitch); margin-bottom:5px; font-weight:900;">ENDS IN:</div>
+                        <div class="timer-hud">
+                            <div class="timer-unit"><div class="timer-val" id="dr-d" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">DAYS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-h" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">HRS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-m" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">MIN</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-s" style="font-size:1.2rem; width:45px;">00</div><div class="timer-label" style="font-size:0.4rem;">SEC</div></div>
+                        </div>
+                    </div>
+                    <a href="https://www.twitch.tv/directory/category/predecessor" target="_blank" class="cta-btn" id="drops-btn" style="display: none; background: var(--twitch);">Watch Live Streams →</a>
+                </div>
             </div>
         </div>
 
@@ -316,12 +363,25 @@
 
         function setupDailyCountdown() {
             setInterval(() => {
-                const target = new Date(); target.setUTCHours(8, 0, 0, 0);
-                if (Date.now() >= target.getTime()) target.setUTCDate(target.getUTCDate() + 1);
-                const diff = target.getTime() - Date.now();
-                document.getElementById('daily-h').innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
-                document.getElementById('daily-m').innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
-                document.getElementById('daily-s').innerText = String(Math.floor((diff % 6e4) / 1000)).padStart(2, '0');
+                const now = Date.now();
+                
+                // 10 AM CEST = 08:00 UTC
+                const targetLoot = new Date(); targetLoot.setUTCHours(8, 0, 0, 0);
+                if (now >= targetLoot.getTime()) targetLoot.setUTCDate(targetLoot.getUTCDate() + 1);
+                const diffLoot = targetLoot.getTime() - now;
+                
+                // 12 PM CEST = 10:00 UTC
+                const targetQuests = new Date(); targetQuests.setUTCHours(10, 0, 0, 0);
+                if (now >= targetQuests.getTime()) targetQuests.setUTCDate(targetQuests.getUTCDate() + 1);
+                const diffQuests = targetQuests.getTime() - now;
+
+                document.getElementById('daily-h').innerText = String(Math.floor((diffLoot % 864e5) / 36e5)).padStart(2, '0');
+                document.getElementById('daily-m').innerText = String(Math.floor((diffLoot % 36e5) / 6e4)).padStart(2, '0');
+                document.getElementById('daily-s').innerText = String(Math.floor((diffLoot % 6e4) / 1000)).padStart(2, '0');
+
+                document.getElementById('quest-h').innerText = String(Math.floor((diffQuests % 864e5) / 36e5)).padStart(2, '0');
+                document.getElementById('quest-m').innerText = String(Math.floor((diffQuests % 36e5) / 6e4)).padStart(2, '0');
+                document.getElementById('quest-s').innerText = String(Math.floor((diffQuests % 6e4) / 1000)).padStart(2, '0');
             }, 1000);
         }
 

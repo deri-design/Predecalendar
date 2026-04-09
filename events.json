@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-08 19:25:00",
+    "last_updated": "2026-04-09 14:19:29",
     "events": [
         {
             "original_id": "1488967151757824192",
@@ -99,6 +99,16 @@
             "type": "news",
             "desc": "\u26a0\ufe0f Upcoming Downtime\nPredecessor game servers will enter maintenance mode as we push a new game update. During this time you will be unable to play.",
             "image": "https://images-ext-1.discordapp.net/external/IbiGZbO6HrmxAaiDrN2yZR_xuzO70SfrpZSR0Ei9Wrs/https/pbs.twimg.com/media/GjA_nkZXMAAPssx.jpg?format=webp&width=1581&height=889",
+            "url": "https://www.predecessorgame.com/en-US/news"
+        },
+        {
+            "original_id": "1491804563257163796",
+            "date": "2026-04-10",
+            "iso_date": "2026-04-10T15:00:00Z",
+            "title": "DOUBLE XP WEEKEND",
+            "type": "news",
+            "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n @Official News",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69d90552&is=69d7b3d2&hm=cd0edc9d32cd032a8ea608721a651b3d34584d16be551fd3e6140db09d3f5c54&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

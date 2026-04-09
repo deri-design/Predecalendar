@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from bs4 import BeautifulSoup
 
 def fetch_drops():
-    print("--- Beziehe detaillierte Belohnungen von TwitchDrops.app ---")
+    print("--- Beziehe NUR AKTIVE Belohnungen von TwitchDrops.app ---")
     
     url = "https://twitchdrops.app/game/predecessor"
     headers = {
@@ -23,78 +23,65 @@ def fetch_drops():
 
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # 1. VERSUCH: Auslesen der Daten aus dem Next.js JSON (am genauesten)
+        # --- SCHRITT 1: Finde die Grenze zu den alten Drops ---
+        # Wir suchen die Überschrift "PAST DROPS"
+        past_drops_heading = soup.find(string=re.compile(r'PAST DROPS', re.I))
+        
+        # --- SCHRITT 2: Versuche JSON-Extraktion mit Status-Check ---
         next_data_script = soup.find('script', id='__NEXT_DATA__')
         if next_data_script:
-            print("Extrahiere Daten aus JSON-Block...")
+            print("Analysiere JSON-Daten...")
             data = json.loads(next_data_script.string)
-            
-            # Wir suchen tief im JSON-Baum nach der Kampagnen-Liste
-            # Meist unter props -> pageProps -> game -> drop_campaigns
             page_props = data.get('props', {}).get('pageProps', {})
             game_obj = page_props.get('game', {})
             
-            # Wir nehmen alle Kampagnen, die aktiv oder geplant sind
+            # Suche nach Kampagnen im JSON
             raw_campaigns = game_obj.get('drop_campaigns', []) or page_props.get('campaigns', [])
             
-            if not raw_campaigns:
-                # Falls der Pfad anders ist, suchen wir rekursiv
-                def find_list_with_items(obj):
-                    if isinstance(obj, dict):
-                        if 'items' in obj and isinstance(obj['items'], list) and len(obj['items']) > 0:
-                            if 'name' in obj: return [obj] # Es ist eine Kampagne
-                        for v in obj.values():
-                            res = find_list_with_items(v)
-                            if res: return res
-                    elif isinstance(obj, list):
-                        for i in obj:
-                            res = find_list_with_items(i)
-                            if res: return res
-                    return None
-                raw_campaigns = find_list_with_items(data) or []
-
             for camp in raw_campaigns:
-                rewards = []
-                # Wir holen jedes einzelne Item (Loot Cores, Skins etc.)
-                items = camp.get('items', [])
-                for item in items:
-                    # Bild-URL korrigieren (oft fehlen Domain-Namen im JSON)
-                    img = item.get('image', '')
-                    if img and img.startswith('/'): img = "https://twitchdrops.app" + img
+                # STRENGER CHECK: Nur Kampagnen mit Status 'ACTIVE' zulassen
+                status = str(camp.get('status', '')).upper()
+                if status == 'ACTIVE':
+                    print(f"Aktive Kampagne im JSON gefunden: {camp.get('name')}")
+                    rewards = []
+                    for item in camp.get('items', []):
+                        img = item.get('image', '')
+                        if img and img.startswith('/'): img = "https://twitchdrops.app" + img
+                        
+                        rewards.append({
+                            "name": item.get('name', 'Belohnung'),
+                            "image": img,
+                            "minutes": item.get('required_minutes') or item.get('minutes', 60)
+                        })
                     
-                    rewards.append({
-                        "name": item.get('name', 'Belohnung'),
-                        "image": img,
-                        "minutes": item.get('required_minutes') or item.get('minutes', 60)
-                    })
-                
-                if rewards:
-                    active_campaigns.append({
-                        "campaign_name": camp.get('name', '1.13 Premium Drops'),
-                        "rewards": rewards
-                    })
+                    if rewards:
+                        active_campaigns.append({
+                            "campaign_name": camp.get('name'),
+                            "rewards": rewards
+                        })
 
-        # 2. VERSUCH: HTML-Fallback (Falls JSON nicht funktioniert)
+        # --- SCHRITT 3: HTML-Fallback (nur falls JSON-Check nichts fand) ---
         if not active_campaigns:
-            print("JSON fehlgeschlagen, nutze HTML-Parsing für Belohnungen...")
-            # Wir suchen die Karten auf der Seite (wie im Screenshot Image 131)
-            # Jedes Reward-Item ist meist in einem Container mit Text wie "Watch 1h"
-            items_found = soup.find_all(string=re.compile(r'Watch \d+', re.I))
+            print("JSON war leer/inaktiv. Nutze gefiltertes HTML-Parsing...")
+            # Wir suchen alle "Watch"-Texte
+            time_elements = soup.find_all(string=re.compile(r'Watch \d+', re.I))
             
             temp_rewards = []
-            for item_text in items_found:
-                parent = item_text.parent.parent # Zum Container hochgehen
+            for te in time_elements:
+                # PRÜFUNG: Liegt dieses Element unterhalb von "PAST DROPS"?
+                # Wenn ja, ignorieren wir es komplett.
+                if past_drops_heading and te.sourceline > past_drops_heading.parent.sourceline:
+                    continue
+
+                parent = te.parent.parent
                 img_tag = parent.find('img')
-                name_tag = parent.find(['h3', 'h4', 'p', 'span'], string=True) # Textinhalt
+                name_tag = parent.find(['h3', 'h4', 'p', 'span'], string=True)
                 
                 if img_tag:
-                    name = name_tag.get_text().strip() if name_tag else "Drop Item"
-                    # Wenn kein Name gefunden, nimm den Alt-Tag des Bildes
-                    if name == "Drop Item" and img_tag.has_attr('alt'): name = img_tag['alt']
+                    name = name_tag.get_text().strip() if name_tag else img_tag.get('alt', 'Drop Item')
                     
-                    time_str = item_text.strip()
+                    time_str = te.strip()
                     mins = 60
-                    # Umrechnung: 1h -> 60, 2h -> 120 etc.
                     nums = re.findall(r'\d+', time_str)
                     if nums:
                         val = int(nums[0])
@@ -111,25 +98,27 @@ def fetch_drops():
             
             if temp_rewards:
                 active_campaigns.append({
-                    "campaign_name": "Premium Drops",
+                    "campaign_name": "Aktuelle Drops",
                     "rewards": temp_rewards
                 })
 
-    except Exception as e:
-        print(f"Fehler beim Scrapen: {e}")
+        # Zeitstempel CEST
+        german_time = datetime.now(timezone.utc) + timedelta(hours=2)
+        output = {
+            "last_updated": german_time.strftime("%Y-%m-%d %H:%M:%S") + " (CEST)",
+            "active": len(active_campaigns) > 0,
+            "campaigns": active_campaigns
+        }
+        
+        with open('drops.json', 'w') as f:
+            json.dump(output, f, indent=4)
+        
+        print(f"Bereinigung abgeschlossen. Aktiv: {output['active']} | Belohnungen: {len(active_campaigns[0]['rewards']) if active_campaigns else 0}")
 
-    # CEST Zeitstempel
-    german_time = datetime.now(timezone.utc) + timedelta(hours=2)
-    output = {
-        "last_updated": german_time.strftime("%Y-%m-%d %H:%M:%S") + " (CEST)",
-        "active": len(active_campaigns) > 0,
-        "campaigns": active_campaigns
-    }
-    
-    with open('drops.json', 'w') as f:
-        json.dump(output, f, indent=4)
-    
-    print(f"Abgeschlossen. Aktiv: {output['active']} | Belohnungen gefunden: {len(active_campaigns[0]['rewards']) if active_campaigns else 0}")
+    except Exception as e:
+        print(f"Fehler: {e}")
+        with open('drops.json', 'w') as f:
+            json.dump({"active": False, "campaigns": [], "last_updated": "Error"}, f, indent=4)
 
 if __name__ == "__main__":
     fetch_drops()

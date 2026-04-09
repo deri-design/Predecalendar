@@ -1,14 +1,59 @@
 {
-    "last_updated": "2026-04-09 04:02:00 (CEST)",
+    "last_updated": "2026-04-09 05:33:06 (CEST)",
     "active": true,
     "campaigns": [
         {
-            "campaign_name": "Predecessor Twitch Drops",
+            "campaign_name": "Premium Drops",
             "rewards": [
                 {
-                    "name": "Loot Cores / Skins",
-                    "image": "https://static-cdn.jtvnw.net/drops/assets/predecessor_default.png",
+                    "name": "Ion Loot Core",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/3d23d56e-1719-4fff-a001-c16c7e9f923f.png",
                     "minutes": 60
+                },
+                {
+                    "name": "Purple Adele Profile Icon",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/bee23f4f-44aa-4171-9fcb-3afc57b2e52a.jpeg",
+                    "minutes": 120
+                },
+                {
+                    "name": "Purple Adele Banner",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/f3ff63ca-efc1-4e89-888d-9bb86afbb116.jpeg",
+                    "minutes": 240
+                },
+                {
+                    "name": "Quantum Loot Core",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/524953d6-ade9-4ad3-8f65-2120682a44f3.png",
+                    "minutes": 360
+                },
+                {
+                    "name": "Purple Adele Skin Variant",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/afa72ad3-2d89-4d8a-ade8-f2b061b3a42d.jpeg",
+                    "minutes": 480
+                },
+                {
+                    "name": "Ion Loot Core",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/3d23d56e-1719-4fff-a001-c16c7e9f923f.png",
+                    "minutes": 1800
+                },
+                {
+                    "name": "Quantum Loot Core",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/524953d6-ade9-4ad3-8f65-2120682a44f3.png",
+                    "minutes": 120
+                },
+                {
+                    "name": "Yurei Overhead Emote",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/d9edbe5e-8fc0-480c-83de-d43b8ac872a8.png",
+                    "minutes": 480
+                },
+                {
+                    "name": "Bayle Overhead Emote",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/dde2f334-bd73-4c72-a58e-29581fc7bd6c.png",
+                    "minutes": 720
+                },
+                {
+                    "name": "Victorious R. Gideon Skin",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/5d6e59e0-e86b-4763-ac51-623a60338928.png",
+                    "minutes": 900
                 }
             ]
         }

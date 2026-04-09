@@ -1,5 +1,18 @@
 {
-    "last_updated": "2026-04-09 09:02:29 (CEST)",
-    "active": false,
-    "campaigns": []
+    "last_updated": "2026-04-09 09:06:47 (CEST)",
+    "active": true,
+    "campaigns": [
+        {
+            "campaign_name": "Predecessor Drops",
+            "start": "2026-04-07T18:00:00Z",
+            "end": "2026-05-04T18:00:00Z",
+            "rewards": [
+                {
+                    "name": "Loot Reward",
+                    "image": "https://static-cdn.jtvnw.net/twitch-quests-assets/REWARD/afa72ad3-2d89-4d8a-ade8-f2b061b3a42d.jpeg",
+                    "minutes": 480
+                }
+            ]
+        }
+    ]
 }

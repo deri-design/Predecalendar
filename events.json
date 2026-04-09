@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-09 21:50:18",
+    "last_updated": "2026-04-09 22:16:40",
     "events": [
         {
             "original_id": "1488967151757824192",
@@ -116,7 +116,7 @@
             "date": "2026-04-01",
             "iso_date": "2026-04-01T18:00:00+02:00",
             "title": "V1.13 DEV STREAM",
-            "type": "twitch",
+            "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69d95ca3&is=69d80b23&hm=7c45b3c72a5a02178e371106484b553f2f47af502ce59e83cf4ed48e2544b168&",
             "url": "https://www.predecessorgame.com/en-US/news"

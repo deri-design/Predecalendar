@@ -12,10 +12,9 @@ CHANNEL_ID = "1487129767865225261"
 
 def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
-    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=20"
+    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=50"
     res = requests.get(url, headers=headers)
-    if res.status_code != 200: return []
-    return res.json()
+    return res.json() if res.status_code == 200 else []
 
 def find_deep_img(obj):
     if not obj: return ""
@@ -32,12 +31,6 @@ def extract_all_text_and_links(m):
     text_segments = [m.get('content', '')]
     urls = re.findall(r'(https?://[^\s]+)', m.get('content', ''))
     def process_obj(obj):
-        if 'message_snapshots' in obj:
-            for snap in obj['message_snapshots']:
-                snap_msg = snap.get('message', {})
-                text_segments.append(snap_msg.get('content', ''))
-                urls.extend(re.findall(r'(https?://[^\s]+)', snap_msg.get('content', '')))
-                process_obj(snap_msg)
         if 'embeds' in obj:
             for emb in obj['embeds']:
                 text_segments.append(emb.get('title', ''))
@@ -58,6 +51,15 @@ def ask_groq(messages_text):
 def scrape():
     messages = get_discord_messages()
     if not messages: return
+
+    # Load existing database to prevent clearing it
+    try:
+        with open('events.json', 'r') as f:
+            db = json.load(f)
+            event_map = {str(e['original_id']): e for e in db.get('events', [])}
+    except:
+        event_map = {}
+
     to_process, ai_input_list = [], []
     for i, m in enumerate(messages):
         full_text, all_urls = extract_all_text_and_links(m)
@@ -69,24 +71,31 @@ def scrape():
         ai_input_list.append(f"INDEX: [{i}]\nCONTENT: {full_text}")
 
     ai_results = ask_groq("\n---\n".join(ai_input_list))
-    final_events = []
+
     for ar in ai_results:
         intel = next((x for x in to_process if x['index'] == ar['index']), None)
         if not intel: continue
+        
         event_date = ar.get('date') or intel['posted']
         event_time = ar.get('time', '14:00')
-        iso_date = f"{event_date}T{event_time}:00+02:00" # FORCE CEST
+        iso_date = f"{event_date}T{event_time}:00+02:00" # CEST
         
         etype = ar.get('type', 'news')
-        eurl = next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
-        if "twitch" in intel['raw'].lower(): etype = "twitch"
+        if "twitch" in intel['raw'].lower() or "twitch.tv" in str(intel['urls']): etype = "twitch"
+        if "patch" in intel['raw'].lower() or "v1." in intel['raw'].lower(): etype = "patch"
 
-        final_events.append({
-            "original_id": intel['id'], "date": event_date, "iso_date": iso_date,
+        event_map[str(intel['id'])] = {
+            "original_id": intel['id'],
+            "date": event_date,
+            "iso_date": iso_date,
             "title": str(ar.get('title', 'UPDATE')).upper()[:40],
-            "type": etype, "desc": intel['clean'], "image": intel['img'], "url": eurl
-        })
+            "type": etype,
+            "desc": intel['clean'],
+            "image": intel['img'],
+            "url": next((u for u in intel['urls'] if "playp.red" in u or "predecessorgame" in u), "https://www.predecessorgame.com/en-US/news")
+        }
+
     with open('events.json', 'w') as f:
-        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": final_events}, f, indent=4)
+        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}, f, indent=4)
 
 if __name__ == "__main__": scrape()

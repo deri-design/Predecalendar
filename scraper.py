@@ -16,16 +16,18 @@ def get_discord_messages():
     res = requests.get(url, headers=headers)
     if res.status_code != 200:
         print(f"DISCORD ERROR {res.status_code}: {res.text}")
-        return[]
+        return []
     return res.json()
 
 def find_deep_img(obj):
     if not obj: return ""
     if isinstance(obj, str):
-        if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj: return obj
+        if any(ext in obj.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']) and 'http' in obj:
+            return obj
     if isinstance(obj, dict):
-        for key in['url', 'proxy_url']:
-            if key in obj and isinstance(obj[key], str) and any(ext in obj[key].lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']): return obj[key]
+        for key in ['url', 'proxy_url']:
+            if key in obj and isinstance(obj[key], str) and any(ext in obj[key].lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
+                return obj[key]
         for v in obj.values():
             res = find_deep_img(v)
             if res: return res
@@ -36,7 +38,7 @@ def find_deep_img(obj):
     return ""
 
 def extract_all_text_and_links(m):
-    text_segments =[m.get('content', '')]
+    text_segments = [m.get('content', '')]
     urls = re.findall(r'(https?://[^\s]+)', m.get('content', ''))
     def process_obj(obj):
         if 'message_snapshots' in obj:
@@ -57,24 +59,25 @@ def ask_groq(messages_text):
     client = Groq(api_key=GROQ_API_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
-    Today is {today}. Context: "Predecessor" game announcements.
-    TASK: Extract events.
+    Today is {today}. Predecessor game announcements. 
+    TASK: Extract events with exact times.
     RULES:
     1. Identify START DATE (YYYY-MM-DD).
-    2. Identify START TIME (HH:MM) - e.g. "2:00 PM" is 14:00. If none, use 14:00.
-    3. Return ONLY a valid JSON list of objects.
-    4. "index": return the EXACT integer index provided in the block header.
+    2. Identify START TIME (HH:MM) - e.g. "2:00 PM" is 14:00. If none found, use 14:00.
+    3. Return ONLY valid JSON list.
+    4. "index" MUST match header index.
     Messages:
     {messages_text}
-    OUTPUT FORMAT:[
+    OUTPUT FORMAT:
+    [
       {{"index": 0, "date": "YYYY-MM-DD", "time": "HH:MM", "title": "Title", "type": "patch/news/twitch/hero"}}
     ]
     """
     try:
         chat = client.chat.completions.create(messages=[{"role": "user", "content": prompt}], model="llama-3.3-70b-versatile", temperature=0.0)
         raw = chat.choices[0].message.content
-        json_match = re.search(r'\[.*\]', raw, re.DOTALL)
-        return json.loads(json_match.group(0)) if json_match else []
+        match = re.search(r'\[.*\]', raw, re.DOTALL)
+        return json.loads(match.group(0)) if match else []
     except: return []
 
 def scrape():
@@ -86,34 +89,33 @@ def scrape():
             event_map = {str(e['original_id']): e for e in db.get('events', [])}
     except: event_map = {}
 
-    to_process, ai_input_list = [], []
+    to_process, ai_input = [], []
     for i, m in enumerate(messages):
-        full_text, all_urls = extract_all_text_and_links(m)
-        if full_text:
-            to_process.append({"index": i, "id": m['id'], "raw": full_text, "clean": re.sub(r'<@&?\d+>', '', full_text).strip(), "urls": all_urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]})
-            ai_input_list.append(f"INDEX: [{i}]\nCONTENT: {full_text}")
+        txt, urls = extract_all_text_and_links(m)
+        to_process.append({"index": i, "id": m['id'], "raw": txt, "clean": re.sub(r'<@&?\d+>', '', txt).strip(), "urls": urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]})
+        ai_input.append(f"INDEX: [{i}]\nCONTENT: {txt}")
 
-    if not ai_input_list: return
-    ai_results = ask_groq("\n---\n".join(ai_input_list))
-
-    for ar in ai_results:
+    results = ask_groq("\n---\n".join(ai_input))
+    for ar in results:
         intel = next((x for x in to_process if x['index'] == ar.get('index')), None)
         if not intel: continue
         
-        event_date = ar.get('date') or intel['posted']
-        event_time = ar.get('time', '14:00')
-        # PRECISION: CEST Offset (+02:00)
-        iso_date = f"{event_date}T{event_time}:00+02:00"
+        date = ar.get('date') or intel['posted']
+        time = ar.get('time', '14:00')
+        iso = f"{date}T{time}:00+02:00" # FORCE CEST OFFSET
+
+        etype = ar.get('type', 'news')
+        if "twitch" in intel['raw'].lower(): etype = "twitch"
+        if "v1." in intel['raw'].lower() or "patch" in intel['raw'].lower(): etype = "patch"
 
         event_map[str(intel['id'])] = {
-            "original_id": intel['id'], "date": event_date, "iso_date": iso_date,
-            "title": str(ar.get('title', 'UPDATE')).upper()[:40], "type": ar.get('type', 'news'),
+            "original_id": intel['id'], "date": date, "iso_date": iso,
+            "title": str(ar.get('title', 'UPDATE')).upper()[:40], "type": etype,
             "desc": intel['clean'], "image": intel['img'],
             "url": next((u for u in intel['urls'] if "playp.red" in u or "predecessor" in u), "https://www.predecessorgame.com/en-US/news")
         }
 
-    output = {"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}
     with open('events.json', 'w') as f:
-        json.dump(output, f, indent=4)
+        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "events": list(event_map.values())}, f, indent=4)
 
 if __name__ == "__main__": scrape()

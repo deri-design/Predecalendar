@@ -20,7 +20,7 @@
             --gold-light: #FBEB61; --gold-dark: #C48400; --gold: #dcb63b; 
             --teal: #37a9a9; --red: #c73843; --twitch: #9146ff; --youtube: #FF0000; 
             --quest: #3498db; --bg: #06080d; --cell-glass: rgba(9, 14, 22, 0.85); 
-            --border: #1e2638; --text: #c8d0e0; --glass-blur: blur(25px);
+            --border: #1e2638; --text: #c8d0e0; --hud-glow: rgba(220, 182, 59, 0.4); --glass-blur: blur(25px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,6 +30,7 @@
             padding: 2rem 1rem; min-height: 100vh; position: relative; overflow-x: hidden;
         }
 
+        /* --- STYLED BACKGROUND WITH 10% OPACITY --- */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('./img/bg.jpg') no-repeat center center; background-size: cover;
@@ -49,15 +50,17 @@
         .subline { font-family: 'Inter', sans-serif; color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
 
         /* --- 3-COLUMN STACKED HUD --- */
-        .huds-wrapper { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 2rem; align-items: stretch; }
-        .hud-column { display: flex; flex-direction: column; gap: 20px; }
+        .huds-wrapper { display: flex; justify-content: space-between; gap: 20px; width: 100%; margin-bottom: 2rem; align-items: stretch; }
+        .hud-column { flex: 1; display: flex; flex-direction: column; gap: 20px; }
 
         .hud-card { 
-            flex: 1; background: var(--cell-glass); backdrop-filter: var(--glass-blur); border: 1px solid var(--gold); border-bottom: 4px solid var(--gold); 
-            padding: 25px 20px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.6); border-radius: 4px;
+            flex: 1; min-width: 0; background: var(--cell-glass); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); 
+            border: 1px solid var(--gold); border-bottom: 4px solid var(--gold); padding: 25px 20px; position: relative; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); border-radius: 4px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
         }
-        .center .hud-card { flex: none; padding: 15px 20px; }
+
+        .hud-column.center .hud-card { flex: none; padding: 15px 20px; }
 
         #hud-next { border-color: var(--gold); animation: pulseGold 4s infinite; }
         #hud-daily { border-color: var(--teal); border-bottom: 4px solid var(--teal); animation: pulseTeal 4s infinite; }
@@ -71,16 +74,16 @@
 
         .hud-label { font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
         .hud-title { font-family: 'Inter', sans-serif; font-size: 1.3rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; font-weight: 900; margin-bottom: 15px; min-height: 3rem; display: flex; align-items: center; justify-content: center; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        .center .hud-title { font-size: 1.1rem; margin-bottom: 10px; min-height: 0; }
+        .hud-column.center .hud-title { font-size: 1.1rem; margin-bottom: 10px; min-height: 0; }
         .hud-img { width: 100%; height: 140px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); background: #0a0f18; }
         
         .timer-hud { display: flex; gap: 8px; margin-top: auto; }
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
         .timer-val { font-family: 'StoricaHeavy', sans-serif; font-size: 1.8rem; color: #fff; background: rgba(0,0,0,0.4); padding: 8px 0; border-radius: 4px; border-bottom: 2px solid var(--gold); width: 60px; text-align: center; }
-        .timer-label { font-size: 0.5rem; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: 900; }
+        .timer-label { font-size: 0.5rem; font-family: 'Inter', sans-serif; color: var(--gold); margin-top: 4px; letter-spacing: 1px; font-weight: 900; }
         
         #hud-daily .timer-val { border-color: var(--teal); } #hud-quests .timer-val { border-color: var(--quest); }
-        .center .timer-val { font-size: 1.4rem; width: 45px; padding: 4px 0; }
+        .hud-column.center .timer-val { font-size: 1.4rem; width: 45px; padding: 4px 0; }
 
         .drops-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; flex: 1; overflow-y: auto; max-height: 250px; scrollbar-width: thin; }
         .reward-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(145, 70, 255, 0.3); border-radius: 4px; padding: 8px; display: flex; align-items: center; gap: 12px; text-align: left; }
@@ -121,13 +124,14 @@
         .briefing-tag { font-size: 0.9rem; color: var(--gold); margin-bottom: 15px; font-weight: 900; text-transform: uppercase; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; white-space: pre-wrap; }
 
-        @media (max-width: 1300px) { .huds-wrapper { grid-template-columns: 1fr; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } }
+        @media (max-width: 1300px) { .huds-wrapper { flex-direction: column; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header"><h1>PREDCALENDAR</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
         <div class="huds-wrapper">
+            <!-- COL 1 -->
             <div class="hud-column">
                 <div class="hud-card" id="hud-next">
                     <span class="hud-label" style="color: var(--gold);">NEXT EVENT</span>
@@ -141,6 +145,7 @@
                     </div>
                 </div>
             </div>
+            <!-- COL 2 -->
             <div class="hud-column center">
                 <div class="hud-card" id="hud-daily">
                     <span class="hud-label" style="color: var(--teal);">DAILY RESET (10 AM CEST)</span>
@@ -161,6 +166,7 @@
                     </div>
                 </div>
             </div>
+            <!-- COL 3 -->
             <div class="hud-column">
                 <div class="hud-card" id="hud-drops">
                     <span class="hud-label" style="color: var(--twitch);">TWITCH DROPS</span>
@@ -178,6 +184,7 @@
                 </div>
             </div>
         </div>
+
         <div class="legend">
             <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
             <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
@@ -185,6 +192,7 @@
             <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
             <div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div>
         </div>
+
         <div class="calendar-nav">
             <button class="nav-btn" onclick="shiftView(-3)">← PREV 3 WEEKS</button>
             <button class="nav-btn active" id="btn-curr" onclick="resetView()">CURRENT VIEW</button>
@@ -196,6 +204,7 @@
     <script>
         let evData = []; let dropData = {active: false, campaigns: []}; const today = new Date(); let currentWeekOffset = 0;
         const grid = document.getElementById('main-grid'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
+        
         async function init() {
             try {
                 const r = await fetch('./events.json?t=' + Date.now()); const data = await r.json(); evData = data.events || [];
@@ -203,6 +212,7 @@
                 setupCountdown(); setupDrops(dropData); setupDailyCountdown(); renderRoadmap();
             } catch(e) { renderRoadmap(); }
         }
+
         function setupDrops(data) {
             const titleEl = document.getElementById('drops-title'), container = document.getElementById('drops-rewards'), timerHUD = document.getElementById('drops-timer-container');
             if (data.active && data.campaigns.length > 0) {
@@ -219,9 +229,11 @@
                 }); container.innerHTML = html;
             } else { titleEl.innerText = "NONE ACTIVE"; }
         }
+
         function shiftView(weeks) { currentWeekOffset += weeks; renderRoadmap(); updateNav(); }
         function resetView() { currentWeekOffset = 0; renderRoadmap(); updateNav(); }
         function updateNav() { document.getElementById('btn-curr').classList.toggle('active', currentWeekOffset === 0); }
+
         function renderRoadmap() {
             grid.innerHTML = "MON TUE WED THU FRI SAT SUN".split(" ").map(d => `<div class="h-cell">${d}</div>`).join("");
             let start = new Date(); start.setDate(start.getDate() - 10 + (currentWeekOffset * 7));
@@ -239,6 +251,7 @@
                 }); grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
             }
         }
+
         function setupCountdown() {
             setInterval(() => {
                 const now = Date.now(); const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date) })).filter(e => e.time > now).sort((a, b) => a.time - b.time);
@@ -253,7 +266,29 @@
                 }
             }, 1000);
         }
+
         function setupDailyCountdown() {
             setInterval(() => {
                 const now = Date.now();
-                const targetLoot = new Date(); targetLoot.setUTCHours(8, 0, 0, 0); if (now >= targetLoot.getTime())
+                const targetLoot = new Date(); targetLoot.setUTCHours(8, 0, 0, 0); if (now >= targetLoot.getTime()) targetLoot.setUTCDate(targetLoot.getUTCDate() + 1);
+                const targetQuests = new Date(); targetQuests.setUTCHours(10, 0, 0, 0); if (now >= targetQuests.getTime()) targetQuests.setUTCDate(targetQuests.getUTCDate() + 1);
+                const diffLoot = targetLoot.getTime() - now; const diffQuests = targetQuests.getTime() - now;
+                document.getElementById('daily-h').innerText = String(Math.floor((diffLoot % 864e5) / 36e5)).padStart(2, '0');
+                document.getElementById('daily-m').innerText = String(Math.floor((diffLoot % 36e5) / 6e4)).padStart(2, '0');
+                document.getElementById('daily-s').innerText = String(Math.floor((diffLoot % 6e4) / 1000)).padStart(2, '0');
+                document.getElementById('quest-h').innerText = String(Math.floor((diffQuests % 864e5) / 36e5)).padStart(2, '0');
+                document.getElementById('quest-m').innerText = String(Math.floor((diffQuests % 36e5) / 6e4)).padStart(2, '0');
+                document.getElementById('quest-s').innerText = String(Math.floor((diffQuests % 6e4) / 1000)).padStart(2, '0');
+            }, 1000);
+        }
+
+        window.showBriefing = function(e, obj) {
+            const rect = e.currentTarget.getBoundingClientRect(); document.getElementById('b-tag').innerText = obj.title; document.getElementById('b-desc').innerText = obj.desc;
+            if (obj.image) { bImg.src = obj.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
+            briefing.style.display = 'block'; let x = rect.left + rect.width + 20; if (x + 450 > window.innerWidth) x = rect.left - 470;
+            briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, rect.top + window.scrollY) + 'px';
+        };
+        init();
+    </script>
+</body>
+</html>

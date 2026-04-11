@@ -12,12 +12,9 @@ CHANNEL_ID = "1487129767865225261"
 
 def get_discord_messages():
     headers = {"Authorization": f"Bot {DISCORD_TOKEN}"}
-    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=20"
+    url = f"https://discord.com/api/v10/channels/{CHANNEL_ID}/messages?limit=50"
     res = requests.get(url, headers=headers)
-    if res.status_code != 200:
-        print(f"DISCORD ERROR {res.status_code}: {res.text}")
-        return []
-    return res.json()
+    return res.json() if res.status_code == 200 else []
 
 def find_deep_img(obj):
     if not obj: return ""
@@ -29,22 +26,12 @@ def find_deep_img(obj):
         for v in obj.values():
             res = find_deep_img(v)
             if res: return res
-    if isinstance(obj, list):
-        for i in obj:
-            res = find_deep_img(i)
-            if res: return res
     return ""
 
 def extract_all_text_and_links(m):
     text_segments = [m.get('content', '')]
     urls = re.findall(r'(https?://[^\s]+)', m.get('content', ''))
     def process_obj(obj):
-        if 'message_snapshots' in obj:
-            for snap in obj['message_snapshots']:
-                snap_msg = snap.get('message', {})
-                text_segments.append(snap_msg.get('content', ''))
-                urls.extend(re.findall(r'(https?://[^\s]+)', snap_msg.get('content', '')))
-                process_obj(snap_msg)
         if 'embeds' in obj:
             for emb in obj['embeds']:
                 text_segments.append(emb.get('title', ''))
@@ -57,25 +44,20 @@ def ask_groq(messages_text):
     client = Groq(api_key=GROQ_API_KEY)
     today = datetime.now().strftime("%A, %B %d, %Y")
     prompt = f"""
-    Today is {today}. Predecessor game announcements. 
-    TASK: Extract events with exact dates and ranges.
+    Today is {today}. Context: Predecessor game announcements.
+    TASK: Extract events. Merge duplicate announcements for the same event into ONE range.
     RULES:
-    1. Identify START DATE (YYYY-MM-DD).
-    2. Identify END DATE (YYYY-MM-DD). If one-day, use same as START.
-    3. Identify START TIME (HH:MM) - e.g. "2:00 PM" is 14:00. Default 14:00.
-    4. Return ONLY valid JSON list. "index" must match header index.
+    1. Identify START and END dates (YYYY-MM-DD).
+    2. Identify START TIME (HH:MM). Default to 14:00 if not found.
+    3. Return ONLY a valid JSON list.
+    4. Deduplicate: If two messages discuss the same 'XP Weekend', return only ONE object with the widest date range.
     Messages:
     {messages_text}
-    OUTPUT FORMAT:
-    [
-      {{"index": 0, "date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD", "time": "HH:MM", "title": "Title", "type": "patch/news/twitch/hero"}}
-    ]
+    OUTPUT FORMAT: [{{'index': 0, 'date': 'YYYY-MM-DD', 'end_date': 'YYYY-MM-DD', 'time': 'HH:MM', 'title': 'Short Title', 'type': 'patch/news/twitch/hero'}}]
     """
     try:
         chat = client.chat.completions.create(messages=[{"role": "user", "content": prompt}], model="llama-3.3-70b-versatile", temperature=0.0)
-        raw = chat.choices[0].message.content
-        match = re.search(r'\[.*\]', raw, re.DOTALL)
-        return json.loads(match.group(0)) if match else []
+        return json.loads(re.search(r'\[.*\]', chat.choices[0].message.content, re.DOTALL).group(0))
     except: return []
 
 def scrape():
@@ -83,14 +65,14 @@ def scrape():
     if not messages: return
     try:
         with open('events.json', 'r') as f:
-            db = json.load(f)
-            event_map = {str(e['original_id']): e for e in db.get('events', [])}
-    except: event_map = {}
+            old_db = json.load(f).get('events', [])
+    except: old_db = []
 
+    event_map = {str(e['original_id']): e for e in old_db}
     to_process, ai_input = [], []
     for i, m in enumerate(messages):
         txt, urls = extract_all_text_and_links(m)
-        to_process.append({"index": i, "id": m['id'], "raw": txt, "clean": re.sub(r'<@&?\d+>', '', txt).strip(), "urls": urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]})
+        to_process.append({"index": i, "id": m['id'], "raw": txt, "clean": txt, "urls": urls, "img": find_deep_img(m), "posted": m['timestamp'][:10]})
         ai_input.append(f"INDEX: [{i}]\nCONTENT: {txt}")
 
     results = ask_groq("\n---\n".join(ai_input))
@@ -98,19 +80,18 @@ def scrape():
         intel = next((x for x in to_process if x['index'] == ar.get('index')), None)
         if not intel: continue
         
-        date = ar.get('date') or intel['posted']
-        end_date = ar.get('end_date') or date
-        time = ar.get('time', '14:00')
-        iso = f"{date}T{time}:00+02:00"
-
-        etype = ar.get('type', 'news')
-        if "twitch" in intel['raw'].lower(): etype = "twitch"
-        if "patch" in intel['raw'].lower() or "v1." in intel['raw'].lower(): etype = "patch"
-
+        # Determine unique event key for merging logic (e.g., "DOUBLE XP WEEKEND")
+        event_key = str(ar.get('title', '')).upper()
+        
         event_map[str(intel['id'])] = {
-            "original_id": intel['id'], "date": date, "end_date": end_date, "iso_date": iso,
-            "title": str(ar.get('title', 'UPDATE')).upper()[:40], "type": etype,
-            "desc": intel['clean'], "image": intel['img'],
+            "original_id": intel['id'],
+            "date": ar.get('date'),
+            "end_date": ar.get('end_date'),
+            "iso_date": f"{ar.get('date')}T{ar.get('time', '14:00')}:00+02:00",
+            "title": event_key[:40],
+            "type": ar.get('type', 'news'),
+            "desc": intel['clean'],
+            "image": intel['img'],
             "url": next((u for u in intel['urls'] if "playp.red" in u or "predecessor" in u), "https://www.predecessorgame.com/en-US/news")
         }
 

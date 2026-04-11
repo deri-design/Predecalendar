@@ -58,9 +58,8 @@
             display: flex; flex-direction: column; align-items: center; text-align: center;
         }
 
-        /* Fixed 50/50 Alignment */
-        .center-stack { justify-content: space-between; }
-        .center-stack .hud-card { flex: 1; height: calc(50% - 7.5px); padding: 15px; }
+        /* 50/50 Height Alignment */
+        .center-stack .hud-card { flex: 1; min-height: 0; justify-content: center; }
 
         #hud-next { border-color: var(--gold); animation: pulseGold 4s infinite; }
         #hud-daily { border-color: var(--teal); border-bottom: 4px solid var(--teal); animation: pulseTeal 4s infinite; }
@@ -193,7 +192,7 @@
                 <div class="hud-card" id="hud-duration">
                     <span class="hud-label" style="color: var(--red);">ACTIVE EVENT ENDS IN</span>
                     <div class="hud-title" id="dur-title">NONE ACTIVE</div>
-                    <img id="dur-img" class="hud-img" src="" alt="Active Event" style="display: none;">
+                    <img id="hud-dur-img" class="hud-img" src="" alt="Visual" style="display: none;">
                     <div class="timer-hud">
                         <div class="timer-unit"><div class="timer-val" id="dur-d">00</div><div class="timer-label">DAYS</div></div>
                         <div class="timer-unit"><div class="timer-val" id="dur-h">00</div><div class="timer-label">HRS</div></div>
@@ -203,7 +202,7 @@
                 </div>
             </div>
 
-            <!-- COL 4: TWITCH DROPS (HIDDEN REWARDS) -->
+            <!-- COL 4: TWITCH DROPS -->
             <div class="hud-column">
                 <div class="hud-card" id="hud-drops">
                     <span class="hud-label" style="color: var(--twitch);">TWITCH DROPS</span>
@@ -253,28 +252,68 @@
         </div>
         <div class="roadmap-grid" id="main-grid"></div>
     </div>
+
     <div id="global-briefing"><img id="b-img" class="briefing-img" src="" alt=""><div class="briefing-content"><span id="b-tag" class="briefing-tag"></span><div id="b-desc" class="briefing-desc"></div></div></div>
     
     <script>
-        let evData =[]; let dropData = {active: false, campaigns:[]}; const today = new Date(); let currentWeekOffset = 0;
+        let evData = []; let dropData = {active: false, campaigns:[]}; const today = new Date(); let currentWeekOffset = 0;
         const grid = document.getElementById('main-grid'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
         
-        // Helper to format Discord timestamps into readable local text
-        function parseDiscordText(text) {
-            if (!text) return "";
-            // Remove discord custom emojis <:name:123>
-            let cleanText = text.replace(/<a?:[a-zA-Z0-9_]+:\d+>/g, '');
-            // Convert timestamps <t:123:f>
-            return cleanText.replace(/<t:(\d+):[a-zA-Z]>/g, function(match, ts) {
-                const d = new Date(parseInt(ts) * 1000);
-                return d.toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-            });
-        }
-
         async function init() {
             try {
-                const r = await fetch('./events.json?t=' + Date.now()); const data = await r.json(); evData = data.events ||[];
-                const dr = await fetch('./drops.json?t=' + Date.now()); dropData = await dr.json();
+                const r = await fetch('./events.json?t=' + Date.now()); 
+                const data = await r.json(); 
+                let rawEvents = data.events ||[];
+                
+                // Advanced Parser & Deduplication
+                let mergedEvents = new Map();
+                
+                rawEvents.forEach(ev => {
+                    // Extract precise timestamps from <t:12345:f> discord tags if they exist
+                    const tMatches =[...ev.desc.matchAll(/<t:(\d+)(?::[a-zA-Z])?>/g)];
+                    if (tMatches.length > 0) {
+                        const startDt = new Date(parseInt(tMatches[0][1]) * 1000);
+                        ev.iso_date = startDt.toISOString();
+                        ev.date = `${startDt.getFullYear()}-${String(startDt.getMonth()+1).padStart(2,'0')}-${String(startDt.getDate()).padStart(2,'0')}`;
+                        
+                        if (tMatches.length > 1) {
+                            const endDt = new Date(parseInt(tMatches[1][1]) * 1000);
+                            ev.end_iso_date = endDt.toISOString();
+                            ev.end_date = `${endDt.getFullYear()}-${String(endDt.getMonth()+1).padStart(2,'0')}-${String(endDt.getDate()).padStart(2,'0')}`;
+                        } else {
+                            ev.end_iso_date = ev.iso_date;
+                            ev.end_date = ev.date;
+                        }
+                    } else {
+                        // Fallback to AI extracted dates
+                        if(!ev.end_date) ev.end_date = ev.date;
+                        if(!ev.iso_date) ev.iso_date = ev.date + "T14:00:00+02:00";
+                        ev.end_iso_date = ev.end_date + "T23:59:59+02:00";
+                    }
+
+                    // Strict deduplication by normalizing the title
+                    let baseTitle = ev.title.replace(/ IS LIVE| LIVE NOW| LIVE!| LIVE| REVEAL/gi, '')
+                                            .replace(/[^\w\s]/g, '').trim().toUpperCase();
+                    
+                    if (mergedEvents.has(baseTitle)) {
+                        let existing = mergedEvents.get(baseTitle);
+                        // Push bounds to encompass both posts
+                        if (ev.iso_date < existing.iso_date) { existing.date = ev.date; existing.iso_date = ev.iso_date; }
+                        if (ev.end_iso_date > existing.end_iso_date) { existing.end_date = ev.end_date; existing.end_iso_date = ev.end_iso_date; }
+                        // Merge image and longest description
+                        if (!existing.image && ev.image) existing.image = ev.image;
+                        if (ev.desc.length > existing.desc.length) existing.desc = ev.desc;
+                    } else {
+                        ev.displayTitle = ev.title.replace(/ IS LIVE| LIVE NOW| LIVE!| LIVE| REVEAL/gi, '').trim();
+                        mergedEvents.set(baseTitle, ev);
+                    }
+                });
+                
+                evData = Array.from(mergedEvents.values());
+
+                const dr = await fetch('./drops.json?t=' + Date.now()); 
+                dropData = await dr.json();
+                
                 setupCountdown(); setupDrops(dropData); setupDailyCountdown(); setupDurationCountdown(); renderRoadmap();
             } catch(e) { renderRoadmap(); }
         }
@@ -321,9 +360,12 @@
                 const rangesActive = evData.filter(e => e.date !== e.end_date && dStr >= e.date && dStr <= e.end_date);
                 rangesActive.forEach(() => { html += `<div class="range-bar"></div>`; });
                 cell.innerHTML = html;
+                
+                // Only render the event link block on its start date
                 itemsAtStart.forEach(ev => {
                     const el = document.createElement('a'); el.href = ev.url || '#'; el.target = "_blank"; el.className = `event ${ev.type || 'news'}`;
-                    el.innerHTML = `<div class="e-title">${ev.title}</div>`; el.onmouseenter = (e) => showBriefing(e, ev); el.onmouseleave = () => briefing.style.display = 'none';
+                    el.innerHTML = `<div class="e-title">${ev.displayTitle || ev.title}</div>`; 
+                    el.onmouseenter = (e) => showBriefing(e, ev); el.onmouseleave = () => briefing.style.display = 'none';
                     cell.appendChild(el);
                 }); grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
             }
@@ -332,15 +374,16 @@
         function setupCountdown() {
             setInterval(() => {
                 const now = Date.now(); 
-                // Only show events that have NOT started yet
                 const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date) }))
                     .filter(e => e.time > now)
                     .sort((a, b) => a.time - b.time);
 
                 if (futureEvents.length > 0) {
-                    const nextEv = futureEvents[0]; document.getElementById('op-title').innerText = nextEv.title;
+                    const nextEv = futureEvents[0]; 
+                    document.getElementById('op-title').innerText = nextEv.displayTitle || nextEv.title;
                     if (nextEv.image) { hudImg.src = nextEv.image; hudImg.style.display = 'block'; } else { hudImg.style.display = 'none'; }
                     if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'block'; } else { document.getElementById('twitch-btn').style.display = 'none'; }
+                    
                     const diff = nextEv.time - now;
                     document.getElementById('d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
                     document.getElementById('h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
@@ -368,30 +411,24 @@
         function setupDurationCountdown() {
             setInterval(() => {
                 const nowTS = Date.now();
-                const now = new Date();
-                const curStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+                const durImg = document.getElementById('hud-dur-img');
 
-                // Find currently running events by date comparison
                 const activeEvents = evData.filter(e => {
-                    const end = e.end_date || e.date;
-                    return curStr >= e.date && curStr <= end;
+                    const startTS = Date.parse(e.iso_date);
+                    const endTS = Date.parse(e.end_iso_date);
+                    return nowTS >= startTS && nowTS <= endTS;
                 });
 
-                // Prioritize XP events
-                activeEvents.sort((a,b) => b.title.includes("XP") - a.title.includes("XP"));
+                // Prioritize "XP" events in the duration HUD
+                activeEvents.sort((a,b) => (b.title.includes("XP") ? 1 : 0) - (a.title.includes("XP") ? 1 : 0));
                 
                 if (activeEvents.length > 0) {
                     const e = activeEvents[0];
-                    const endTS = Date.parse((e.end_date || e.date) + "T23:59:59+02:00");
+                    const endTS = Date.parse(e.end_iso_date);
                     const diff = endTS - nowTS;
                     
-                    document.getElementById('dur-title').innerText = e.title;
-                    if (e.image) {
-                        document.getElementById('dur-img').src = e.image;
-                        document.getElementById('dur-img').style.display = 'block';
-                    } else {
-                        document.getElementById('dur-img').style.display = 'none';
-                    }
+                    document.getElementById('dur-title').innerText = e.displayTitle || e.title;
+                    if (e.image) { durImg.src = e.image; durImg.style.display = 'block'; } else { durImg.style.display = 'none'; }
 
                     document.getElementById('dur-d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
                     document.getElementById('dur-h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
@@ -399,26 +436,37 @@
                     document.getElementById('dur-s').innerText = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
                 } else {
                     document.getElementById('dur-title').innerText = "NONE ACTIVE";
-                    document.getElementById('dur-img').style.display = 'none';["dur-d","dur-h","dur-m","dur-s"].forEach(id => document.getElementById(id).innerText = "00");
+                    durImg.style.display = 'none';["dur-d","dur-h","dur-m","dur-s"].forEach(id => document.getElementById(id).innerText = "00");
                 }
             }, 1000);
         }
 
         window.showBriefing = function(e, obj) {
             const rect = e.currentTarget.getBoundingClientRect(); 
-            document.getElementById('b-tag').innerText = obj.title; 
+            document.getElementById('b-tag').innerText = obj.displayTitle || obj.title; 
             
-            // Use the parser to clean up Discord times and emojis in the popup description
-            document.getElementById('b-desc').innerText = parseDiscordText(obj.desc);
-            
+            // Format Discord Timestamps & Remove broken Emotes
+            let cleanDesc = obj.desc.replace(/<t:(\d+)(:[a-zA-Z])?>/g, (match, timestamp) => {
+                return new Date(timestamp * 1000).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            });
+            cleanDesc = cleanDesc.replace(/<:[a-zA-Z0-9_]+:\d+>/g, '');
+            document.getElementById('b-desc').innerText = cleanDesc;
+
             if (obj.image) { bImg.src = obj.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
             briefing.style.display = 'block'; 
-            let x = rect.left + rect.width + 20; let y = rect.top + window.scrollY;
+            
+            let x = rect.left + rect.width + 20; 
+            let y = rect.top + window.scrollY;
+            
             if (x + 450 > window.innerWidth) x = rect.left - 470;
-            const bHeight = briefing.offsetHeight || 400; if (rect.top + bHeight > window.innerHeight) y = (rect.bottom + window.scrollY) - bHeight;
-            briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
+            const bHeight = briefing.offsetHeight || 400; 
+            if (rect.top + bHeight > window.innerHeight) y = (rect.bottom + window.scrollY) - bHeight;
+            
+            briefing.style.left = x + 'px'; 
+            briefing.style.top = Math.max(40, y) + 'px';
         };
 
+        // Close Modal when clicking outside
         window.onclick = function(event) { if (event.target == document.getElementById('drops-modal')) document.getElementById('drops-modal').style.display = "none"; }
 
         init();

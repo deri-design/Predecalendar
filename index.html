@@ -58,8 +58,9 @@
             display: flex; flex-direction: column; align-items: center; text-align: center;
         }
 
-        /* Fixed 50/50 Height Alignment for Column 2 */
-        .center-stack .hud-card { flex: 1; min-height: 0; justify-content: center; }
+        /* Fixed 50/50 Height Alignment */
+        .center-stack { justify-content: space-between; }
+        .center-stack .hud-card { flex: 0 0 calc(50% - 7.5px); padding: 15px; justify-content: center; }
 
         #hud-next { border-color: var(--gold); animation: pulseGold 4s infinite; }
         #hud-daily { border-color: var(--teal); border-bottom: 4px solid var(--teal); animation: pulseTeal 4s infinite; }
@@ -85,61 +86,48 @@
         #hud-daily .timer-val, #hud-daily .timer-label { color: var(--teal); border-color: var(--teal); }
         #hud-quests .timer-val, #hud-quests .timer-label { color: var(--quest); border-color: var(--quest); }
         #hud-duration .timer-val, #hud-duration .timer-label { color: var(--red); border-color: var(--red); }
-        .center-stack .timer-val { font-size: 1.2rem; width: 45px; padding: 4px 0; }
+        .center-stack .timer-val { font-size: 1.25rem; width: 45px; padding: 4px 0; }
 
         .rewards-btn { cursor: pointer; background: rgba(145, 70, 255, 0.1); border: 1px solid var(--twitch); color: #fff; padding: 8px 15px; font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; transition: 0.2s; margin-bottom: 15px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .rewards-btn:hover { background: var(--twitch); transform: scale(1.02); }
         .cta-btn { margin-top: 10px; padding: 10px; background: var(--twitch); color: #fff; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; width: 100%; text-align: center; box-shadow: 0 0 10px rgba(145, 70, 255, 0.3); transition: 0.2s; }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(145, 70, 255, 0.5); }
 
-        /* --- DROPS MODAL --- */
+        /* --- MODAL --- */
         #drops-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 20000; backdrop-filter: blur(10px); align-items: center; justify-content: center; }
-        .modal-content { background: var(--cell-glass); border: 2px solid var(--twitch); padding: 30px; border-radius: 4px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 0 100px rgba(145, 70, 255, 0.3); }
-        .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; color: #fff; font-weight: 900; font-size: 1.5rem; opacity: 0.6; transition: 0.2s; }
-        .modal-close:hover { opacity: 1; }
-        .reward-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(145, 70, 255, 0.3); border-radius: 4px; padding: 10px; display: flex; align-items: center; gap: 15px; text-align: left; margin-bottom: 10px; }
+        .modal-content { background: var(--cell-glass); border: 2px solid var(--twitch); padding: 30px; border-radius: 4px; max-width: 500px; width: 90%; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; color: #fff; font-weight: 900; font-size: 1.5rem; }
+        .reward-card { background: rgba(0,0,0,0.5); border: 1px solid rgba(145, 70, 255, 0.3); border-radius: 4px; padding: 10px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
         .reward-img { width: 50px; height: 50px; object-fit: contain; }
-        .reward-name { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #fff; font-weight: 900; }
-        .reward-req { font-size: 0.7rem; color: var(--twitch); font-weight: 800; margin-top: 2px; }
+        .reward-name { font-size: 0.8rem; color: #fff; font-weight: 900; }
 
-        /* --- LEGEND --- */
-        .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
-        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; color: #fff; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
-        .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); } .dot.twitch { background: var(--twitch); } .dot.youtube { background: var(--youtube); }
-
-        /* --- CALENDAR --- */
-        .calendar-nav { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }
-        .nav-btn { background: var(--cell-glass); border: 1px solid var(--gold); color: var(--gold); padding: 10px 25px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; border-radius: 2px; transition: 0.2s; }
-        .nav-btn:hover { background: var(--gold); color: #000; }
-        .nav-btn.active { background: var(--gold); color: #000; pointer-events: none; }
-
+        /* --- ROADMAP GRID --- */
         .roadmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: rgba(55, 169, 169, 0.2); border: 1px solid rgba(55, 169, 169, 0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
         .h-cell { background: var(--cell-glass); padding: 15px; text-align: center; font-size: 0.75rem; color: #5d7599; font-weight: 900; }
-        .roadmap-grid .h-cell:nth-child(6), .roadmap-grid .h-cell:nth-child(7) { color: var(--gold-light); }
         .cell { background: var(--cell-glass); min-height: 160px; max-height: 480px; padding: 8px; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: thin; position: relative; }
         .cell.weekend { background: rgba(13, 19, 31, 0.95); }
-        .num-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .num { font-size: 0.9rem; color: #fff; font-weight: 900; }
         .month-tag { font-size: 0.65rem; color: var(--gold); font-weight: 900; }
         .cell.today { outline: 2px solid var(--gold); background: rgba(220, 182, 59, 0.15); z-index: 2; }
         
-        .drop-bar { height: 6px; background: var(--twitch); margin: 2px 0 8px 0; border-radius: 3px; box-shadow: 0 0 8px var(--twitch); position: relative; }
+        .drop-bar { height: 6px; background: var(--twitch); margin: 2px 0 8px 0; border-radius: 3px; position: relative; }
         .drop-bar::after { content: "DROPS ACTIVE"; position: absolute; top: -10px; left: 0; font-size: 0.5rem; color: var(--twitch); font-weight: 900; }
         .range-bar { height: 4px; background: var(--gold); margin: 2px 0 6px 0; border-radius: 2px; width: 100%; box-shadow: 0 0 5px var(--gold); }
 
         .event { display: block; text-decoration: none; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--gold); margin-bottom: 8px; border-radius: 2px; padding: 8px; transition: 0.2s; cursor: pointer; }
-        .event:hover { border-color: #fff !important; transform: translateY(-2px); }
-        .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); } .event.twitch { border-color: var(--twitch); } .event.youtube { border-color: var(--youtube); }
+        .event.patch { border-color: var(--gold); } .event.hero { border-color: var(--teal); } .event.season { border-color: var(--red); }
         .e-title { font-weight: 900; color: var(--gold); font-size: 0.6rem; text-transform: uppercase; }
-        .event.hero .e-title { color: var(--teal); } .event.season .e-title { color: var(--red); } .event.twitch .e-title { color: #bf94ff; } .event.youtube .e-title { color: #ff6666; }
 
-        /* --- POPUP --- */
+        /* --- BRIEFING POPUP --- */
         #global-briefing { display: none; position: fixed; width: 450px; max-height: 85vh; overflow-y: auto; background: rgba(13, 19, 31, 0.95); backdrop-filter: var(--glass-blur); border: 2px solid var(--gold); z-index: 10000; pointer-events: none; scrollbar-width: thin; box-shadow: 0 0 100px #000; }
         .briefing-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .briefing-content { padding: 25px; }
         .briefing-tag { font-size: 0.9rem; color: var(--gold); margin-bottom: 15px; font-weight: 900; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; display: block; }
         .briefing-desc { font-size: 18px; line-height: 1.6; color: #fff; white-space: pre-wrap; }
+
+        .legend { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 800; color: #fff; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
+        .dot.patch { background: var(--gold); } .dot.hero { background: var(--teal); } .dot.season { background: var(--red); }
 
         @media (max-width: 1300px) { .huds-wrapper { grid-template-columns: 1fr; } .roadmap-grid { grid-template-columns: repeat(1, 1fr); } }
     </style>
@@ -147,7 +135,6 @@
 <body>
     <div class="container">
         <header class="header"><h1>PREDCALENDAR</h1><div class="subline">Unofficial Predecessor Event Calendar</div></header>
-        
         <div class="huds-wrapper">
             <!-- COL 1 -->
             <div class="hud-column">
@@ -161,10 +148,8 @@
                         <div class="timer-unit"><div class="timer-val" id="m">00</div><div class="timer-label">MIN</div></div>
                         <div class="timer-unit"><div class="timer-val" id="s">00</div><div class="timer-label">SEC</div></div>
                     </div>
-                    <a href="https://www.twitch.tv/predecessorgame" target="_blank" class="cta-btn" id="twitch-btn" style="display: none;">Official Twitch Channel →</a>
                 </div>
             </div>
-
             <!-- COL 2 -->
             <div class="hud-column center-stack">
                 <div class="hud-card" id="hud-daily">
@@ -186,12 +171,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- COL 3 (ACTIVE EVENT) -->
+            <!-- COL 3 -->
             <div class="hud-column">
                 <div class="hud-card" id="hud-duration">
                     <span class="hud-label" style="color: var(--red);">ACTIVE EVENT ENDS IN</span>
                     <div class="hud-title" id="dur-title">NONE ACTIVE</div>
+                    <img id="hud-dur-img" class="hud-img" src="" alt="Active Visual" style="display: none;">
                     <div class="timer-hud">
                         <div class="timer-unit"><div class="timer-val" id="dur-d">00</div><div class="timer-label">DAYS</div></div>
                         <div class="timer-unit"><div class="timer-val" id="dur-h">00</div><div class="timer-label">HRS</div></div>
@@ -200,7 +185,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- COL 4 -->
             <div class="hud-column">
                 <div class="hud-card" id="hud-drops">
@@ -208,15 +192,13 @@
                     <div class="hud-title" id="drops-title">SCANNING...</div>
                     <button class="rewards-btn" id="rewards-open-btn" style="display: none;" onclick="document.getElementById('drops-modal').style.display='flex'">Rewards</button>
                     <div id="drops-timer-container" style="margin-top:10px; display:none;">
-                        <div style="font-size:0.6rem; color:var(--twitch); margin-bottom:5px; font-weight:900;">Ends In:</div>
                         <div class="timer-hud">
-                            <div class="timer-unit"><div class="timer-val" id="dr-d" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label" style="font-size:0.45rem;">DAYS</div></div>
-                            <div class="timer-unit"><div class="timer-val" id="dr-h" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label" style="font-size:0.45rem;">HRS</div></div>
-                            <div class="timer-unit"><div class="timer-val" id="dr-m" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label" style="font-size:0.45rem;">MIN</div></div>
-                            <div class="timer-unit"><div class="timer-val" id="dr-s" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label" style="font-size:0.45rem;">SEC</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-d" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label">DAYS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-h" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label">HRS</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-m" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label">MIN</div></div>
+                            <div class="timer-unit"><div class="timer-val" id="dr-s" style="font-size:1.1rem; width:45px;">00</div><div class="timer-label">SEC</div></div>
                         </div>
                     </div>
-                    <a href="https://www.twitch.tv/directory/category/predecessor" target="_blank" class="cta-btn" id="drops-btn" style="display: none;">Watch Live Streams →</a>
                 </div>
             </div>
         </div>
@@ -233,8 +215,6 @@
             <div class="legend-item"><div class="dot patch"></div> PATCH RELEASE</div>
             <div class="legend-item"><div class="dot hero"></div> HERO RELEASE</div>
             <div class="legend-item"><div class="dot season"></div> SEASON / EVENT</div>
-            <div class="legend-item"><div class="dot twitch"></div> TWITCH STREAM</div>
-            <div class="legend-item"><div class="dot youtube"></div> YOUTUBE VIDEO</div>
         </div>
 
         <div class="calendar-nav">
@@ -248,7 +228,7 @@
     
     <script>
         let evData = []; let dropData = {active: false, campaigns: []}; const today = new Date(); let currentWeekOffset = 0;
-        const grid = document.getElementById('main-grid'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img');
+        const grid = document.getElementById('main-grid'), briefing = document.getElementById('global-briefing'), bImg = document.getElementById('b-img'), hudImg = document.getElementById('hud-next-img'), durImg = document.getElementById('hud-dur-img');
         
         async function init() {
             try {
@@ -258,10 +238,18 @@
             } catch(e) { renderRoadmap(); }
         }
 
+        // --- NEW: Convert Discord timestamps to local strings ---
+        function formatDiscordTime(text) {
+            return text.replace(/<t:(\d+):[a-zA-Z]>/g, (match, epoch) => {
+                const date = new Date(parseInt(epoch) * 1000);
+                return date.toLocaleString('de-DE', { day: '2-digit', month: 'long', hour: '2-digit', minute: '2-digit' });
+            });
+        }
+
         function setupDrops(data) {
-            const titleEl = document.getElementById('drops-title'), modalList = document.getElementById('modal-rewards-list'), openBtn = document.getElementById('rewards-open-btn'), btn = document.getElementById('drops-btn'), timerHUD = document.getElementById('drops-timer-container');
+            const titleEl = document.getElementById('drops-title'), modalList = document.getElementById('modal-rewards-list'), openBtn = document.getElementById('rewards-open-btn'), timerHUD = document.getElementById('drops-timer-container');
             if (data.active && data.campaigns.length > 0) {
-                titleEl.innerText = "ACTIVE NOW"; openBtn.style.display = "flex"; btn.style.display = "block"; timerHUD.style.display = "block"; 
+                titleEl.innerText = "ACTIVE NOW"; openBtn.style.display = "flex"; timerHUD.style.display = "block"; 
                 let html = "";
                 data.campaigns.forEach(camp => {
                     const end = Date.parse(camp.end);
@@ -272,8 +260,7 @@
                         document.getElementById('dr-s').innerText = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
                     }}, 1000); }
                     camp.rewards.forEach(rew => {
-                        const h = Math.round(rew.minutes / 60); const timeStr = h >= 1 ? `${h} h` : `${rew.minutes} m`;
-                        html += `<div class="reward-card"><img src="${rew.image}" class="reward-img"><div class="reward-info"><span class="reward-name">${rew.name}</span><span class="reward-req">Watch ${timeStr}</span></div></div>`;
+                        html += `<div class="reward-card"><img src="${rew.image}" class="reward-img"><div class="reward-info"><span class="reward-name">${rew.name}</span></div></div>`;
                     });
                 }); modalList.innerHTML = html;
             } else { titleEl.innerText = "NONE ACTIVE"; }
@@ -288,21 +275,33 @@
             let start = new Date(); start.setDate(start.getDate() - 10 + (currentWeekOffset * 7));
             let dayOffset = start.getDay(); start.setDate(start.getDate() - (dayOffset === 0 ? 6 : dayOffset - 1));
             start.setDate(start.getDate() + 7); let end = new Date(start); end.setDate(end.getDate() + 20); let cursor = new Date(start);
+            
+            // Collect unique event names for range bars
+            const activeRangeBars = new Set();
+
             while (cursor <= end) {
-                const dStr = `${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
-                const itemsAtStart = evData.filter(e => e.date === dStr); const isT = cursor.toDateString() === today.toDateString();
+                const dStr = cursor.toISOString().split('T')[0];
+                const isT = cursor.toDateString() === today.toDateString();
                 const cell = document.createElement('div'); cell.className = `cell ${isT ? 'today' : ''} ${cursor.getDay()===0||cursor.getDay()===6?'weekend':''}`;
                 let html = `<div class="num-container"><span class="num">${cursor.getDate()}</span><span class="month-tag">${cursor.toLocaleString('default',{month:'short'}).toUpperCase()}</span></div>`;
+                
                 if (dropData.active) {
                     const activeCamp = dropData.campaigns.find(c => { const s = c.start.split('T')[0], e = c.end.split('T')[0]; return dStr >= s && dStr <= e; });
                     if (activeCamp) html += `<div class="drop-bar"></div>`;
                 }
-                const rangesActive = evData.filter(e => e.date !== e.end_date && dStr >= e.date && dStr <= e.end_date);
-                rangesActive.forEach(() => { html += `<div class="range-bar"></div>`; });
+
+                // Unified Range Bar logic
+                const rangesActive = evData.filter(e => e.date !== e.end_date && dStr >= e.date && dStr <= (e.end_date || e.date));
+                const uniqueTitles = [...new Set(rangesActive.map(r => r.title))];
+                uniqueTitles.forEach(() => { html += `<div class="range-bar"></div>`; });
+
                 cell.innerHTML = html;
+                const itemsAtStart = evData.filter(e => e.date === dStr);
                 itemsAtStart.forEach(ev => {
                     const el = document.createElement('a'); el.href = ev.url || '#'; el.target = "_blank"; el.className = `event ${ev.type || 'news'}`;
-                    el.innerHTML = `<div class="e-title">${ev.title}</div>`; el.onmouseenter = (e) => showBriefing(e, ev); el.onmouseleave = () => briefing.style.display = 'none';
+                    el.innerHTML = `<div class="e-title">${ev.title}</div>`; 
+                    el.onmouseenter = (e) => showBriefing(e, ev); 
+                    el.onmouseleave = () => briefing.style.display = 'none';
                     cell.appendChild(el);
                 }); grid.appendChild(cell); cursor.setDate(cursor.getDate() + 1);
             }
@@ -311,7 +310,6 @@
         function setupCountdown() {
             setInterval(() => {
                 const now = Date.now();
-                // Filter events that haven't started yet and aren't running
                 const futureEvents = evData.map(e => ({ ...e, time: Date.parse(e.iso_date) }))
                     .filter(e => e.time > now)
                     .sort((a, b) => a.time - b.time);
@@ -319,7 +317,6 @@
                 if (futureEvents.length > 0) {
                     const nextEv = futureEvents[0]; document.getElementById('op-title').innerText = nextEv.title;
                     if (nextEv.image) { hudImg.src = nextEv.image; hudImg.style.display = 'block'; } else { hudImg.style.display = 'none'; }
-                    if (nextEv.type === 'twitch') { document.getElementById('twitch-btn').style.display = 'block'; } else { document.getElementById('twitch-btn').style.display = 'none'; }
                     const diff = nextEv.time - now;
                     document.getElementById('d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
                     document.getElementById('h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
@@ -347,16 +344,12 @@
         function setupDurationCountdown() {
             setInterval(() => {
                 const nowTS = Date.now();
-                const now = new Date();
-                const curStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-
-                // Find currently running events by date comparison
                 const activeEvents = evData.filter(e => {
-                    const end = e.end_date || e.date;
-                    return curStr >= e.date && curStr <= end;
+                    const start = Date.parse(e.iso_date);
+                    const end = Date.parse((e.end_date || e.date) + "T23:59:59+02:00");
+                    return nowTS >= start && nowTS <= end;
                 });
-
-                // Prioritize XP events
+                
                 activeEvents.sort((a,b) => b.title.includes("XP") - a.title.includes("XP"));
                 
                 if (activeEvents.length > 0) {
@@ -364,23 +357,29 @@
                     const endTS = Date.parse((e.end_date || e.date) + "T23:59:59+02:00");
                     const diff = endTS - nowTS;
                     document.getElementById('dur-title').innerText = e.title;
+                    if (e.image) { durImg.src = e.image; durImg.style.display = 'block'; }
                     document.getElementById('dur-d').innerText = String(Math.floor(diff/864e5)).padStart(2,'0');
                     document.getElementById('dur-h').innerText = String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
                     document.getElementById('dur-m').innerText = String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
                     document.getElementById('dur-s').innerText = String(Math.floor((diff%6e4)/1000)).padStart(2,'0');
                 } else {
                     document.getElementById('dur-title').innerText = "NONE ACTIVE";
+                    durImg.style.display = 'none';
                     ["dur-d","dur-h","dur-m","dur-s"].forEach(id => document.getElementById(id).innerText = "00");
                 }
             }, 1000);
         }
 
         window.showBriefing = function(e, obj) {
-            const rect = e.currentTarget.getBoundingClientRect(); document.getElementById('b-tag').innerText = obj.title; document.getElementById('b-desc').innerText = obj.desc;
+            const rect = e.currentTarget.getBoundingClientRect(); 
+            document.getElementById('b-tag').innerText = obj.title; 
+            document.getElementById('b-desc').innerText = formatDiscordTime(obj.desc);
             if (obj.image) { bImg.src = obj.image; bImg.style.display = 'block'; } else { bImg.style.display = 'none'; }
-            briefing.style.display = 'block'; let x = rect.left + rect.width + 20; let y = rect.top + window.scrollY;
+            briefing.style.display = 'block'; 
+            let x = rect.left + rect.width + 20, y = rect.top + window.scrollY;
             if (x + 450 > window.innerWidth) x = rect.left - 470;
-            const bHeight = briefing.offsetHeight || 400; if (rect.top + bHeight > window.innerHeight) y = (rect.bottom + window.scrollY) - bHeight;
+            const bHeight = briefing.offsetHeight || 400; 
+            if (rect.top + bHeight > window.innerHeight) y = (rect.bottom + window.scrollY) - bHeight;
             briefing.style.left = x + 'px'; briefing.style.top = Math.max(40, y) + 'px';
         };
         init();

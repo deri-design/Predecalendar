@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-14 21:55:48",
+    "last_updated": "2026-04-15 02:57:35",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -9,7 +9,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69df9cd2&is=69de4b52&hm=fc2f69e13e384ce44335875ac11cce58bf0f4183733886462d1a022a81dffc47&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69e04592&is=69def412&hm=b4c38d0ba0f4c28cb37585ebc35927b48ffabdbd2a07a2d32755c29a3c7fe1f1&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -17,7 +17,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 PATCH NOTES",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",

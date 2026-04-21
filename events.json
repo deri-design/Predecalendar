@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-21 16:13:41",
+    "last_updated": "2026-04-21 19:20:45",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-07",
-            "end_date": "2026-04-07",
-            "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 PATCH NOTES",
+            "date": "2026-04-01",
+            "end_date": "2026-04-01",
+            "iso_date": "2026-04-01T14:00:00+02:00",
+            "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE HERO RELEASE",
+            "title": "ADELE QUEEN OF THORNS",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -50,7 +50,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "DAYBREAK V4 RELEASE",
+            "title": "DAYBREAK V4",
             "type": "patch",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\n\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
             "image": "",
@@ -61,7 +61,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13: THRONE OF THORNS RELEASE",
+            "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69e882d1&is=69e73151&hm=b202911ba3f5ef58d8ca1bcd5f3571abf39494615bbf5676b33abb451a6f80c8&",
@@ -97,7 +97,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "# V1.13: Throne of Thorns is LIVE!\n\n\ud83c\udf39 Command the battlefield with Adele, Queen of Thorns\n\ud83c\udf04 Explore Daybreak V4\n\u203c\ufe0f Take on new Quests\n\ud83d\udd22 Check out the new scoreboard\n... and more!\n\nRead full list of changes here \ud83d\uddd2\ufe0f \nhttps://playp.red/4mi5HZ5\n\nJoin the patch discussion here \ud83d\udde8\ufe0f \nhttps://discord.com/channels/389767672151146498/1491039376359297034/1491039376359297034\n\n\ud83d\udd14 @Official News\nV1.13: Throne of Thorns Patch Notes | Predecessor\nEverything you need to know about V1.13: Throne of Thorns!",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491039902043738253/Patch_Highlight.jpg?ex=69e80ade&is=69e6b95e&hm=c8027027f00ccbcdf64b4748104ea25cc97eafbbb6feab5a7942f4df23c05639&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491039902043738253/Patch_Highlight.jpg?ex=69e8b39e&is=69e7621e&hm=eea721152fe2b0677b370646e1b8e33946f6001a1b2409637a550eeb75286429&",
             "url": "https://playp.red/4mi5HZ5"
         },
         {

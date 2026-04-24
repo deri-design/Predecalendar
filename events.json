@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-24 13:48:38",
+    "last_updated": "2026-04-24 16:07:42",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -9,7 +9,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69ec2312&is=69ead192&hm=22740451e3e65a0ded4fb4270e624cc84d7e51faf83f8278d10de3b316c33eaf&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69eccbd2&is=69eb7a52&hm=7a55dd19e607217fc4f3c16aa1474e9a8cf71da86fd57be6f0a271b3b83987b0&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE HERO RELEASE",
+            "title": "ADELE QUEEN OF THORNS",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -50,7 +50,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "DAYBREAK V4 RELEASE",
+            "title": "DAYBREAK V4",
             "type": "patch",
             "desc": "\ud83c\udf07 Size - adjusted \n\ud83d\uddfa\ufe0f Layout - improved\n\ud83c\udfc3 Lower Mobility Heroes - empowered\n\nDaybreak V4 is coming in V1.13: Throne of Thorns on April 7th - bringing some of the most exciting changes yet! \ud83d\udd25",
             "image": "",
@@ -61,7 +61,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13: THRONE OF THORNS RELEASE",
+            "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
             "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69ec7751&is=69eb25d1&hm=ca834b57913da1dc096da0b51dd20ad2363318292abb835417a107f5ea01117d&",
@@ -75,7 +75,7 @@
             "title": "MERCH DROP",
             "type": "news",
             "desc": "He\u2019s here! \ud83e\udd17\n\nWe\u2019ve teamed up with Youtooz for our very first merch drop - introducing the plush version of our own Nyrian Gladiator, Zarus! \ud83e\udd8e\n\nPre-orders go live on their website starting April 7, and we\u2019ll let you know the moment they\u2019re available \ud83d\uddd3\ufe0f\n\nWe\u2019ll also be giving away some plushies to a few lucky winners, so stay tuned for more details!\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69ec3c46&is=69eaeac6&hm=07137e1785a3020ca72b37b0161f6559421cf4ccaa84d0a757c2feb2f3a3db91&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488568581737152654/predecessor-plush-zarus_reveal_wide_1.png?ex=69ece506&is=69eb9386&hm=ade7077cf9163767d3db113026ff114077d1a6a82819b2df82612bb9cb38eb50&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -102,14 +102,25 @@
         },
         {
             "original_id": "1492160067339030721",
-            "date": "2026-04-18",
-            "end_date": "2026-04-19",
-            "iso_date": "2026-04-18T14:00:00+02:00",
+            "date": "2026-04-25",
+            "end_date": "2026-04-27",
+            "iso_date": "2026-04-25T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69e4db44&is=69e389c4&hm=237318caed41fd6ec5c9d71f424952d09f9be9958b73e0dc1bf15876dcb593ce&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69ecc444&is=69eb72c4&hm=3c18fe7d8fa85fa312fcef879fd5d52e9619dd4b15d6f44bed00fd21fd87db52&",
             "url": "https://www.predecessorgame.com/en-US/news"
+        },
+        {
+            "original_id": "1497239981830307922",
+            "date": "2026-04-28",
+            "end_date": "2026-04-28",
+            "iso_date": "2026-04-28T14:00:00+02:00",
+            "title": "BALANCE PATCH V1.13.2",
+            "type": "patch",
+            "desc": "# \u2696\ufe0f v1.13.2 Patch Notes!\n\nBalance Patch v1.13.2 is coming on 28th April \ud83d\udd25\n\nThe patch notes are here, so dive in and check out all the changes coming up next week\ud83d\udc47\nhttps://playp.red/3QY13DG \n\n\ud83d\udd14 @Official News",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69ecc874&is=69eb76f4&hm=65f93963777f61b1f64d8a0b0b45e32c9895181b0d868ebb39123928bd10b556&",
+            "url": "https://playp.red/3QY13DG"
         }
     ]
 }

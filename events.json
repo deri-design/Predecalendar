@@ -1,11 +1,11 @@
 {
-    "last_updated": "2026-04-25 19:01:15",
+    "last_updated": "2026-04-25 21:41:18",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-04-26",
+            "date": "2026-04-25",
             "end_date": "2026-04-26",
-            "iso_date": "2026-04-26T14:00:00+02:00",
+            "iso_date": "2026-04-25T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
@@ -31,7 +31,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69edcbe3&is=69ec7a63&hm=0a6e47e9cdc4ec2f362df12cba2704a53faef4c87b24f5507c8a1a68f803b611&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69ee74a3&is=69ed2323&hm=d42946fff0e02d651fea06cf2882ad03b1e2c4efbd13a8cd3ef819ed044f1c08&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -64,7 +64,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69edc8d1&is=69ec7751&hm=c51ec11cbf9868e07ba39279c50ea134c5e4f1e57c3f6a35f1f40720b3f17e9c&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69ee7191&is=69ed2011&hm=46cbe6736a3f79ab1e7c84eb3664091950d1ccb90e03c8c885feed2550ca7f01&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

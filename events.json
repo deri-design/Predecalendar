@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-25 07:26:01",
+    "last_updated": "2026-04-25 09:56:38",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -17,7 +17,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 PATCH NOTES",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -31,7 +31,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69ed2323&is=69ebd1a3&hm=41ee9810b607bd14d444a0527ac95897f19686ac6cdfacaceed5a1acb6f8a01f&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69edcbe3&is=69ec7a63&hm=0a6e47e9cdc4ec2f362df12cba2704a53faef4c87b24f5507c8a1a68f803b611&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -64,7 +64,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69ed2011&is=69ebce91&hm=ab187f2be5f062edf4cefea4a39a133873fb7af286c6356841891bf3cd9a7b4b&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69edc8d1&is=69ec7751&hm=c51ec11cbf9868e07ba39279c50ea134c5e4f1e57c3f6a35f1f40720b3f17e9c&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

@@ -1,15 +1,15 @@
 {
-    "last_updated": "2026-04-24 21:52:49",
+    "last_updated": "2026-04-25 02:53:06",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-04-25",
+            "date": "2026-04-26",
             "end_date": "2026-04-27",
-            "iso_date": "2026-04-25T14:00:00+02:00",
+            "iso_date": "2026-04-26T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69eccbd2&is=69eb7a52&hm=7a55dd19e607217fc4f3c16aa1474e9a8cf71da86fd57be6f0a271b3b83987b0&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=69ed7492&is=69ec2312&hm=636cd1a502b79212f6f5c97048c16cc83ad80634905daf43aa21fce2fca96e2f&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -17,7 +17,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 PATCH NOTES",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -108,7 +108,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69ecc444&is=69eb72c4&hm=3c18fe7d8fa85fa312fcef879fd5d52e9619dd4b15d6f44bed00fd21fd87db52&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69ed6d04&is=69ec1b84&hm=edaae7c64a537b556335d68bdfc875281bf5e16b41b98e52f6688b9e1462d3b2&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -119,7 +119,7 @@
             "title": "BALANCE PATCH V1.13.2",
             "type": "patch",
             "desc": "# \u2696\ufe0f v1.13.2 Patch Notes!\n\nBalance Patch v1.13.2 is coming on 28th April \ud83d\udd25\n\nThe patch notes are here, so dive in and check out all the changes coming up next week\ud83d\udc47\nhttps://playp.red/3QY13DG \n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69ecc874&is=69eb76f4&hm=65f93963777f61b1f64d8a0b0b45e32c9895181b0d868ebb39123928bd10b556&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69ed7134&is=69ec1fb4&hm=8b683f6f4569ea27af179047832157186fb74b242c4fc3a95f6665eab085c855&",
             "url": "https://playp.red/3QY13DG"
         }
     ]

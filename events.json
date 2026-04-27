@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-27 19:40:40",
+    "last_updated": "2026-04-27 21:57:07",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -17,7 +17,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 UPDATE",
+            "title": "V1.13 PATCH NOTES",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -31,7 +31,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f06ee3&is=69ef1d63&hm=e59c22d30e42ef62c7f5e8c32c62f5c1550f1816b8989661cb25a24a8d528232&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f117a3&is=69efc623&hm=6057394f55f4a0ff859d7bc82323257cbbbcc12ad679edcb18f7802fe51481a6&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -64,7 +64,7 @@
             "title": "V1.13: THRONE OF THORNS RELEASE",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f06bd1&is=69ef1a51&hm=224d09e6db98542dc8daf3705b1cc0fff09056421b505d6459cceb3f1de934ef&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f11491&is=69efc311&hm=a94a73fbafd4094ad0d9b6f58cb8f778f626e5b67caf3ee0b5870ac4cd0b7cc7&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -116,7 +116,7 @@
             "date": "2026-04-28",
             "end_date": "2026-04-28",
             "iso_date": "2026-04-28T14:00:00+02:00",
-            "title": "BALANCE PATCH V1.13.2",
+            "title": "V1.13.2 PATCH",
             "type": "patch",
             "desc": "# \u2696\ufe0f v1.13.2 Patch Notes!\n\nBalance Patch v1.13.2 is coming on 28th April \ud83d\udd25\n\nThe patch notes are here, so dive in and check out all the changes coming up next week\ud83d\udc47\nhttps://playp.red/3QY13DG \n\n\ud83d\udd14 @Official News",
             "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69f0bcf4&is=69ef6b74&hm=e3584a877358072582b4c00fa1d455d74d7e2a1601b67cb1f291ca3544ee7bf8&",

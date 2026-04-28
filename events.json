@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-04-28 19:48:16",
+    "last_updated": "2026-04-28 22:03:11",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-07",
-            "end_date": "2026-04-07",
-            "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 UPDATE",
+            "date": "2026-04-01",
+            "end_date": "2026-04-01",
+            "iso_date": "2026-04-01T14:00:00+02:00",
+            "title": "DEV STREAM FOR V1.13",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -31,7 +31,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f1c063&is=69f06ee3&hm=5abefe8b43dd5610385c831c8e35c884fe0a92ba073973838af55dda87cf4187&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f26923&is=69f117a3&hm=9471cc0c0b208a5ed16da3770b44f126d16d2e2e681df924dc22c0753448fc2a&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -64,7 +64,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f1bd51&is=69f06bd1&hm=a4b2f2963b64e323e7971b06da86e845c7294dc1fd570fb89ad2377085b6af5f&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f26611&is=69f11491&hm=a09fbbd7ae38aa201b72c99025c1cd087be99709f5cc3d4fcc8a229f4a16e6e9&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

@@ -1,11 +1,11 @@
 {
-    "last_updated": "2026-05-04 03:41:54",
+    "last_updated": "2026-05-04 08:36:20",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-04-25",
-            "end_date": "2026-04-27",
-            "iso_date": "2026-04-25T14:00:00+02:00",
+            "date": "2026-05-02",
+            "end_date": "2026-05-03",
+            "iso_date": "2026-05-02T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
@@ -17,7 +17,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 UPDATE",
+            "title": "PATCH NOTES FOR V1.13",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -31,7 +31,7 @@
             "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "# \ud83c\udfa5 v1.13 Dev Stream - 1st April \n\nv1.13 Throne of Thorns is just around the corner! We'll be live on Twitch next week for a first look at the new update \ud83c\udf39\n\nMark it in your calendar and we'll see you in chat!\n\ud83d\uddd3\ufe0f01 April | \u23f0 6PM UTC / 2PM ET\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f900a3&is=69f7af23&hm=05de2aeff65622ca9aa768b1ebf4bb54cbb58d5bf2af682ce62484befaa77555&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487185724934590584/1.3_Stream_1080.jpg?ex=69f9a963&is=69f857e3&hm=e06a3c05bbd6cdf3cdb2dcb4e37ef90b34a733c16382dcd350678f368a53f481&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -64,7 +64,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "V1.13: Throne of Thorns drops April 7th - very soon \ud83d\udc40\n\nAnd we\u2019ve got some news to share... here's first of them:\n\nHero Affinity level cap is increasing all the way to Level 99! \ud83d\udd25\n\nYou asked for it, and it\u2019s finally here. Time to push your mains further than ever before \ud83d\udcaa\n\n\ud83d\udd14",
-            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f8fd91&is=69f7ac11&hm=422a945720d6081e15c8e61691e291e40af131cf91750700d700be029e78e032&",
+            "image": "https://cdn.discordapp.com/attachments/1487129767865225261/1487182428861890600/image_173.png?ex=69f9a651&is=69f854d1&hm=d339dfa52cd219ee2dce9a421a0d40d08fe5d20455e7f10049ff9d9faf8b403c&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -102,9 +102,9 @@
         },
         {
             "original_id": "1492160067339030721",
-            "date": "2026-04-25",
-            "end_date": "2026-04-27",
-            "iso_date": "2026-04-25T14:00:00+02:00",
+            "date": "2026-05-01",
+            "end_date": "2026-05-03",
+            "iso_date": "2026-05-01T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
@@ -119,7 +119,7 @@
             "title": "BALANCE PATCH V1.13.2",
             "type": "patch",
             "desc": "# \u2696\ufe0f v1.13.2 Patch Notes!\n\nBalance Patch v1.13.2 is coming on 28th April \ud83d\udd25\n\nThe patch notes are here, so dive in and check out all the changes coming up next week\ud83d\udc47\nhttps://playp.red/3QY13DG \n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69f8a5f4&is=69f75474&hm=f563db8fa380013f9e2ebf04677b0c026b6627a31c7a11149849d1f9bf4c3aaa&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=69f94eb4&is=69f7fd34&hm=9e752e80c09ab9794fa9104d6c0fd60f149d226b3cbbed795f2aa482c1f58246&",
             "url": "https://playp.red/3QY13DG"
         },
         {

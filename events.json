@@ -1,11 +1,11 @@
 {
-    "last_updated": "2026-05-06 14:26:50",
+    "last_updated": "2026-05-06 16:46:32",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-05-08",
-            "end_date": "2026-05-10",
-            "iso_date": "2026-05-08T14:00:00+02:00",
+            "date": "2026-05-07",
+            "end_date": "2026-05-09",
+            "iso_date": "2026-05-07T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-01",
-            "end_date": "2026-04-01",
-            "iso_date": "2026-04-01T14:00:00+02:00",
-            "title": "V1.13 PATCH NOTES",
+            "date": "2026-04-07",
+            "end_date": "2026-04-07",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE IS JOINING THE FIGHT IN V1.13: THR",
+            "title": "ADELE JOINS THE FIGHT",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -102,10 +102,10 @@
         },
         {
             "original_id": "1492160067339030721",
-            "date": "2026-05-08",
-            "end_date": "2026-05-10",
-            "iso_date": "2026-05-08T14:00:00+02:00",
-            "title": "DOUBLE XP WEEKEND IS LIVE",
+            "date": "2026-05-06",
+            "end_date": "2026-05-06",
+            "iso_date": "2026-05-06T14:00:00+02:00",
+            "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
             "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69fc9644&is=69fb44c4&hm=568fe7b1d2a96cd91dbd7958bb66d09378d7b797b4ff3c4d2b08a3c1818eb1a9&",
@@ -135,10 +135,10 @@
         },
         {
             "original_id": "1497603160569675886",
-            "date": "2026-05-09",
+            "date": "2026-05-15",
             "end_date": "2026-05-16",
-            "iso_date": "2026-05-09T14:00:00+02:00",
-            "title": "NATIONS LEAGUE IS LIVE",
+            "iso_date": "2026-05-15T14:00:00+02:00",
+            "title": "NATIONS LEAGUE",
             "type": "twitch",
             "desc": "# Nations League is LIVE \ud83d\udd34 \n\nTune in this weekend (and next weekend!) to catch all the action and find out which country will take the crown \ud83d\udc51 \nhttps://playp.red/3QqgAfm\n\n\ud83d\udd14 @Official News\nPredecessorGame - Twitch\nNations League #3",
             "image": "https://static-cdn.jtvnw.net/jtv_user_pictures/278a37d4-ef0f-4bc2-a614-467af5f8b268-profile_image-300x300.png",
@@ -168,14 +168,25 @@
         },
         {
             "original_id": "1488967151757824192",
-            "date": "2026-03-25",
-            "end_date": "2026-03-25",
-            "iso_date": "2026-03-25T14:00:00+02:00",
+            "date": "2026-04-29",
+            "end_date": "2026-04-29",
+            "iso_date": "2026-04-29T14:00:00+02:00",
             "title": "THRONE OF THORNS FIRST LOOK DEV STREAM",
             "type": "twitch",
             "desc": "# Throne of Thorns First Look Dev Stream \ud83d\udd34 \n\nWe're LIVE! Come take a look at what's coming up in next week's update \ud83c\udf39 \n\nhttps://www.twitch.tv/predecessorgame\n\n@Official News\nPredecessorGame - Twitch\nOfficial account for the third person action MOBA Predecessor, developed by Omeda Studios.",
             "image": "https://cdn.discordapp.com/attachments/514802553213550602/1488963691167612989/Twitch_Announcement_1920x1080_Live_Now.jpg?ex=69fc2cbf&is=69fadb3f&hm=6e86bed6be5d5fa9396e8c386d7d46797ca617dbf60387820068854f1a3f790c&",
             "url": "https://www.twitch.tv/predecessorgame"
+        },
+        {
+            "original_id": "1501606813190197310",
+            "date": "2026-05-13",
+            "end_date": "2026-05-13",
+            "iso_date": "2026-05-13T14:00:00+02:00",
+            "title": "LIVESTREAM FOR UPDATE 1.14",
+            "type": "twitch",
+            "desc": "# \u2694\ufe0f Update 1.14: Harbingers of Ruin - May 19th!\n\nThe new update launches in less than two weeks, bringing our biggest, most in-depth Hero customisation system ever - **Eternals**! \ud83d\udc40\nhttps://youtube.com/shorts/gppqJLAWRL4\n\nFind out more on our livestream next Wednesday, May 13th \ud83c\udfa5\n\n\ud83d\udd14 @Official News\nEternals - New Customisation System Coming Soon\n#predecessor #moba #gamingshorts",
+            "image": "https://i.ytimg.com/vi/gppqJLAWRL4/maxresdefault.jpg",
+            "url": "https://www.predecessorgame.com/en-US/news"
         }
     ]
 }

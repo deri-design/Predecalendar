@@ -1,11 +1,11 @@
 {
-    "last_updated": "2026-05-08 10:27:08",
+    "last_updated": "2026-05-08 14:01:46",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-05-08",
-            "end_date": "2026-05-09",
-            "iso_date": "2026-05-08T14:00:00+02:00",
+            "date": "2026-05-09",
+            "end_date": "2026-05-10",
+            "iso_date": "2026-05-09T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-07",
-            "end_date": "2026-04-07",
-            "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "V1.13 UPDATE",
+            "date": "2026-04-01",
+            "end_date": "2026-04-01",
+            "iso_date": "2026-04-01T14:00:00+02:00",
+            "title": "V1.13 DEV STREAM",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE RELEASE",
+            "title": "ADELE JOINS THE FIGHT IN V1.13",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -108,7 +108,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69fe9084&is=69fd3f04&hm=2c3584da3332dc9af0652f6c47e8daa4be71b748c05b2dcaead2e7041773057f&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=69ff3944&is=69fde7c4&hm=f9ecb2afa642fa30ab3ca0a5cec0b1a9aadef96e7a017aaf8b0439a3c0707d4a&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

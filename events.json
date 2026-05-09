@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-05-09 15:57:45",
+    "last_updated": "2026-05-09 19:10:34",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-01",
-            "end_date": "2026-04-01",
-            "iso_date": "2026-04-01T14:00:00+02:00",
-            "title": "DEV STREAM",
+            "date": "2026-04-07",
+            "end_date": "2026-04-07",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE JOINS THE FIGHT",
+            "title": "ADELE RELEASE",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -190,11 +190,11 @@
         },
         {
             "original_id": "1501973432047239260",
-            "date": "2026-05-13",
-            "end_date": "2026-05-13",
-            "iso_date": "2026-05-13T14:00:00+02:00",
-            "title": "ETERNALS DEV STREAM",
-            "type": "twitch",
+            "date": "2026-05-19",
+            "end_date": "2026-05-19",
+            "iso_date": "2026-05-19T14:00:00+02:00",
+            "title": "UPDATE 1.14: HARBINGERS OF RUIN",
+            "type": "patch",
             "desc": "# Eternals - A Quick Look! \ud83d\udc40\n\nCurious about Eternals? Our new Hero customization system is coming in Update 1.14: Harbingers of Ruin (May 19th)!\n\nSo here's a quick breakdown before we show it off on stream on May 13th \ud83d\udc47\nhttps://youtube.com/shorts/7L95X-kil9s\n\n\ud83d\udd14 @Official News\nA Quick Look at Eternals!\nEternals is a brand new Hero customisation system coming in Update 1.14: Harbingers of Ruin on May 19th. Find out more on our dev stream on May 13th!\n\n#predecessor #gamingshorts #moba",
             "image": "https://i.ytimg.com/vi/7L95X-kil9s/maxresdefault.jpg",
             "url": "https://www.predecessorgame.com/en-US/news"

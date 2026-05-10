@@ -1,23 +1,23 @@
 {
-    "last_updated": "2026-05-09 21:52:05",
+    "last_updated": "2026-05-10 03:47:53",
     "events": [
         {
             "original_id": "1491804563257163796",
-            "date": "2026-05-09",
+            "date": "2026-05-08",
             "end_date": "2026-05-10",
-            "iso_date": "2026-05-09T14:00:00+02:00",
+            "iso_date": "2026-05-08T14:00:00+02:00",
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=6a009252&is=69ff40d2&hm=0efa339db7bf091221834cf06ef8d1f3f76868a1fb9cd5119812d9270d3c1d9d&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=6a013b12&is=69ffe992&hm=84887ae045b1727fb364afc1b080778e38ebedad0df6e97a3a080246473af4e3&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-01",
-            "end_date": "2026-04-01",
-            "iso_date": "2026-04-01T14:00:00+02:00",
-            "title": "DEV STREAM",
+            "date": "2026-04-07",
+            "end_date": "2026-04-07",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "V1.13 UPDATE",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -39,7 +39,7 @@
             "date": "2026-04-07",
             "end_date": "2026-04-07",
             "iso_date": "2026-04-07T14:00:00+02:00",
-            "title": "ADELE RELEASE",
+            "title": "ADELE HERO RELEASE",
             "type": "patch",
             "desc": "Thorns are spreading across the battlefield\u2026 \ud83c\udf39 \n\nThat can only mean one thing...\n\nAdele is joining the fight in V1.13: Throne of Thorns, coming April 7th!\n\nhttps://youtu.be/_mxjJioNuhI\n\n\ud83d\udd14 @Official News\nAdele Queen of Thorns | Reveal Trailer | Predecessor\nAdele joins the fight in update 1.13: Throne of Thorns on April 7th!\n\nPredecessor redefines the modern MOBA genre, blending stunning realistic environments with explosive third-person action. \n\nPLAY NOW!\nhttps://playp.red/playnow",
             "image": "https://i.ytimg.com/vi/_mxjJioNuhI/maxresdefault.jpg",
@@ -108,7 +108,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=6a008ac4&is=69ff3944&hm=0490f7124cb4e715ec19cb61ed58d91b8984945a963a4ba8180b002f7b4003cc&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=6a013384&is=69ffe204&hm=138f92ec92a63ab0477aaa087d3fe05d5fe621f89f4f30fea472dc14741b7758&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {

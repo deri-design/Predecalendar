@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-05-13 14:46:08",
+    "last_updated": "2026-05-13 17:20:13",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -14,10 +14,10 @@
         },
         {
             "original_id": "1488209609377190051",
-            "date": "2026-04-01",
-            "end_date": "2026-04-01",
-            "iso_date": "2026-04-01T14:00:00+02:00",
-            "title": "V1.13 DEV STREAM",
+            "date": "2026-04-07",
+            "end_date": "2026-04-07",
+            "iso_date": "2026-04-07T14:00:00+02:00",
+            "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "Hey everyone!\n\nQuick heads up - patch notes for V1.13 will be dropping on April 7th due to the Easter Holidays. \n\nThis **doesn't affect the update** itself, which will launch as planned on **April 7th** as well. \n\nWe'll be going through a bunch of new stuff in our Dev Stream on Wednesday 1st, so be sure to tune in and find out more about what's coming up in V1.13: Throne of Thorns!",
             "image": "",
@@ -146,13 +146,13 @@
         },
         {
             "original_id": "1501208006149542068",
-            "date": "2026-05-12",
-            "end_date": "2026-05-12",
-            "iso_date": "2026-05-12T14:00:00+02:00",
+            "date": "2026-05-13",
+            "end_date": "2026-05-13",
+            "iso_date": "2026-05-13T14:00:00+02:00",
             "title": "ZARUS PLUSH LAST CHANCE",
             "type": "news",
             "desc": "# \u23f0 Zarus Plush Last Chance!\n\nThere's only 6 hours left to get your hands on your very own, limited edition Zarus plush from YouTooz! <:ZarusHappy:1136260095005696102> \n\nHead over to https://youtooz.com/products/zarus-plush-9-inch and get your order in while there's still time \u231b \n\n\ud83d\udd14 @Official News\nZarus Plush (9in) \u2013 Youtooz Collectibles\nThe Plush Zarus' search for godhood has led him to his most intense challenge yet, becoming a Youtooz plush! Sitting at 9 inches tall and gripping the green-tipped Spear of Nyr in his right hand as a jagged smile crosses his grey face, small spikes run along the outside of his head up to a pair of long horns at the top",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1501204060387278909/predecessor-plush-zarus_reveal_wide_1.png?ex=6a04733b&is=6a0321bb&hm=9f19324a483e67e807a6e00f906dc37ff56e1b464fe8b205b471532f8e3c69f7&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1501204060387278909/predecessor-plush-zarus_reveal_wide_1.png?ex=6a05c4bb&is=6a04733b&hm=6d248b9d634bcd302c357c754efddef99eead7973ea4faab35571649f0660e56&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -179,11 +179,11 @@
         },
         {
             "original_id": "1501606813190197310",
-            "date": "2026-05-13",
-            "end_date": "2026-05-13",
-            "iso_date": "2026-05-13T14:00:00+02:00",
-            "title": "UPDATE 1.14 FIRST LOOK",
-            "type": "twitch",
+            "date": "2026-05-19",
+            "end_date": "2026-05-19",
+            "iso_date": "2026-05-19T14:00:00+02:00",
+            "title": "UPDATE 1.14: HARBINGERS OF RUIN",
+            "type": "patch",
             "desc": "# \u2694\ufe0f Update 1.14: Harbingers of Ruin - May 19th!\n\nThe new update launches in less than two weeks, bringing our biggest, most in-depth Hero customisation system ever - **Eternals**! \ud83d\udc40\nhttps://youtube.com/shorts/gppqJLAWRL4\n\nFind out more on our livestream next Wednesday, May 13th \ud83c\udfa5\n\n\ud83d\udd14 @Official News\nEternals - New Customisation System Coming Soon\n#predecessor #moba #gamingshorts",
             "image": "https://i.ytimg.com/vi/gppqJLAWRL4/maxresdefault.jpg",
             "url": "https://www.predecessorgame.com/en-US/news"
@@ -229,7 +229,7 @@
             "title": "1.14 FIRST LOOK LIVESTREAM",
             "type": "twitch",
             "desc": "# 1.14 First Look Livestream - Tomorrow! \ud83c\udfa5\n\nIt's almost time! We'll be live tomorrow - <t:1778695200:f> on Twitch \ud83d\udd34\n\nDon't miss out on the first look at our new Hero, Legion, AND Eternals! \ud83d\udd25\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1503806623687118950/Twitch_Announcement_1920x1080.png?ex=6a05594e&is=6a0407ce&hm=ada1f30ad42a5cbc819cb5521a50185bfb9a405ec587387a7d253a7f917120f9&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1503806623687118950/Twitch_Announcement_1920x1080.png?ex=6a06020e&is=6a04b08e&hm=a0d60dc9bb5b050c210e2b0bf359c04787c9f8d069d73db78b0d38757d6c413a&",
             "url": "https://www.predecessorgame.com/en-US/news"
         }
     ]

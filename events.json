@@ -1,5 +1,5 @@
 {
-    "last_updated": "2026-05-13 11:32:28",
+    "last_updated": "2026-05-13 14:46:08",
     "events": [
         {
             "original_id": "1491804563257163796",
@@ -9,7 +9,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend \ud83d\udca5\n\nThe affinity cap has been raised and to celebrate, we've got double account and affinity XP all weekend - starting tomorrow! \n\nLogin and play between <t:1775822400:f> and <t:1776081600:f> to earn those levels! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=6a052f92&is=6a03de12&hm=ad22de3fad7b859990e5ceb508bf2aa294a382950ac4c4050c340ab54d23f471&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491803013440995488/1-13_DoubleXP_16-9.jpg?ex=6a05d852&is=6a0486d2&hm=8e676003deb7f83d0c0199e18edc3c223264cfeb6cf7302a57d93c303ef360ea&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -97,7 +97,7 @@
             "title": "V1.13: THRONE OF THORNS",
             "type": "patch",
             "desc": "# V1.13: Throne of Thorns is LIVE!\n\n\ud83c\udf39 Command the battlefield with Adele, Queen of Thorns\n\ud83c\udf04 Explore Daybreak V4\n\u203c\ufe0f Take on new Quests\n\ud83d\udd22 Check out the new scoreboard\n... and more!\n\nRead full list of changes here \ud83d\uddd2\ufe0f \nhttps://playp.red/4mi5HZ5\n\nJoin the patch discussion here \ud83d\udde8\ufe0f \nhttps://discord.com/channels/389767672151146498/1491039376359297034/1491039376359297034\n\n\ud83d\udd14 @Official News\nV1.13: Throne of Thorns Patch Notes | Predecessor\nEverything you need to know about V1.13: Throne of Thorns!",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491039902043738253/Patch_Highlight.jpg?ex=6a050bde&is=6a03ba5e&hm=97a199ba2fc605bc5ec05cc4012efbdfd4593e14101f5498a902ae97d2dd7904&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1491039902043738253/Patch_Highlight.jpg?ex=6a05b49e&is=6a04631e&hm=67097b91925829f4ca60058df0e0e3f4c77693d6776bdcfff379717d567f32fa&",
             "url": "https://playp.red/4mi5HZ5"
         },
         {
@@ -108,7 +108,7 @@
             "title": "DOUBLE XP WEEKEND",
             "type": "news",
             "desc": "# Double XP Weekend is LIVE \ud83d\udca5\n\nDouble account AND affinity XP all weekend until <t:1776081600:f> <:MurdockNice:1021857503602032690> \n\nJump in and get those affinity levels up! \ud83d\udcc8\n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=6a052804&is=6a03d684&hm=ee869a663c7837cc0567e762f522eedee491249d85386391d436100a83f2c639&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1492157288054657214/1-13_DoubleXP_16-9_LIVE_1.jpg?ex=6a05d0c4&is=6a047f44&hm=f67287736e771fb156cd53d4554be48350e040a8d1fd3ead12ac97d523599eb0&",
             "url": "https://www.predecessorgame.com/en-US/news"
         },
         {
@@ -119,7 +119,7 @@
             "title": "V1.13.2 PATCH",
             "type": "patch",
             "desc": "# \u2696\ufe0f v1.13.2 Patch Notes!\n\nBalance Patch v1.13.2 is coming on 28th April \ud83d\udd25\n\nThe patch notes are here, so dive in and check out all the changes coming up next week\ud83d\udc47\nhttps://playp.red/3QY13DG \n\n\ud83d\udd14 @Official News",
-            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=6a052c34&is=6a03dab4&hm=732d770f8ac0f66b0b81d1da497b82daeabb8a7fe8a00cf9ac0a17263af67969&",
+            "image": "https://cdn.discordapp.com/attachments/514802553213550602/1497235212822773901/Patch_Header_1-1_LIVE_copy.jpg?ex=6a05d4f4&is=6a048374&hm=73fefcd9691459228ef263e2982fa31ce2896d717423f2b1d2a32e148e3a3d34&",
             "url": "https://playp.red/3QY13DG"
         },
         {
@@ -179,11 +179,11 @@
         },
         {
             "original_id": "1501606813190197310",
-            "date": "2026-05-19",
-            "end_date": "2026-05-19",
-            "iso_date": "2026-05-19T14:00:00+02:00",
-            "title": "UPDATE 1.14: HARBINGERS OF RUIN",
-            "type": "patch",
+            "date": "2026-05-13",
+            "end_date": "2026-05-13",
+            "iso_date": "2026-05-13T14:00:00+02:00",
+            "title": "UPDATE 1.14 FIRST LOOK",
+            "type": "twitch",
             "desc": "# \u2694\ufe0f Update 1.14: Harbingers of Ruin - May 19th!\n\nThe new update launches in less than two weeks, bringing our biggest, most in-depth Hero customisation system ever - **Eternals**! \ud83d\udc40\nhttps://youtube.com/shorts/gppqJLAWRL4\n\nFind out more on our livestream next Wednesday, May 13th \ud83c\udfa5\n\n\ud83d\udd14 @Official News\nEternals - New Customisation System Coming Soon\n#predecessor #moba #gamingshorts",
             "image": "https://i.ytimg.com/vi/gppqJLAWRL4/maxresdefault.jpg",
             "url": "https://www.predecessorgame.com/en-US/news"
